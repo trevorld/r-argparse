@@ -66,10 +66,3 @@ test_that("ArgumentParser works as expected", {
     expect_output(parser$print_help(), "foobar's saying \\(default: bye\\)")
     expect_error(ArgumentParser(python_cmd="foobar"))
 })
-
-# vector default
-# rvector_to_pylist
-# booleans
-# numeric
-# character
-
