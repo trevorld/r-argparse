@@ -1,0 +1,28 @@
+Package: argparse
+Type: Package
+Title: Command line optional and positional argument parser.
+Version: 0.5.3
+Author: Trevor L Davis. Ports examples from the argparse Python module by the
+    Python Software Foundation. Ports examples from the getopt package by Allen
+    Day.
+Copyright: Copyright (c) 2012 Trevor L Davis
+    Copyright (c) 2008 Allen Day
+    Copyright (c) 2001-2012 Python Software Foundation; All Rights Reserved
+Maintainer: Trevor L Davis <trevor.l.davis@stanford.edu>
+Description: A command line parser to
+    be used with Rscript to write "#!" shebang scripts that gracefully
+    accept positional and optional arguments and automatically generate usage.
+    Initial beta release.
+License: GPL (>= 2)
+URL: http://r-forge.r-project.org/projects/optparse
+LazyLoad: yes
+Depends:
+    proto
+Imports:
+    getopt (>= 1.19),
+    rjson
+SystemRequirements: python (>= 2.7)
+Suggests:
+    testthat
+Collate:
+    'argparse.R'

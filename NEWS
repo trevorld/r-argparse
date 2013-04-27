@@ -1,0 +1,3 @@
+argparse 0.5.3
+==============
+* Fix bug in parser$add_argument for case when we specify a default vector instead of scalar.  Thanks Martin Diehl for bug report.
