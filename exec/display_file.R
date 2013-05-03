@@ -9,13 +9,6 @@ parser$add_argument("file", nargs=1, help="File to be displayed")
 args <- parser$parse_args()
 
 file <- args$file
-# if(length(arguments$args) != 1) {
-#     cat("Incorrect number of required positional arguments\n\n")
-#     print_help(parser)
-#     stop()
-# } else {
-#     file <- arguments$args
-# }
 
 if( file.access(file) == -1) {
     stop(sprintf("Specified file ( %s ) does not exist", file))

@@ -23,6 +23,8 @@ Imports:
     rjson
 SystemRequirements: python (>= 2.7)
 Suggests:
+    knitr,
     testthat
+VignetteBuilder: knitr
 Collate:
     'argparse.R'

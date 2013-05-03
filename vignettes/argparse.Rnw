@@ -1,4 +1,5 @@
 %\VignetteIndexEntry{argparse Command Line Argument Parsing}
+%\VignetteEngine{knitr::knitr}
 \documentclass[a4paper]{article}
 \usepackage{listings}
 \title{argparse Command Line Argument Parsing}
@@ -8,18 +9,22 @@
 argparse is a command line argument parser inspired by Python's ``argparse'' library.  Use this with Rscript to write ``\#!''-shebang scripts that accept short and long flags/options and positional arguments, generate a usage statement, and set default values for options that are not specified on the command line.
 
 <<echo=FALSE>>=
+library("knitr")
 Rscript_executable <- file.path(R.home(), "bin", "Rscript")
-setwd(system.file("exec", package="argparse")) # to access the "Rscript files"
+opts_knit$set(root.dir = system.file("exec", package="argparse")) # to access the "Rscript files"
+opts_chunk$set(comment=NA) 
+# setwd(system.file("exec", package="argparse")) 
 list_file_command <- "ls"
 chmod_command <- "chmod ug+x display_file.R example.R"
 path_command <- "export PATH=$PATH:`pwd`"
+run_command <- function(string) { suppressWarnings(cat(system(string, intern=TRUE), sep="\n")) }
 @
 
 In our working directory we have two example R scripts, named ``example.R'' and ``display\_file.R'' illustrating the use of the argparse package.
 \newline\newline
 \noindent\verb|\Sexpr{paste("bash$", list_file_command)}|
 <<echo=FALSE>>=
-cat(system(sprintf("%s", list_file_command), intern=TRUE), sep="\n")
+run_command(sprintf("%s", list_file_command))
 command <- "display_file.R example.R" # to show file
 @
 
@@ -35,7 +40,7 @@ Here is what ``example.R'' contains:
 \newline\newline
 \noindent\verb|\Sexpr{paste("bash$", command)}|
 <<echo=FALSE>>=
-cat(system(sprintf("%s %s 2>&1", Rscript_executable, command),  intern=TRUE), sep="\n")   
+run_command(sprintf("%s %s 2>&1", Rscript_executable, command))
 @
 
 \newpage
@@ -47,7 +52,7 @@ By default \emph{argparse} will generate a help message if it encounters \verb|-
 \newline\newline
 \noindent\verb|\Sexpr{paste("bash$", command)}|
 <<echo=FALSE>>=
-cat(system(sprintf("%s %s 2>&1", Rscript_executable, command),  intern=TRUE), sep="\n")   
+run_command(sprintf("%s %s 2>&1", Rscript_executable, command))
 command <- "example.R" # rely only on defaults
 @
 
@@ -55,7 +60,7 @@ If you specify default values when creating your \verb|ArgumentParser| then \emp
 \newline\newline
 \noindent\verb|\Sexpr{paste("bash$", command)}|
 <<echo=FALSE>>=
-cat(system(sprintf("%s %s 2>&1", Rscript_executable, command),  intern=TRUE), sep="\n")   
+run_command(sprintf("%s %s 2>&1", Rscript_executable, command))
 command <- "example.R --mean=10 --sd=10 --count=3" 
 @
 
@@ -64,7 +69,7 @@ Or you can specify your own values.
 \newline\newline
 \noindent\verb|\Sexpr{paste("bash$", command)}|
 <<echo=FALSE>>=
-cat(system(sprintf("%s %s 2>&1", Rscript_executable, command),  intern=TRUE), sep="\n")   
+run_command(sprintf("%s %s 2>&1", Rscript_executable, command))   
 command <- "example.R --quiet -c 4 --generator=\"runif\"" #  same as above but "quiet"
 @
 \end{samepage}
@@ -75,7 +80,7 @@ If you remember from the example program that \verb|--quiet| had \verb|action="s
 \newline\newline
 \noindent\verb|\Sexpr{paste("bash$", command)}|
 <<echo=FALSE>>=
-cat(system(sprintf("%s %s 2>&1", Rscript_executable, command),  intern=TRUE), sep="\n")   
+run_command(sprintf("%s %s 2>&1", Rscript_executable, command))   
 command <- "example.R --silent -m 5" #  same as above but "quiet"
 @
 
@@ -83,7 +88,7 @@ If you specify an illegal flag then \emph{argparse} will print out a usage messa
 \newline\newline
 \noindent\verb|\Sexpr{paste("bash$", command)}|
 <<echo=FALSE>>=
-cat(system(sprintf("%s %s 2>&1", Rscript_executable, command),  intern=TRUE), sep="\n")   
+run_command(sprintf("%s %s 2>&1", Rscript_executable, command))   
 command <- "example.R -c 100 -c 2 -c 1000 -c 7" #  same as above but "quiet"
 @
 
@@ -91,7 +96,7 @@ If you specify the same option multiple times then \emph{argparse} will use the 
 \newline\newline
 \noindent\verb|\Sexpr{paste("bash$", command)}|
 <<echo=FALSE>>=
-cat(system(sprintf("%s %s 2>&1", Rscript_executable, command),  intern=TRUE), sep="\n")   
+run_command(sprintf("%s %s 2>&1", Rscript_executable, command))   
 @
 
 \emph{argparse} can also parse positional arguments.  Below we give an example program \emph{display\_file.R}, which is a program that prints out the contents of a single file (the required positional argument, not an optional argument) and which accepts the normal help option as well as an option to add line numbers to the output.
@@ -101,23 +106,23 @@ command <- "display_file.R --help"
 @
 \noindent\verb|\Sexpr{paste("bash$", command)}|
 <<echo=FALSE>>=
-cat(system(sprintf("%s %s 2>&1", Rscript_executable, command),  intern=TRUE), sep="\n")   
+run_command(sprintf("%s %s 2>&1", Rscript_executable, command))   
 command <- "display_file.R --add_numbers display_file.R" 
 @
 \noindent\verb|\Sexpr{paste("bash$", command)}|
 <<echo=FALSE>>=
-cat(system(sprintf("%s %s 2>&1", Rscript_executable, command),  intern=TRUE), sep="\n")   
+run_command(sprintf("%s %s 2>&1", Rscript_executable, command))   
 command <- "display_file.R non_existent_file.txt" 
 @
 \noindent\verb|\Sexpr{paste("bash$", command)}|
 <<echo=FALSE>>=
-cat(system(sprintf("%s %s 2>&1", Rscript_executable, command),  intern=TRUE), sep="\n")   
+run_command(sprintf("%s %s 2>&1", Rscript_executable, command))   
 command <- "display_file.R"
 @
 \newpage
 \noindent\verb|\Sexpr{paste("bash$", command)}|
 <<echo=FALSE>>=
-cat(system(sprintf("%s %s 2>&1", Rscript_executable, command),  intern=TRUE), sep="\n")   
+run_command(sprintf("%s %s 2>&1", Rscript_executable, command))   
 @
 
 \end{document}
