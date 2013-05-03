@@ -14,7 +14,8 @@ Description: A command line parser to
     accept positional and optional arguments and automatically generate usage.
     Initial beta release.
 License: GPL (>= 2)
-URL: http://r-forge.r-project.org/projects/optparse
+URL: https://github.com/trevorld/argparse
+BugReports: https://github.com/trevorld/argparse/issues
 LazyLoad: yes
 Depends:
     proto
