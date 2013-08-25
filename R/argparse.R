@@ -242,24 +242,18 @@ is_python <- function(path) {
 
 # Find a suitable python cmd or give error if not possible
 find_python_cmd <- function() {
-    python_cmds <- c("python", "python3", "python2", "pypy",
+    python_cmds <- c("python", "python3", "python2", "python2.7", "pypy",
             sprintf("C:/Python%s/python", c(27, 30:34)))
     python_cmds <- Sys.which(python_cmds)
     python_cmds <- python_cmds[which(python_cmds != "")]
     python_cmd <- NA
     for(cmd in python_cmds) {
-        if(is_python(cmd)) {
-            python_cmd <- cmd
-            break
-        }
+        if(is_python(cmd)) return(cmd)
     }
-    if(is.na(python_cmd)) {
-        stop(paste("Could not find SystemRequirement Python (>= 2.7) on PATH",
-                       "nor in a couple common Windows locations.\n",
-                       "Please either install Python, add it to the PATH, and/or set",
-                        "the ``python_cmd`` option to the path of its current location",
-                        "Please see the INSTALL file for more information"))
+    stop(paste("Could not find SystemRequirement Python (>= 2.7) on PATH",
+               "nor in a couple common Windows locations.\n",
+               "Please either install Python, add it to the PATH, and/or set",
+               "the ``python_cmd`` option to the path of its current location",
+               "Please see the INSTALL file for more information"))
 
-    }
-    return(python_cmd)
 }

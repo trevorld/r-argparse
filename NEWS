@@ -1,4 +1,9 @@
 argparse 0.5.3
 ==============
-* Fix bug in parser$add_argument for case when we specify a default vector instead of scalar.  Thanks Martin Diehl for bug report.
+
+* Fix bug in parser$add_argument for case when we specify a default vector
+  instead of scalar.  Thanks Martin Diehl for bug report.
+
+* ``find_python_cmd`` will now also look for a ``python2.7`` binary.
+
 * Website moved to https://github.com/trevorld/argparse

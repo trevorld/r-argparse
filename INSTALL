@@ -1,28 +1,56 @@
 Installing System Requirements
 ==============================
-The ``argparse`` package requires that a Python interpreter be installed with the ``argparse`` and ``json`` (or ``simplejson``) modules.  They are included with all Python implementations version 2.7 and higher.  The package will not install Python for you and ``ArgumentParser`` will throw an error if it can not find a sufficient Python interpreter.  This package is tested with the traditional implementation of Python aka CPython (either 2.7 or 3+ is fine) but probably works with other implementations (for example it has been lightly tested to work with PyPy).  If you are using Linux or a Mac you probably already have CPython installed but it might be too old and you might want to upgrade using your distribution package manager.  For more information on installing Python go to:
+
+The ``argparse`` package requires that a Python interpreter be installed with
+the ``argparse`` and ``json`` (or ``simplejson``) modules.  They are
+automatically included with recent Python implementations starting with versions
+2.7 and 3.2.  The package will not install Python for you and ``ArgumentParser``
+will throw an error if it can not find a sufficient Python interpreter.  This
+package is tested with the traditional implementation of Python aka CPython
+(either 2.7 or 3.2+ is fine) but probably works with other implementations (for
+example it has been lightly tested to work with PyPy).  If you are using Linux
+or a Mac you probably already have CPython installed but it might be too old and
+you might want to upgrade using your distribution package manager.  For more
+information on installing Python go to:
 
     http://www.python.org/download/
 
-If you have Python 2.7 or higher the ``argparse`` and ``json`` modules are part of the standard library and should be automatically installed with the installation of the Python interpreter.  If you have less than Python 2.7 you should probably upgrade or have your administrator do so.
+If you have Python 2.7 or 3.2 and higher the ``argparse`` and ``json`` modules
+are part of the standard library and should be automatically installed with the
+installation of the Python interpreter.  If you have less than Python 2.7 you
+should probably upgrade or have your administrator do so.  You can also have
+Python 2.7 installed alongside the older Python (as the binary ``python2.7``)
 
-However, if you have Python 2.6 you you should be able to get by if you install the ``argparse`` module yourself:
+However, if you have Python 2.6 you you should be able to get by if you install
+the ``argparse`` module yourself:
 
     https://code.google.com/p/argparse/  
 
-If you have Python 2.5 in addition to installing the ``argparse`` module you will need to install the ``simplejson`` module as well:
+If you have Python 2.5 in addition to installing the ``argparse`` module you
+will need to install the ``simplejson`` module as well:
 
     https://github.com/simplejson/simplejson
 
 Having ``argparse`` find Python
 ===============================
 
-You may specify the Python interpreter for ``argparse`` to use by either setting the ``python_cmd`` option::
+You may specify the Python interpreter for ``argparse`` to use by either setting
+the ``python_cmd`` option::
 
     options(python_cmd = "D:/NonstandardWindowsInstallation/Python27/python")
 
-or by passing the path to the ``python_cmd`` argument in the ``ArgumentParser`` function::
+or by passing the path to the ``python_cmd`` argument in the ``ArgumentParser``
+function::
 
     ArgumentParser(description="A simple Rscript", python_cmd="pypy")
 
-If these are not specified then by default ``ArgumentParser`` will look on the PATH for ``python``, ``python3``, ``python2``, ``pypy``, ``jython`` using the first one that it detects has both the ``argparse`` and ``json`` (or ``simplejson``) modules installed.  It will also look for ``C:\Python27\python`` through ``C:\Python34\python`` since the CPython Windows installer by default DOES NOT add python to the Windows PATH variable.  If you install CPython on Windows and do not choose the default location then strongly consider adding it to your PATH as well so ``argparse`` can find it automatically.  If ``ArgumentParser`` cannot find a suitable Python intepreter it will throw an error.
+If these are not specified then by default ``ArgumentParser`` will look on the
+PATH for ``python``, ``python3``, ``python2``, ``pypy``, ``python2.7`` using the
+first one that it detects has both the ``argparse`` and ``json`` (or
+``simplejson``) modules installed.  It will also look for ``C:\Python27\python``
+through ``C:\Python34\python`` since the CPython Windows installer by default
+DOES NOT add python to the Windows PATH variable.  If you install CPython on
+Windows and do not choose the default location then strongly consider adding it
+to your PATH as well so ``argparse`` can find it automatically.  If
+``ArgumentParser`` cannot find a suitable Python intepreter it will throw an
+error.
