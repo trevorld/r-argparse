@@ -12,6 +12,13 @@
 #  
 #  You should have received a copy of the GNU General Public License  
 #  along with this program.  If not, see <http://www.gnu.org/licenses/>.  
+#
+# This file incorporates work from the argparse module in Python 2.7.3.
+#  
+#     Copyright (c) 1990-2012 Python Software Foundation; All Rights Reserved
+#
+# See (inst/)COPYRIGHTS or http://docs.python.org/2/license.html for the full
+# Python (GPL-compatible) license stack.
 context("Unit tests")
 
 options(python_cmd = find_python_cmd())
