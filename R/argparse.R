@@ -165,6 +165,12 @@ convert_..._to_arguments <- function(mode, ...) {
         }
         proposed_arguments[ii] <- sprintf("%s%s", default_string, default)
     }
+    # Don't put quotes around formatter_class argument
+    if(mode == "ArgumentParser" && any(grepl("formatter_class=", proposed_arguments))) {
+        ii <- grep("formatter_class=", proposed_arguments)
+        formatter_class <- argument_list[[ii]]
+        proposed_arguments[ii] <- sprintf("formatter_class=%s", formatter_class)
+    }
     # Set right default prog name if not specified, if possible
     # Do last to not screw up other fixes with prog insertion
     if(mode == "ArgumentParser" && all(!grepl("prog=", proposed_arguments))) {
@@ -200,7 +206,6 @@ find_python_cmd <- function() {
             sprintf("C:/Python%s/python", c(27, 30:34)))
     python_cmds <- Sys.which(python_cmds)
     python_cmds <- python_cmds[which(python_cmds != "")]
-    python_cmd <- NA
     for(cmd in python_cmds) {
         if(is_python(cmd)) return(cmd)
     }

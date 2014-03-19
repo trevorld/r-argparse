@@ -49,6 +49,8 @@ test_that("convert_..._to_arguments works as expected", {
     expect_match(c.2a(argument_default=30), "argument_default=30")
     expect_match(c.2a(argument_default="foobar"), "argument_default='foobar'")
     expect_match(c.2a(foo="bar"), "^prog='PROGRAM'|^prog='test-argparse.R'")
+    expect_match(c.2a(formatter_class="argparse.ArgumentDefaultsHelpFormatter"),
+                 "formatter_class=argparse.ArgumentDefaultsHelpFormatter")
 })
 
 context("add_argument")
