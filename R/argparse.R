@@ -1,4 +1,4 @@
-# Copyright (c) 2012-2013 Trevor L. Davis <trevor.l.davis@stanford.edu>  
+# Copyright (c) 2012-2014 Trevor L. Davis <trevor.l.davis@stanford.edu>  
 #  
 #  This file is free software: you may copy, redistribute and/or modify it  
 #  under the terms of the GNU General Public License as published by the  
@@ -115,6 +115,16 @@ ArgumentParser <- function(..., python_cmd=getOption("python_cmd", find_python_c
     })
 }
 
+# @param argument argument to be converted from R to Python
+convert_argument <- function(argument) {
+    if(is.character(argument)) argument <- shQuote(argument, type="sh") 
+    if(is.logical(argument)) argument <- ifelse(argument, 'True', 'False') 
+    if(length(argument) > 1) {
+        argument <- sprintf("[%s]", paste(argument, collapse=", "))
+    }
+    argument
+}
+
 # @param mode Either "add_argument" or "ArgumentParser"
 #' @import getopt
 convert_..._to_arguments <- function(mode, ...) {
@@ -150,6 +160,11 @@ convert_..._to_arguments <- function(mode, ...) {
         }
         proposed_arguments[ii] <- sprintf("nargs=%s", nargs)
     }
+    if(mode == "add_argument" && any(grepl("choices=", proposed_arguments))) {
+        ii <- grep("choices=", proposed_arguments)
+        choices <- convert_argument(argument_list[[ii]])
+        proposed_arguments[ii] <- sprintf("choices=%s", choices)
+    }
     # Make defaults are what Python wants, if specified
     default_string <- switch(mode,
            add_argument = "default=", 
@@ -158,11 +173,7 @@ convert_..._to_arguments <- function(mode, ...) {
     if(any(grepl(default_string, proposed_arguments))) {
         ii <- grep(default_string, proposed_arguments)
         default <- argument_list[[ii]]
-        if(is.character(default)) default <- shQuote(default, type="sh") 
-        if(is.logical(default)) default <- ifelse(default, 'True', 'False') 
-        if(length(default) > 1) {
-            default <- sprintf("[%s]", paste(default, collapse=", "))
-        }
+        default <- convert_argument(default)
         proposed_arguments[ii] <- sprintf("%s%s", default_string, default)
     }
     # Don't put quotes around formatter_class argument

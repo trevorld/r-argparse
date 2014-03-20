@@ -1,5 +1,8 @@
 argparse 1.0.0
 ==============
+* Some support for ``choices`` argument in ``parser$add_argument``.  Thanks Christopher Small for report/request.
+
+* Some support for ``formatter_class`` argument in ``ArgumentParser``.  Thanks Costas Bouyioukos for report/request.
 
 
 argparse 0.5.3

@@ -1,4 +1,4 @@
-# Copyright (c) 2012-2013 Trevor L Davis <trevor.l.davis@stanford.edu>
+# Copyright (c) 2012-2014 Trevor L Davis <trevor.l.davis@stanford.edu>
 #  
 #  This file is free software: you may copy, redistribute and/or modify it  
 #  under the terms of the GNU General Public License as published by the  
@@ -89,3 +89,12 @@ test_that("ArgumentParser works as expected", {
     expect_output(parser$print_help(), "foobar's saying \\(default: bye\\)")
     expect_error(ArgumentParser(python_cmd="foobar"))
 })
+test_that("parse_args warks as expected", {
+    parser <- ArgumentParser(prog="foobar", usage="%(prog)s arg1 arg2")
+    parser$add_argument('--hello', dest='saying', action='store', default='foo',
+            choices=c('foo', 'bar'), 
+            help="%(prog)s's saying (default: %(default)s)")
+    expect_equal(parser$parse_args("--hello=bar"), list(saying="bar"))
+    # expect_error(parser$parse_args("--hello=what"))
+})
+
