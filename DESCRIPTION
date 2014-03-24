@@ -9,7 +9,6 @@ Maintainer: Trevor L Davis <trevor.l.davis@stanford.edu>
 Description: A command line parser to
     be used with Rscript to write "#!" shebang scripts that gracefully
     accept positional and optional arguments and automatically generate usage.
-    Initial beta release.
 License: GPL (>= 2)
 Copyright: See file (inst/)COPYRIGHTS.
 URL: https://github.com/trevorld/argparse
