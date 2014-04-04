@@ -43,6 +43,7 @@
 #'      
 #' @import rjson
 #' @import proto
+#' @import findpython
 #' @export
 #' @examples
 #'
@@ -59,8 +60,9 @@
 #' accumulate_fn <- get(args$accumulate)
 #' print(accumulate_fn(args$integers))
 ## ifelse(.Platform$OS.type == "windows", "python.exe", "python")
-ArgumentParser <- function(..., python_cmd=getOption("python_cmd", find_python_cmd())) {
-    if(!is_python(python_cmd)) {
+ArgumentParser <- function(..., 
+                    python_cmd=getOption("python_cmd", find_python_cmd(required_modules = c('argparse', 'json | simplejson')))) {
+    if(!is_python_sufficient(python_cmd, required_modules = c('argparse', 'json | simplejson'))) {
         stop(paste(sprintf("python executable %s either is not installed,", python_cmd), 
                 "is not on the path, or does not have argparse, json modules",
                 "please see INSTALL file"))
@@ -190,40 +192,4 @@ convert_..._to_arguments <- function(mode, ...) {
         proposed_arguments <- c(sprintf("prog='%s'", prog), proposed_arguments)
     }
     return(paste(proposed_arguments, collapse=", "))
-}
-
-# Tests whether the python command can be used with argparse, (simple)json packages
-is_python <- function(path) {
-    qpath <- sQuote(path)
-    import_code <- c("import argparse", "try: import json", 
-            "except ImportError: import simplejson as json") 
-    tryCatch({
-            system(path, intern=TRUE, input=import_code, ignore.stderr=TRUE)
-            TRUE
-        }, 
-        warning = function(w) { 
-            warning(qpath, 
-                "does not seem to have the argparse and/or (simple)json module")
-            FALSE
-        },
-        error = function(e) {
-            FALSE
-        })
-}
-
-# Find a suitable python cmd or give error if not possible
-find_python_cmd <- function() {
-    python_cmds <- c("python", "python3", "python2", "python2.7", "pypy",
-            sprintf("C:/Python%s/python", c(27, 30:34)))
-    python_cmds <- Sys.which(python_cmds)
-    python_cmds <- python_cmds[which(python_cmds != "")]
-    for(cmd in python_cmds) {
-        if(is_python(cmd)) return(cmd)
-    }
-    stop(paste("Could not find SystemRequirement Python (>= 2.7) on PATH",
-               "nor in a couple common Windows locations.\n",
-               "Please either install Python, add it to the PATH, and/or set",
-               "the ``python_cmd`` option to the path of its current location",
-               "Please see the INSTALL file for more information"))
-
 }

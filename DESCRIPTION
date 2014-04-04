@@ -17,6 +17,7 @@ LazyLoad: yes
 Depends:
     proto
 Imports:
+    findpython,
     getopt (>= 1.19),
     rjson
 SystemRequirements: python (>= 2.7)
@@ -24,5 +25,3 @@ Suggests:
     knitr,
     testthat
 VignetteBuilder: knitr
-Collate:
-    'argparse.R'
