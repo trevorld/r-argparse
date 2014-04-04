@@ -44,13 +44,5 @@ function::
 
     ArgumentParser(description="A simple Rscript", python_cmd="pypy")
 
-If these are not specified then by default ``ArgumentParser`` will look on the
-PATH for ``python``, ``python3``, ``python2``, ``pypy``, ``python2.7`` using the
-first one that it detects has both the ``argparse`` and ``json`` (or
-``simplejson``) modules installed.  It will also look for ``C:\Python27\python``
-through ``C:\Python34\python`` since the CPython Windows installer by default
-DOES NOT add python to the Windows PATH variable.  If you install CPython on
-Windows and do not choose the default location then strongly consider adding it
-to your PATH as well so ``argparse`` can find it automatically.  If
-``ArgumentParser`` cannot find a suitable Python intepreter it will throw an
-error.
+If these are not specified then by default ``ArgumentParser`` will 
+use the package ``findpython`` to look for a suitable Python binary.
