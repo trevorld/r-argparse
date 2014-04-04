@@ -7,6 +7,10 @@ argparse 1.0.0
 * Package now looks for Python binaries with ``findpython::find_python_cmd``
   which is a little bit more robust than the previous ``argparse::find_python_cmd``.
 
+* If ``interactive() == TRUE`` then ``parse_args`` will no longer ``quit(status=1)`` after printing a help message
+  but will instead throw an error.  ``argparse`` will continue to ``quit(status=1)`` after printing a help message
+  for non-interactive Rscripts.
+
 
 argparse 0.5.3
 ==============
