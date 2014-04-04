@@ -93,7 +93,7 @@ ArgumentParser <- function(...,
                         input=python_code, stdout=TRUE, stderr=TRUE))
             if(grepl("^usage:", output[1])) {
                 cat(output, sep="\n")
-                quit(status=1)
+                if(interactive()) stop("help requested") else quit(status=1) 
             } else {
                 return(rjson::fromJSON(output))
             }
