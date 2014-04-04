@@ -4,6 +4,9 @@ argparse 1.0.0
 
 * Some support for ``formatter_class`` argument in ``ArgumentParser``.  Thanks Costas Bouyioukos for report/request.
 
+* Package now looks for Python binaries with ``findpython::find_python_cmd``
+  which is a little bit more robust than the previous ``argparse::find_python_cmd``.
+
 
 argparse 0.5.3
 ==============
