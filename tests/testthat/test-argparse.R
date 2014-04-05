@@ -21,7 +21,7 @@
 # Python (GPL-compatible) license stack.
 context("Unit tests")
 
-options(python_cmd = find_python_cmd())
+options(python_cmd = find_python_cmd(required_modules=c("argparse", "json | simplejson")))
 context("print_help")
 test_that("print_help works as expected", {
     parser <- ArgumentParser(description="Process some integers.")

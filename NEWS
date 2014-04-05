@@ -1,3 +1,7 @@
+argparse 1.0.1
+==============
+* Fix minor bug when running package tests on machines with both old and new versions of Python.  Thanks Prof. Brian Ripley for bug report.
+
 argparse 1.0.0
 ==============
 * Some support for ``choices`` argument in ``parser$add_argument``.  Thanks Christopher Small for report/request.
