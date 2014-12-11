@@ -1,6 +1,6 @@
 Package: argparse
 Type: Package
-Title: Command line optional and positional argument parser.
+Title: Command Line Optional and Positional Argument Parser
 Version: 1.0.1
 Author: Trevor L Davis. Ports examples from the argparse Python module by the
     Python Software Foundation. Ports examples from the getopt package by Allen
