@@ -31,6 +31,12 @@ test_that("print_help works as expected", {
     expect_output(parser$print_usage(), "usage:")
     # expect_output(parser$parse_args("-h"), "usage:")
     # expect_output(parser$parse_args("--help"), "options:")
+    # Request/bug by PlasmaBinturong
+    parser$add_argument('integers', metavar='N', type="integer", nargs='+',
+                       help='an integer for the accumulator')
+    expect_error(parser$parse_args(), "parse error")
+    expect_error(parser$parse_args("-h"), "help requested")
+    
 })
 context("convert_..._to_arguments")
 test_that("convert_..._to_arguments works as expected", {
@@ -101,5 +107,6 @@ test_that("parse_args warks as expected", {
     parser <- ArgumentParser()
     parser$add_argument("--lotsofstuff", type = "character", nargs = "+")
     args <- parser$parse_args(c("--lotsofstuff", rep("stuff", 1000))) 
+
 })
 

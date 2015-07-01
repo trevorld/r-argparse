@@ -1,6 +1,8 @@
 argparse 1.0.2
 ==============
 * Fixes bug when using a very large argument list.  Thanks Taylor Pospisil for bug report.
+* Parse error usage message now prints to standard error.  User requested help message quit status is now zero.  
+  Thanks to PlasmaBinturong for report/request.
 
 argparse 1.0.1
 ==============

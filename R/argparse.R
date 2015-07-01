@@ -92,8 +92,15 @@ ArgumentParser <- function(...,
             output <- suppressWarnings(system2(python_cmd,
                         input=python_code, stdout=TRUE, stderr=TRUE))
             if(grepl("^usage:", output[1])) {
-                cat(output, sep="\n")
-                if(interactive()) stop("help requested") else quit(status=1) 
+                has_positional_arguments <- any(grepl("^positional arguments:", output))
+                has_optional_arguments <- any(grepl("^optional arguments:", output))
+                if (has_positional_arguments || has_optional_arguments) {
+                    cat(output, sep="\n")
+                    if(interactive()) stop("help requested") else quit(status=0) 
+                } else {
+                    cat(output, file=stderr(), sep="\n")
+                    if(interactive()) stop("parse error") else quit(status=1) 
+                }
             } else {
                 return(rjson::fromJSON(paste(output, collapse="")))
             }
