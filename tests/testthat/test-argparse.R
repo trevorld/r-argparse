@@ -96,5 +96,10 @@ test_that("parse_args warks as expected", {
             help="%(prog)s's saying (default: %(default)s)")
     expect_equal(parser$parse_args("--hello=bar"), list(saying="bar"))
     # expect_error(parser$parse_args("--hello=what"))
+
+    # Bug found by Taylor Pospisil
+    parser <- ArgumentParser()
+    parser$add_argument("--lotsofstuff", type = "character", nargs = "+")
+    args <- parser$parse_args(c("--lotsofstuff", rep("stuff", 1000))) 
 })
 

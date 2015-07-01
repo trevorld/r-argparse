@@ -95,7 +95,7 @@ ArgumentParser <- function(...,
                 cat(output, sep="\n")
                 if(interactive()) stop("help requested") else quit(status=1) 
             } else {
-                return(rjson::fromJSON(output))
+                return(rjson::fromJSON(paste(output, collapse="")))
             }
         }
         print_help <- function(.) {
