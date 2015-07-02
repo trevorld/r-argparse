@@ -19,6 +19,8 @@
 #
 # See (inst/)COPYRIGHTS or http://docs.python.org/2/license.html for the full
 # Python (GPL-compatible) license stack.
+tmpfile = file(tempfile(), 'w')
+sink(tmpfile, type="message")
 context("Unit tests")
 
 options(python_cmd = find_python_cmd(required_modules=c("argparse", "json | simplejson")))
@@ -35,7 +37,7 @@ test_that("print_help works as expected", {
     parser$add_argument('integers', metavar='N', type="integer", nargs='+',
                        help='an integer for the accumulator')
     expect_error(parser$parse_args(), "parse error")
-    expect_error(parser$parse_args("-h"), "help requested")
+    expect_error(capture.output(parser$parse_args("-h")), "help requested")
     
 })
 context("convert_..._to_arguments")
@@ -108,5 +110,11 @@ test_that("parse_args warks as expected", {
     parser$add_argument("--lotsofstuff", type = "character", nargs = "+")
     args <- parser$parse_args(c("--lotsofstuff", rep("stuff", 1000))) 
 
+    # Unhelpful error message found by Martí Duran Ferrer
+    parser <- ArgumentParser()
+    parser$add_argument('M',required=TRUE, help="Test")
+    expect_error(parser$parse_args(), "python error")
+
 })
 
+sink()

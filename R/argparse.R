@@ -101,6 +101,9 @@ ArgumentParser <- function(...,
                     cat(output, file=stderr(), sep="\n")
                     if(interactive()) stop("parse error") else quit(status=1) 
                 }
+            } else if(grepl("^Traceback", output[1])) {
+                cat(output, file=stderr(), sep="\n")
+                if(interactive()) stop("python error") else quit(status=1) 
             } else {
                 return(rjson::fromJSON(paste(output, collapse="")))
             }
