@@ -19,8 +19,6 @@
 #
 # See (inst/)COPYRIGHTS or http://docs.python.org/2/license.html for the full
 # Python (GPL-compatible) license stack.
-tmpfile = file(tempfile(), 'w')
-sink(tmpfile, type="message")
 context("Unit tests")
 
 options(python_cmd = find_python_cmd(required_modules=c("argparse", "json | simplejson")))
@@ -31,14 +29,14 @@ test_that("print_help works as expected", {
     expect_output(parser$print_help(), "optional arguments:")
     expect_output(parser$print_help(), "Process some integers.")
     expect_output(parser$print_usage(), "usage:")
-    # expect_output(parser$parse_args("-h"), "usage:")
-    # expect_output(parser$parse_args("--help"), "options:")
+
     # Request/bug by PlasmaBinturong
     parser$add_argument('integers', metavar='N', type="integer", nargs='+',
                        help='an integer for the accumulator')
-    expect_error(parser$parse_args(), "parse error")
-    expect_error(capture.output(parser$parse_args("-h")), "help requested")
-    
+    if( interactive()) {
+        expect_error(capture.output(parser$parse_args(), "parse error"))
+        expect_error(capture.output(parser$parse_args("-h")), "help requested")
+    }
 })
 context("convert_..._to_arguments")
 test_that("convert_..._to_arguments works as expected", {
@@ -103,7 +101,9 @@ test_that("parse_args warks as expected", {
             choices=c('foo', 'bar'), 
             help="%(prog)s's saying (default: %(default)s)")
     expect_equal(parser$parse_args("--hello=bar"), list(saying="bar"))
-    # expect_error(parser$parse_args("--hello=what"))
+    if (interactive()) {
+        expect_error(parser$parse_args("--hello=what"))
+    }
 
     # Bug found by Taylor Pospisil
     parser <- ArgumentParser()
@@ -111,10 +111,10 @@ test_that("parse_args warks as expected", {
     args <- parser$parse_args(c("--lotsofstuff", rep("stuff", 1000))) 
 
     # Unhelpful error message found by Martí Duran Ferrer
-    parser <- ArgumentParser()
-    parser$add_argument('M',required=TRUE, help="Test")
-    expect_error(parser$parse_args(), "python error")
+    if (interactive()) {
+        parser <- ArgumentParser()
+        parser$add_argument('M',required=TRUE, help="Test")
 
+        expect_error(parser$parse_args(), "python error")
+    }
 })
-
-sink()

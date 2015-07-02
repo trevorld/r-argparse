@@ -83,27 +83,38 @@ ArgumentParser <- function(...,
                     sprintf("args = parser.parse_args([%s])",
                             paste(sprintf("'%s'", args), collapse=", ")),
                     "print(json.dumps(args.__dict__, sort_keys=True))")
-            # if(.Platform$OS.type == "unix") {
-            #     output <- suppressWarnings(system(paste(python_cmd, "2>&1"),
-            #                 input=python_code, intern=TRUE))
-            # } else {
-            #     output <- suppressWarnings(system(paste(python_cmd),
-            #             input=python_code, intern=TRUE))
             output <- suppressWarnings(system2(python_cmd,
                         input=python_code, stdout=TRUE, stderr=TRUE))
             if(grepl("^usage:", output[1])) {
                 has_positional_arguments <- any(grepl("^positional arguments:", output))
                 has_optional_arguments <- any(grepl("^optional arguments:", output))
                 if (has_positional_arguments || has_optional_arguments) {
-                    cat(output, sep="\n")
-                    if(interactive()) stop("help requested") else quit(status=0) 
+                    if (interactive()) {
+                        # cat(output, sep="\n")
+                        # stop("help requested") 
+                        stop(paste("help requested", paste(output, collapse="\n")), sep="\n")
+                    } else {
+                        cat(output, sep="\n")
+                        quit(status=0)
+                    }
                 } else {
-                    cat(output, file=stderr(), sep="\n")
-                    if(interactive()) stop("parse error") else quit(status=1) 
+                    if (interactive()) {
+                        # cat(output, file=stderr(), sep="\n")
+                        stop(paste("parse error", paste(output, collapse="\n")), sep="\n")
+                    } else {
+                        cat(output, file=stderr(), sep="\n")
+                        quit(status=1)
+                    }
                 }
             } else if(grepl("^Traceback", output[1])) {
-                cat(output, file=stderr(), sep="\n")
-                if(interactive()) stop("python error") else quit(status=1) 
+                if (interactive()) { 
+                    # cat(output, file=stderr(), sep="\n")
+                    # stop("python error")
+                    stop(paste("python error", paste(output, collapse="\n")), sep="\n")
+                } else {
+                    cat(output, file=stderr(), sep="\n")
+                    quit(status=1)
+                }
             } else {
                 return(rjson::fromJSON(paste(output, collapse="")))
             }
