@@ -1,6 +1,18 @@
 argparse: Command line optional and positional argument parser.
 ===============================================================
 
+.. image:: http://www.r-pkg.org/badges/version/argparse
+    :target: http://cran.r-project.org/package=argparse
+    :alt: CRAN Status Badge
+
+.. image:: https://travis-ci.org/trevorld/argparse.png?branch=master
+    :target: http://travis-ci.org/trevorld/argparse
+    :alt: Build Status
+
+.. image:: https://img.shields.io/codecov/c/github/trevorld/argparse.svg
+    :target: https://codecov.io/github/trevorld/argparse?branch=master
+    :alt: Coverage Status
+
 A command line parser to
 be used with Rscript to write "#!" shebang scripts that gracefully
 accept positional and optional arguments and automatically generate usage.
@@ -23,6 +35,9 @@ Additionally this package depends on the R packages ``proto``, ``findpython``,
 To run the unit tests you will need the suggested R package ``testthat`` and in
 order to build the vignette you will need the suggested R package ``knitr``
 (and ``knitr`` probably requires the system tool ``rst2pdf``).
+``rst2pdf`` should be installable via `pip <https://pypi.python.org/pypi/pip>`_.::
+
+    sudo pip install rst2pdf
 
 example
 =======
