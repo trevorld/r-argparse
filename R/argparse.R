@@ -142,6 +142,7 @@ ArgumentParser <- function(...,
 convert_argument <- function(argument) {
     if(is.character(argument)) argument <- shQuote(argument, type="sh") 
     if(is.logical(argument)) argument <- ifelse(argument, 'True', 'False') 
+    if(is.null(argument)) argument <- 'None'
     if(length(argument) > 1) {
         argument <- sprintf("[%s]", paste(argument, collapse=", "))
     }

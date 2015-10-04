@@ -1,7 +1,10 @@
 argparse 1.0.3
 ==============
 * `add_argument` now throws a warning recommending using action "store_true" or "store_false" 
-  if type set to "logical" and action set to "store"
+  if type set to "logical" and action set to "store".  Suggestion of Martí Duran Ferrer
+* You can now explicitly set a `NULL` default in `add_argument`.  
+  Previously one could only implicitly set a `NULL` default by not setting any default at all.
+  Suggestion of Hyunsoo Kim.
 
 argparse 1.0.2
 ==============

@@ -86,6 +86,11 @@ test_that("add_argument works as expected", {
 
     # Frustration of Martí Duran Ferrer
     expect_warning(parser$add_argument('--bool', type='logical', action='store'))
+
+    # Bug/Feature request found by Hyunsoo Kim
+    p <- ArgumentParser()
+    p$add_argument("--test", default=NULL)
+    expect_equal(p$parse_args()$test, NULL)
 })
 
 context("ArgumentParser")
