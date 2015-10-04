@@ -83,6 +83,9 @@ test_that("add_argument works as expected", {
     arguments <- parser$parse_args(c("--sum", "1", "2"))
     expect_equal(arguments$label, c("a", "b"))
     expect_equal(arguments$bool, c(FALSE, TRUE))
+
+    # Frustration of Martí Duran Ferrer
+    expect_warning(parser$add_argument('--bool', type='logical', action='store'))
 })
 
 context("ArgumentParser")

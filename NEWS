@@ -1,3 +1,8 @@
+argparse 1.0.3
+==============
+* `add_argument` now throws a warning recommending using action "store_true" or "store_false" 
+  if type set to "logical" and action set to "store"
+
 argparse 1.0.2
 ==============
 * Fixes parsing bug when using a very large argument list.  Thanks Taylor Pospisil for bug report.

@@ -170,6 +170,9 @@ convert_..._to_arguments <- function(mode, ...) {
                         "supported types:",
                         "'logical', 'integer', 'double' or 'character'")))
         proposed_arguments[ii] <- sprintf("type=%s", python_type)
+        # warn if type set to "logical" and action set to "store" (frustration of Martí Duran Ferrer)
+        if (python_type == "bool" && any(grepl("action='store'", proposed_arguments)))
+            warning("You almost certainly want to use action='store_true' or action='store_false' instead")
                                  
     }
     # make sure nargs are what python wants
