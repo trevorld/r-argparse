@@ -144,7 +144,7 @@ convert_argument <- function(argument) {
     if(is.logical(argument)) argument <- ifelse(argument, 'True', 'False') 
     if(is.null(argument)) argument <- 'None'
     if(length(argument) > 1) {
-        argument <- sprintf("[%s]", paste(argument, collapse=", "))
+        argument <- sprintf("(%s)", paste(argument, collapse=", "))
     }
     argument
 }
@@ -191,6 +191,12 @@ convert_..._to_arguments <- function(mode, ...) {
         ii <- grep("choices=", proposed_arguments)
         choices <- convert_argument(argument_list[[ii]])
         proposed_arguments[ii] <- sprintf("choices=%s", choices)
+    }
+    # Feature request from Paul Newell
+    if(mode == "add_argument" && any(grepl("metavar=", proposed_arguments))) {
+        ii <- grep("metavar=", proposed_arguments)
+        metavar <- convert_argument(argument_list[[ii]])
+        proposed_arguments[ii] <- sprintf("metavar=%s", metavar)
     }
     # Make defaults are what Python wants, if specified
     default_string <- switch(mode,

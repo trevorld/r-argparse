@@ -1,3 +1,8 @@
+argparse 1.0.4
+==============
+* You can now pass in a character vector to the ``metavar`` argument of ``add_argument``.
+  Thanks Paul Newell for bug report and a patch.
+
 argparse 1.0.3
 ==============
 * `add_argument` now throws a warning recommending using action "store_true" or "store_false" 
