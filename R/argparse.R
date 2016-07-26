@@ -192,6 +192,11 @@ convert_..._to_arguments <- function(mode, ...) {
         choices <- convert_argument(argument_list[[ii]])
         proposed_arguments[ii] <- sprintf("choices=%s", choices)
     }
+		if(mode == "add_argument" && any(grepl("metavar=", proposed_arguments))) {
+			ii <- grep("metavar=", proposed_arguments)
+			metavar <- argument_list[[ii]]
+			proposed_arguments[[ii]] <- sprintf('metavar=(%s)', paste('"', metavar, '"', collapse = ",", sep = ""))
+		}
     # Make defaults are what Python wants, if specified
     default_string <- switch(mode,
            add_argument = "default=", 
