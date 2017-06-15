@@ -1,3 +1,8 @@
+argparse 1.0.6
+==============
+* Fix bug when setting ``required=FALSE`` in ``add_argument``.
+  Thanks Claire D. McWhite for bug report.
+
 argparse 1.0.4
 ==============
 * You can now pass in a character vector to the ``metavar`` argument of ``add_argument``.

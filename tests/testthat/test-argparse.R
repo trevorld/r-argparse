@@ -105,6 +105,15 @@ test_that("add_argument works as expected", {
     parser <- ArgumentParser()
     parser$add_argument("extent", nargs=4, type="double", metavar = c("e1", "e2", "e3", "e4"))
     expect_output(parser$print_usage(), "usage: PROGRAM \\[-h\\] e1 e2 e3 e4")
+
+    # Bug report by Claire D. McWhite
+    parser <- ArgumentParser()
+    parser$add_argument("-o", "--output_filename", required=FALSE, default="outfile.txt")
+    expect_equal(parser$parse_args()$output_filename, "outfile.txt")
+
+    parser <- ArgumentParser()
+    parser$add_argument("-o", "--output_filename", required=TRUE, default="outfile.txt")
+    expect_error(parser$parse_args())
 })
 
 context("ArgumentParser")

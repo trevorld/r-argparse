@@ -192,6 +192,12 @@ convert_..._to_arguments <- function(mode, ...) {
         choices <- convert_argument(argument_list[[ii]])
         proposed_arguments[ii] <- sprintf("choices=%s", choices)
     }
+    # Fix bug reported by Claire D McWhite
+    if(mode == "add_argument" && any(grepl("required=", proposed_arguments))) {
+        ii <- grep("required=", proposed_arguments)
+        required <- convert_argument(argument_list[[ii]])
+        proposed_arguments[ii] <- sprintf("required=%s", required)
+    }
     # Feature request from Paul Newell
     if(mode == "add_argument" && any(grepl("metavar=", proposed_arguments))) {
         ii <- grep("metavar=", proposed_arguments)
