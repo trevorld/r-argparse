@@ -111,9 +111,11 @@ test_that("add_argument works as expected", {
     parser$add_argument("-o", "--output_filename", required=FALSE, default="outfile.txt")
     expect_equal(parser$parse_args()$output_filename, "outfile.txt")
 
-    parser <- ArgumentParser()
-    parser$add_argument("-o", "--output_filename", required=TRUE, default="outfile.txt")
-    expect_error(parser$parse_args())
+    if (interactive()) {
+        parser <- ArgumentParser()
+        parser$add_argument("-o", "--output_filename", required=TRUE, default="outfile.txt")
+        expect_error(parser$parse_args())
+    }
 })
 
 context("ArgumentParser")
