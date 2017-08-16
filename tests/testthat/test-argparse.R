@@ -1,4 +1,4 @@
-# Copyright (c) 2012-2014 Trevor L Davis <trevor.l.davis@stanford.edu>
+# Copyright (c) 2012-2017 Trevor L Davis <trevor.l.davis@stanford.edu>
 #  
 #  This file is free software: you may copy, redistribute and/or modify it  
 #  under the terms of the GNU General Public License as published by the  
@@ -115,6 +115,20 @@ test_that("add_argument works as expected", {
         parser <- ArgumentParser()
         parser$add_argument("-o", "--output_filename", required=TRUE, default="outfile.txt")
         expect_error(parser$parse_args())
+    }
+})
+
+context("version")
+test_that("version flags works as expected", {
+    # Feature request of Dario Beraldi
+    if (interactive()) {
+        parser <- ArgumentParser()
+        parser$add_argument("-v", "--version", action='version', version='1.0.1')
+        expect_error(parser$parse_args('-v'), 'version requested: 1.0.1')
+        expect_error(parser$parse_args('--version'), 'version requested: 1.0.1')
+
+        parser <- ArgumentParser()
+        expect_equal(parser$parse_args(), list())
     }
 })
 

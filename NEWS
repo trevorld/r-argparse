@@ -1,3 +1,8 @@
+argparse 1.0.7
+==============
+* Now supports showing program's version with ``action='version'``.
+  Suggestion of Dario Beraldi.
+
 argparse 1.0.6
 ==============
 * Fix bug when setting ``required=FALSE`` in ``add_argument``.

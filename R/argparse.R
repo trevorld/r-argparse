@@ -1,4 +1,4 @@
-# Copyright (c) 2012-2014 Trevor L. Davis <trevor.l.davis@stanford.edu>  
+# Copyright (c) 2012-2017 Trevor L. Davis <trevor.l.davis@stanford.edu>  
 #  
 #  This file is free software: you may copy, redistribute and/or modify it  
 #  under the terms of the GNU General Public License as published by the  
@@ -92,7 +92,7 @@ ArgumentParser <- function(...,
                     if (interactive()) {
                         # cat(output, sep="\n")
                         # stop("help requested") 
-                        stop(paste("help requested", paste(output, collapse="\n")), sep="\n")
+                        stop(paste("help requested: \n", paste(output, collapse="\n")), sep="\n")
                     } else {
                         cat(output, sep="\n")
                         quit(status=0)
@@ -110,13 +110,23 @@ ArgumentParser <- function(...,
                 if (interactive()) { 
                     # cat(output, file=stderr(), sep="\n")
                     # stop("python error")
-                    stop(paste("python error", paste(output, collapse="\n")), sep="\n")
+                    stop(paste("python error:\n", paste(output, collapse="\n")), sep="\n")
                 } else {
                     cat(output, file=stderr(), sep="\n")
                     quit(status=1)
                 }
             } else {
-                return(rjson::fromJSON(paste(output, collapse="")))
+                args <- rjson::fromJSON(paste(output, collapse=""))
+                if(is.list(args)) {
+                    return(args)
+                } else { # Version number request
+                    if (interactive() ) {
+                        stop(paste("version requested:", output), sep="\n")
+                    } else {
+                        cat(output, sep="\n")
+                        quit(status=0)
+                    }
+                }
             }
         }
         print_help <- function(.) {

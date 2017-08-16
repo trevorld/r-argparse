@@ -30,6 +30,7 @@ a wrapper to Python's argparse module
  
     A big thanks to Martin Diehl for a bug report.
 }
+
 \examples{
 
 parser <- ArgumentParser(description='Process some integers')
@@ -49,4 +50,3 @@ print(accumulate_fn(args$integers))
 Python's \code{argparse} library, which this package is based on,
  is described here: \url{http://docs.python.org/library/argparse.html}
 }
-
