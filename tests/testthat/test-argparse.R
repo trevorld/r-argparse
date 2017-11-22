@@ -165,6 +165,12 @@ test_that("parse_args warks as expected", {
 
         expect_error(parser$parse_args(), "python error")
     }
+
+    # Unhelpful error message found by Alex Reinhart
+    if (interactive()) {
+        parser <- ArgumentParser("positional_argument")
+        expect_error(parser$parse_args(), "Positional argument following keyword argument.")
+    }
 })
 
 context("Unicode arguments/options")

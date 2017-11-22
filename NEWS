@@ -1,3 +1,8 @@
+argparse 1.0.9
+==============
+* Better error message when accidentally trying to define a positional argument in ``ArgumentParser()``
+  Suggestion of Alex Reinhart
+
 argparse 1.0.8
 ==============
 * Better support for Unicode arguments/options.

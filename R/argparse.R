@@ -115,7 +115,16 @@ ArgumentParser <- function(..., python_cmd=NULL) {
                 if (interactive()) { 
                     stop(message)
                 } else {
-                    cat(paste("error:", output), file=stderr(), sep="\n")
+                    cat(paste("error:", message), file=stderr(), sep="\n")
+                    quit(status=1)
+                }
+            } else if (grepl("^SyntaxError: positional argument follows keyword argument", output[2])) {
+                message <- paste("Positional argument following keyword argument.",
+                                 "Please note ``ArgumentParser`` only accepts keyword arguments.")
+                if (interactive()) { 
+                    stop(message)
+                } else {
+                    cat(paste("error:", message), file=stderr(), sep="\n")
                     quit(status=1)
                 }
             } else { # No errors or print usage requests
