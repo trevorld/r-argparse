@@ -21,8 +21,8 @@ installation of the Python interpreter.  If you have less than Python 2.7 you
 should probably upgrade or have your administrator do so.  You can also have
 Python 2.7 installed alongside the older Python (as the binary ``python2.7``)
 
-However, if you have Python 2.6 you you should be able to get by if you install
-the ``argparse`` module yourself:
+However, if you have Python 2.6, Python 3.1, or Python 3.0 you you should be
+able to get by if you install the ``argparse`` module yourself:
 
     https://code.google.com/p/argparse/  
 
@@ -30,6 +30,13 @@ If you have Python 2.5 in addition to installing the ``argparse`` module you
 will need to install the ``simplejson`` module as well:
 
     https://github.com/simplejson/simplejson
+
+Support for Non-ASCII characters
+================================
+
+If you want to use Unicode arguments and/or options with ``argparse`` 
+you'll need to use Python 3.0+ instead of Python 2.5-2.7.
+You'll probably also need to use a terminal and/or shell that supports Unicode.
 
 Having ``argparse`` find Python
 ===============================

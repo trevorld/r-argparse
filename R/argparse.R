@@ -22,13 +22,14 @@
 
 #' Create a command line parser 
 #'
-#' \code{ArgumentParser} crates a parser object that acts as 
+#' \code{ArgumentParser} creates a parser object that acts as 
 #' a wrapper to Python's argparse module
 #' 
 #' @param ... Arguments cleaned and passed to Pythons argparse.ArgumentParser()
-#' @param python_cmd The python executable for \code{argparse} to use.
-#'      Must have argparse and json modules (i.e. Python (>= 2.7)).  
-#'      Default is \code{python}
+#' @param python_cmd Python executable for \code{argparse} to use.
+#'      Must have argparse and json modules (automatically included Python 2.7 and 3.2+).
+#'      If using Unicode options/arguments must use Python 3.0+.
+#'      Default will be to use \code{findpython} package to find suitable Python binary.
 #' @return  \code{ArgumentParser} returns a parser object which contains
 #'    an \code{add_argument} function to add arguments to the parser,
 #'    a \code{parse_args} function to parse command line arguments into
@@ -60,13 +61,9 @@
 #' accumulate_fn <- get(args$accumulate)
 #' print(accumulate_fn(args$integers))
 ## ifelse(.Platform$OS.type == "windows", "python.exe", "python")
-ArgumentParser <- function(..., 
-                    python_cmd=getOption("python_cmd", find_python_cmd(required_modules = c('argparse', 'json | simplejson')))) {
-    if(!is_python_sufficient(python_cmd, required_modules = c('argparse', 'json | simplejson'))) {
-        stop(paste(sprintf("python executable %s either is not installed,", python_cmd), 
-                "is not on the path, or does not have argparse, json modules",
-                "please see INSTALL file"))
-    }
+ArgumentParser <- function(..., python_cmd=NULL) {
+    python_cmd <- .find_python_cmd(python_cmd)
+    .assert_python_cmd(python_cmd) 
     python_code = c("import argparse",
     "try:",
     "    import json",
@@ -90,16 +87,13 @@ ArgumentParser <- function(...,
                 has_optional_arguments <- any(grepl("^optional arguments:", output))
                 if (has_positional_arguments || has_optional_arguments) {
                     if (interactive()) {
-                        # cat(output, sep="\n")
-                        # stop("help requested") 
-                        stop(paste("help requested: \n", paste(output, collapse="\n")), sep="\n")
+                        stop(paste("help requested:\n", paste(output, collapse="\n")), sep="\n")
                     } else {
                         cat(output, sep="\n")
                         quit(status=0)
                     }
                 } else {
                     if (interactive()) {
-                        # cat(output, file=stderr(), sep="\n")
                         stop(paste("parse error", paste(output, collapse="\n")), sep="\n")
                     } else {
                         cat(output, file=stderr(), sep="\n")
@@ -108,14 +102,23 @@ ArgumentParser <- function(...,
                 }
             } else if(grepl("^Traceback", output[1])) {
                 if (interactive()) { 
-                    # cat(output, file=stderr(), sep="\n")
-                    # stop("python error")
                     stop(paste("python error:\n", paste(output, collapse="\n")), sep="\n")
                 } else {
                     cat(output, file=stderr(), sep="\n")
                     quit(status=1)
                 }
-            } else {
+            } else if (grepl("^SyntaxError: Non-ASCII character", output[2])) {
+                message <- paste("Non-ASCII character detected.",
+                               "If you wish to use Unicode arguments/options",
+                               "please upgrade to Python 3.2+",
+                               "Please see file INSTALL for more details.")
+                if (interactive()) { 
+                    stop(message)
+                } else {
+                    cat(paste("error:", output), file=stderr(), sep="\n")
+                    quit(status=1)
+                }
+            } else { # No errors or print usage requests
                 args <- rjson::fromJSON(paste(output, collapse=""))
                 if(is.list(args)) {
                     return(args)
@@ -239,4 +242,33 @@ convert_..._to_arguments <- function(mode, ...) {
         proposed_arguments <- c(sprintf("prog='%s'", prog), proposed_arguments)
     }
     return(paste(proposed_arguments, collapse=", "))
+}
+
+# Internal function to check python cmd is okay
+# @param python_cmd Python cmd to use
+.assert_python_cmd <- function(python_cmd) {
+    if(!is_python_sufficient(python_cmd, required_modules = c('argparse', 'json | simplejson'))) {
+        stop(paste(sprintf("python executable %s either is not installed,", python_cmd), 
+                "is not on the path, or does not have argparse, json modules",
+                "please see INSTALL file"))
+    }
+}
+
+# Internal function to find python cmd
+# @param python_cmd  Python cmd to use
+.find_python_cmd <- function(python_cmd) {
+    if(is.null(python_cmd)) {
+        python_cmd <- getOption("python_cmd")
+    }
+    if(is.null(python_cmd)) {
+        required_modules <- c('argparse', 'json | simplejson')
+        did_find_python3 <- can_find_python_cmd(minimum_version='3.0', 
+                                                required_modules=required_modules)
+        if(did_find_python3) {
+            python_cmd <- attr(did_find_python3, "python_cmd")
+        } else {
+            python_cmd <- find_python_cmd(required_modules=required_modules)
+        }
+    }
+    python_cmd
 }

@@ -21,7 +21,8 @@
 # Python (GPL-compatible) license stack.
 context("Unit tests")
 
-options(python_cmd = find_python_cmd(required_modules=c("argparse", "json | simplejson")))
+options(python_cmd = find_python_cmd(minimum_version='3.0',
+                                     required_modules=c("argparse", "json | simplejson")))
 context("print_help")
 test_that("print_help works as expected", {
     parser <- ArgumentParser(description="Process some integers.")
@@ -163,5 +164,23 @@ test_that("parse_args warks as expected", {
         parser$add_argument('M',required=TRUE, help="Test")
 
         expect_error(parser$parse_args(), "python error")
+    }
+})
+
+context("Unicode arguments/options")
+test_that("Unicode support works as expected", {
+    # Bug found by Erick Rocha Fonseca
+    p = ArgumentParser()
+    p$add_argument("name")
+    expect_equal(p$parse_args("芒果"), list(name = "芒果"))
+
+    if(interactive()) {
+        did_find_python2 <- can_find_python_cmd(maximum_version="2.7",
+                                        required_modules=c("argparse", "json|simplejson"))
+        if(did_find_python2) {
+            p = ArgumentParser(python_cmd = attr(did_find_python2, "python_cmd"))
+            p$add_argument("name")
+            expect_error(p$parse_args("芒果"), "Non-ASCII character detected.")
+        }
     }
 })

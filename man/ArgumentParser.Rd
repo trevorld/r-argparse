@@ -4,15 +4,15 @@
 \alias{ArgumentParser}
 \title{Create a command line parser}
 \usage{
-ArgumentParser(..., python_cmd = getOption("python_cmd",
-  find_python_cmd(required_modules = c("argparse", "json | simplejson"))))
+ArgumentParser(..., python_cmd = NULL)
 }
 \arguments{
 \item{...}{Arguments cleaned and passed to Pythons argparse.ArgumentParser()}
 
-\item{python_cmd}{The python executable for \code{argparse} to use.
-Must have argparse and json modules (i.e. Python (>= 2.7)).  
-Default is \code{python}}
+\item{python_cmd}{Python executable for \code{argparse} to use.
+Must have argparse and json modules (automatically included Python 2.7 and 3.2+).
+If using Unicode options/arguments must use Python 3.0+.
+Default will be to use \code{findpython} package to find suitable Python binary.}
 }
 \value{
 \code{ArgumentParser} returns a parser object which contains
@@ -23,7 +23,7 @@ Default is \code{python}}
    and corresponding python module for more information on how to use it.
 }
 \description{
-\code{ArgumentParser} crates a parser object that acts as 
+\code{ArgumentParser} creates a parser object that acts as 
 a wrapper to Python's argparse module
 }
 \section{Acknowledgement}{

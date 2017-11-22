@@ -1,7 +1,7 @@
 Package: argparse
 Type: Package
 Title: Command Line Optional and Positional Argument Parser
-Version: 1.0.7
+Version: 1.0.8
 Author: Trevor L Davis. Ports examples from the argparse Python module by the
     Python Software Foundation. Ports examples from the getopt package by Allen
     Day.
@@ -20,7 +20,7 @@ Imports:
     findpython,
     getopt (>= 1.19),
     rjson
-SystemRequirements: python (>= 2.7)
+SystemRequirements: python (>= 3.2)
 Suggests:
     knitr (>= 1.15.19),
     testthat
