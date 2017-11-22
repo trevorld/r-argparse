@@ -34,7 +34,7 @@ will need to install the ``simplejson`` module as well:
 Support for Non-ASCII characters
 ================================
 
-If you want to use Unicode arguments and/or options with ``argparse`` 
+If you want to use Unicode arguments with ``argparse`` 
 you'll need to use Python 3.0+ instead of Python 2.5-2.7.
 You'll probably also need to use a terminal and/or shell that supports Unicode.
 

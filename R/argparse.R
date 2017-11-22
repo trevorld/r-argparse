@@ -28,7 +28,7 @@
 #' @param ... Arguments cleaned and passed to Pythons argparse.ArgumentParser()
 #' @param python_cmd Python executable for \code{argparse} to use.
 #'      Must have argparse and json modules (automatically included Python 2.7 and 3.2+).
-#'      If using Unicode options/arguments must use Python 3.0+.
+#'      If you need Unicode argument support then you must use Python 3.0+.
 #'      Default will be to use \code{findpython} package to find suitable Python binary.
 #' @return  \code{ArgumentParser} returns a parser object which contains
 #'    an \code{add_argument} function to add arguments to the parser,

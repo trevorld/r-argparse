@@ -24,10 +24,9 @@ To install the development version use the following command::
 dependencies
 ============
 
-The package has a Python dependency.  Read the INSTALL file for more
-information.  Essentially the Python binary must have both the ``argparse`` and
-``json`` modules which is are automatically included for Python 2.7 and Python
-3.2+ and can be manually installed for Python 2.6 and Python 2.5.
+The package has a Python dependency.  
+It is easily satisfied if you have Python (version 3.2 or higher) on your PATH.
+Read the INSTALL file for more information if this doesn't describe you.
 
 Additionally this package depends on the R packages ``proto``, ``findpython``,
 ``getopt``, and ``rjson``.
