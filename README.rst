@@ -29,7 +29,7 @@ It is easily satisfied if you have Python (version 3.2 or higher) on your PATH.
 Read the INSTALL file for more information if this doesn't describe you.
 
 Additionally this package depends on the R packages ``proto``, ``findpython``,
-``getopt``, and ``rjson``.
+``getopt``, and ``jsonlite``.
 
 To run the unit tests you will need the suggested R package ``testthat`` and in
 order to build the vignette you will need the suggested R package ``knitr`` 

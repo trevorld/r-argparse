@@ -42,7 +42,7 @@
 #' @section Acknowledgement: 
 #'     A big thanks to Martin Diehl for a bug report.
 #'      
-#' @import rjson
+#' @import jsonlite
 #' @import proto
 #' @import findpython
 #' @export
@@ -127,17 +127,15 @@ ArgumentParser <- function(..., python_cmd=NULL) {
                     cat(paste("error:", message), file=stderr(), sep="\n")
                     quit(status=1)
                 }
-            } else { # No errors or print usage requests
-                args <- rjson::fromJSON(paste(output, collapse=""))
-                if(is.list(args)) {
-                    return(args)
-                } else { # Version number request
-                    if (interactive() ) {
-                        stop(paste("version requested:", output), sep="\n")
-                    } else {
-                        cat(output, sep="\n")
-                        quit(status=0)
-                    }
+            } else if (grepl("^\\{", output)) {
+                args <- jsonlite::fromJSON(paste(output, collapse=""))
+                return (args)
+            } else { # presumably version number request
+                if (interactive() ) {
+                    stop(paste("version requested:", output), sep="\n")
+                } else {
+                    cat(output, sep="\n")
+                    quit(status=0)
                 }
             }
         }

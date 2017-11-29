@@ -1,7 +1,9 @@
 argparse 1.0.9
 ==============
+* Fix bug when setting ``type='integer'`` in ``add_argument``.
+  Thanks Dominik Mueller for bug report and suggested solution.
 * Better error message when accidentally trying to define a positional argument in ``ArgumentParser()``
-  Suggestion of Alex Reinhart
+  Suggestion of Alex Reinhart.
 
 argparse 1.0.8
 ==============

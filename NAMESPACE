@@ -3,5 +3,5 @@
 export(ArgumentParser)
 import(findpython)
 import(getopt)
+import(jsonlite)
 import(proto)
-import(rjson)

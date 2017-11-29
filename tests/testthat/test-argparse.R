@@ -128,8 +128,11 @@ test_that("version flags works as expected", {
         expect_error(parser$parse_args('-v'), 'version requested: 1.0.1')
         expect_error(parser$parse_args('--version'), 'version requested: 1.0.1')
 
+        # empty list
         parser <- ArgumentParser()
-        expect_equal(parser$parse_args(), list())
+        el <- parser$parse_args()
+        expect_true(is.list(el))
+        expect_equal(length(el), 0)
     }
 })
 
@@ -171,10 +174,28 @@ test_that("parse_args warks as expected", {
         parser <- ArgumentParser("positional_argument")
         expect_error(parser$parse_args(), "Positional argument following keyword argument.")
     }
+
+    # bug reported by Dominik Mueller
+    p <- argparse::ArgumentParser()
+    p$add_argument('--int', type='integer')
+    p$add_argument('--double', type='double')
+    p$add_argument('--character', type='character')
+
+    input <- '1'
+    args <- p$parse_args(c('--int', input,
+                           '--double', input,
+                           '--character', input))
+    expect_equal(class(args$int), "integer")
+    expect_equal(class(args$double), "numeric")
+    expect_equal(class(args$character), "character")
+    expect_equal(args$int, as.integer(1.0))
+    expect_equal(args$double, 1.0)
+    expect_equal(args$character, '1')
 })
 
 context("Unicode arguments/options")
 test_that("Unicode support works as expected", {
+    skip_on_cran()
     # Bug found by Erick Rocha Fonseca
     p = ArgumentParser()
     p$add_argument("name")
