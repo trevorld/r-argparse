@@ -1,9 +1,12 @@
-argparse 1.0.9
+argparse 1.1.0
 ==============
 * Fix bug when setting ``type='integer'`` in ``add_argument``.
   Thanks Dominik Mueller for bug report and suggested solution.
+* The package ``proto`` has been moved from ``Depends`` to ``Imports`` in ``DESCRIPTION``.
+  We now use ``jsonlite`` package instead of ``rjson`` to parse ``JSON``.
 * Better error message when accidentally trying to define a positional argument in ``ArgumentParser()``
   Suggestion of Alex Reinhart.
+* Other error message output when parsing error detected tweaked slightly.
 
 argparse 1.0.8
 ==============

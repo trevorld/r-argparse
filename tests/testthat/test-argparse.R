@@ -187,17 +187,21 @@ test_that("parse_args warks as expected", {
 
 context("Unicode arguments/options")
 test_that("Unicode support works as expected", {
+    skip_on_cran()
+
     # Bug found by Erick Rocha Fonseca
     did_find_python3 <- can_find_python_cmd(minimum_version="3.0",
-                                    required_modules=c("argparse", "json|simplejson"))
+                                    required_modules=c("argparse", "json|simplejson"),
+                                    silent=TRUE)
     if(did_find_python3) {
         p = ArgumentParser(python_cmd = attr(did_find_python3, "python_cmd"))
         p$add_argument("name")
-        expect_equal(p$parse_args("芒果"), list(name = "芒果"))
+        expect_equal(p$parse_args("\u8292\u679C"), list(name = "\u8292\u679C")) # 芒果
     }
 
     did_find_python2 <- can_find_python_cmd(maximum_version="2.7",
-                                    required_modules=c("argparse", "json|simplejson"))
+                                    required_modules=c("argparse", "json|simplejson"),
+                                    silent=TRUE)
     if(did_find_python2) {
         p = ArgumentParser(python_cmd = attr(did_find_python2, "python_cmd"))
         p$add_argument("name")

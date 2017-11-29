@@ -1,17 +1,21 @@
 argparse: Command line optional and positional argument parser.
 ===============================================================
 
-.. image:: http://www.r-pkg.org/badges/version/argparse
-    :target: http://cran.r-project.org/package=argparse
+.. image:: https://www.r-pkg.org/badges/version/argparse
+    :target: https://cran.r-project.org/package=argparse
     :alt: CRAN Status Badge
 
 .. image:: https://travis-ci.org/trevorld/argparse.png?branch=master
-    :target: http://travis-ci.org/trevorld/argparse
+    :target: https://travis-ci.org/trevorld/argparse
     :alt: Build Status
 
 .. image:: https://img.shields.io/codecov/c/github/trevorld/argparse.svg
     :target: https://codecov.io/github/trevorld/argparse?branch=master
     :alt: Coverage Status
+
+.. image:: https://cranlogs.r-pkg.org/badges/argparse
+    :target: https://cran.r-project.org/package=argparse
+    :alt: RStudio CRAN mirror downloads
 
 A command line parser to
 be used with Rscript to write "#!" shebang scripts that gracefully
