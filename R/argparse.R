@@ -86,57 +86,27 @@ ArgumentParser <- function(..., python_cmd=NULL) {
                 has_positional_arguments <- any(grepl("^positional arguments:", output))
                 has_optional_arguments <- any(grepl("^optional arguments:", output))
                 if (has_positional_arguments || has_optional_arguments) {
-                    if (interactive()) {
-                        stop(paste("help requested:\n", paste(output, collapse="\n")), sep="\n")
-                    } else {
-                        cat(output, sep="\n")
-                        quit(status=0)
-                    }
+                    .print_message_and_exit(output, "help requested:")
                 } else {
-                    if (interactive()) {
-                        stop(paste("parse error", paste(output, collapse="\n")), sep="\n")
-                    } else {
-                        cat(output, file=stderr(), sep="\n")
-                        quit(status=1)
-                    }
+                    .stop(output, "parse error:")
                 }
             } else if(grepl("^Traceback", output[1])) {
-                if (interactive()) { 
-                    stop(paste("python error:\n", paste(output, collapse="\n")), sep="\n")
-                } else {
-                    cat(output, file=stderr(), sep="\n")
-                    quit(status=1)
-                }
+                .stop(output, "Error: python error")
             } else if (grepl("^SyntaxError: Non-ASCII character", output[2])) {
                 message <- paste("Non-ASCII character detected.",
                                "If you wish to use Unicode arguments/options",
                                "please upgrade to Python 3.2+",
                                "Please see file INSTALL for more details.")
-                if (interactive()) { 
-                    stop(message)
-                } else {
-                    cat(paste("error:", message), file=stderr(), sep="\n")
-                    quit(status=1)
-                }
+                .stop(message, "non-ascii character error:")
             } else if (grepl("^SyntaxError: positional argument follows keyword argument", output[2])) {
                 message <- paste("Positional argument following keyword argument.",
                                  "Please note ``ArgumentParser`` only accepts keyword arguments.")
-                if (interactive()) { 
-                    stop(message)
-                } else {
-                    cat(paste("error:", message), file=stderr(), sep="\n")
-                    quit(status=1)
-                }
+                .stop(message, "syntax error:")
             } else if (grepl("^\\{", output)) {
                 args <- jsonlite::fromJSON(paste(output, collapse=""))
                 return (args)
             } else { # presumably version number request
-                if (interactive() ) {
-                    stop(paste("version requested:", output), sep="\n")
-                } else {
-                    cat(output, sep="\n")
-                    quit(status=0)
-                }
+                .print_message_and_exit(output, "version requested:")
             }
         }
         print_help <- function(.) {
@@ -278,4 +248,18 @@ convert_..._to_arguments <- function(mode, ...) {
         }
     }
     python_cmd
+}
+
+.stop <- function(message, r_note) {
+        stop(paste(r_note, paste(message, collapse="\n"), sep="\n"))
+}
+
+# Internal function to print message
+.print_message_and_exit <- function(message, r_note, status=0) {
+    if (interactive()) {
+        .stop(message, r_note)
+    } else {
+        cat(message, sep="\n")
+        quit(status=0)
+    }
 }
