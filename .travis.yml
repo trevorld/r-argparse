@@ -6,6 +6,10 @@ r:
 os:
     - linux
     - osx
+addons:
+    apt:
+        packages:
+#           - python3
 sudo: false
 latex: false
 warnings_are_errors: true

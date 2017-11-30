@@ -98,7 +98,8 @@ ArgumentParser <- function(..., python_cmd=NULL) {
                                "please upgrade to Python 3.2+",
                                "Please see file INSTALL for more details.")
                 .stop(message, "non-ascii character error:")
-            } else if (grepl("^SyntaxError: positional argument follows keyword argument", output[2])) {
+            } else if (grepl("^SyntaxError: positional argument follows keyword argument", output[2]) || 
+                       grepl("^SyntaxError: non-keyword arg after keyword arg", output[2])) {
                 message <- paste("Positional argument following keyword argument.",
                                  "Please note ``ArgumentParser`` only accepts keyword arguments.")
                 .stop(message, "syntax error:")
@@ -240,7 +241,8 @@ convert_..._to_arguments <- function(mode, ...) {
     if(is.null(python_cmd)) {
         required_modules <- c('argparse', 'json | simplejson')
         did_find_python3 <- can_find_python_cmd(minimum_version='3.0', 
-                                                required_modules=required_modules)
+                                                required_modules=required_modules,
+                                                silent=TRUE)
         if(did_find_python3) {
             python_cmd <- attr(did_find_python3, "python_cmd")
         } else {
