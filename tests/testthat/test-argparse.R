@@ -21,8 +21,7 @@
 # Python (GPL-compatible) license stack.
 context("Unit tests")
 
-options(python_cmd = find_python_cmd(minimum_version='3.0',
-                                     required_modules=c("argparse", "json | simplejson")))
+options(python_cmd = argparse:::.find_python_cmd(NULL))
 context("print_help")
 test_that("print_help works as expected", {
     parser <- ArgumentParser(description="Process some integers.")
@@ -35,9 +34,9 @@ test_that("print_help works as expected", {
     parser$add_argument('integers', metavar='N', type="integer", nargs='+',
                        help='an integer for the accumulator')
     expect_error(capture.output(parser$parse_args(), "parse error"))
-    if( interactive()) {
-        expect_error(capture.output(parser$parse_args("-h")), "help requested")
-    }
+
+    if(!interactive()) { skip("interactive() == FALSE") }
+    expect_error(capture.output(parser$parse_args("-h")), "help requested")
 })
 
 context("convert_agument")
@@ -185,26 +184,26 @@ test_that("parse_args warks as expected", {
     expect_equal(args$character, '1')
 })
 
+# Bug found by Erick Rocha Fonseca
 context("Unicode arguments/options")
-test_that("Unicode support works as expected", {
-    skip_on_cran()
+test_that("Unicode support works if Python and OS sufficient", {
+    skip_on_cran() # currently gives error on win-builder (bad Windows unicode support?)
 
-    # Bug found by Erick Rocha Fonseca
     did_find_python3 <- can_find_python_cmd(minimum_version="3.0",
                                     required_modules=c("argparse", "json|simplejson"),
                                     silent=TRUE)
-    if(did_find_python3) {
-        p = ArgumentParser(python_cmd = attr(did_find_python3, "python_cmd"))
-        p$add_argument("name")
-        expect_equal(p$parse_args("\u8292\u679C"), list(name = "\u8292\u679C")) # 芒果
-    }
+    if (!did_find_python3) { skip("Need at least Python 3.0 for Unicode support") }
+    p = ArgumentParser(python_cmd = attr(did_find_python3, "python_cmd"))
+    p$add_argument("name")
+    expect_equal(p$parse_args("\u8292\u679C"), list(name = "\u8292\u679C")) # 芒果
+})
+test_that("Unicode attempt throws error if Python or OS not sufficient", {
 
     did_find_python2 <- can_find_python_cmd(maximum_version="2.7",
                                     required_modules=c("argparse", "json|simplejson"),
                                     silent=TRUE)
-    if(did_find_python2) {
-        p = ArgumentParser(python_cmd = attr(did_find_python2, "python_cmd"))
-        p$add_argument("name")
-        expect_error(p$parse_args("芒果"), "Non-ASCII character detected.")
-    }
+    if (!did_find_python2) { skip("Need Python 2 to guarantee throws Unicode error") }
+    p = ArgumentParser(python_cmd = attr(did_find_python2, "python_cmd"))
+    p$add_argument("name")
+    expect_error(p$parse_args("芒果"), "Non-ASCII character detected.")
 })
