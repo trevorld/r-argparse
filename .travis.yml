@@ -1,7 +1,7 @@
 language: r
 cache: packages
 r:
-#   - devel
+    - devel
     - release
 os:
     - linux
