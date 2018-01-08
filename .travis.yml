@@ -1,11 +1,12 @@
 language: r
 cache: packages
 r:
+    - oldrel
     - release
     - devel 
 os:
     - linux
-    - osx 
+      #    - osx 
 matrix:
     exclude:
         r: devel
@@ -18,8 +19,6 @@ notifications:
   email:
     on_success: change
     on_failure: change
-before_install:
-    - if [ $TRAVIS_OS_NAME = linux ]; then sudo apt-get install python3; else brew install python3; fi
 r_github_packages:
     - r-lib/covr
 after_success:
