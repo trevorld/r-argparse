@@ -1,12 +1,12 @@
 language: r
 cache: packages
 r:
-    - oldrel
+    # - oldrel
     - release
     - devel 
 os:
     - linux
-      #    - osx 
+    - osx 
 matrix:
     exclude:
         r: devel
