@@ -1,7 +1,7 @@
 argparse 1.1.1
 ==============
 * Better support for machines only running Python 2.7.  
-* DESCRIPTION makes explicit that it requires version 1.0.0 of ``proto`` dependency.
+* DESCRIPTION makes explicit that it requires version 1.0.0 of ``proto`` dependency.  Thanks Christophe Poulet for bug report.
 
 argparse 1.1.0
 ==============
