@@ -7,7 +7,11 @@ argparse: Command line optional and positional argument parser.
 
 .. image:: https://travis-ci.org/trevorld/argparse.png?branch=master
     :target: https://travis-ci.org/trevorld/argparse
-    :alt: Build Status
+    :alt: Travis-CI Build Status
+
+.. image:: https://ci.appveyor.com/api/projects/status/github/trevorld/argparse?branch=master&svg=true
+    :target: https://ci.appveyor.com/project/trevorld/argparse/branch/master
+    :alt: AppVeyor Build Status
 
 .. image:: https://img.shields.io/codecov/c/github/trevorld/argparse.svg
     :target: https://codecov.io/github/trevorld/argparse?branch=master
