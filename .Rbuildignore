@@ -2,3 +2,4 @@ CONTRIBUTING
 README.rst
 .travis.yml
 cran-comments.rst
+^appveyor\.yml$
