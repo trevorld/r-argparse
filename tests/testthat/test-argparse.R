@@ -143,7 +143,7 @@ test_that("ArgumentParser works as expected", {
     expect_output(parser$print_help(), "foobar's saying \\(default: bye\\)")
     expect_error(ArgumentParser(python_cmd="foobar"))
 })
-test_that("parse_args warks as expected", {
+test_that("parse_args works as expected", {
     parser <- ArgumentParser(prog="foobar", usage="%(prog)s arg1 arg2")
     parser$add_argument('--hello', dest='saying', action='store', default='foo',
             choices=c('foo', 'bar'), 

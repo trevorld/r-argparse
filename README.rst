@@ -21,6 +21,10 @@ argparse: Command line optional and positional argument parser.
     :target: https://cran.r-project.org/package=argparse
     :alt: RStudio CRAN mirror downloads
 
+.. image:: http://www.repostatus.org/badges/latest/active.svg
+    :alt: Project Status: Active – The project has reached a stable, usable state and is being actively developed.
+    :target: http://www.repostatus.org/#active
+
 A command line parser to
 be used with Rscript to write "#!" shebang scripts that gracefully
 accept positional and optional arguments and automatically generate usage.
