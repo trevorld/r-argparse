@@ -76,7 +76,7 @@ ArgumentParser <- function(..., python_cmd=NULL) {
     Parser$new(python_cmd, initial_python_code)
 }
 
-MutuallyExclusiveGroup <- R6Class("MutuallyExclusiveGroup",
+Group <- R6Class("Group",
     public = list(
         initialize = function(parser, name) {
             private$parser <- parser
@@ -144,22 +144,31 @@ Parser <- R6Class("ArgumentParser",
                             convert_..._to_arguments("add_argument", ...)))
             invisible(NULL)
         },
+        add_argument_group = function(...) {
+            name <- paste0("group", private$n_groups)
+            private$n_groups <- private$n_groups + 1
+            self$python_code <- c(self$python_code,
+                    sprintf("%s = parser.add_argument_group(%s)", name,
+                            convert_..._to_arguments("add_argument", ...)))
+            Group$new(self, name)
+        },
         add_mutually_exclusive_group = function(required=FALSE) {
             name <- paste0("mutually_exclusive_group", private$n_mutually_exclusive_groups)
             private$n_mutually_exclusive_groups <- private$n_mutually_exclusive_groups + 1
             self$python_code <- c(self$python_code,
                     sprintf("%s = parser.add_mutually_exclusive_group(%s)", name,
                             ifelse(required, "required=True", "")))
-            MutuallyExclusiveGroup$new(self, name)
+            Group$new(self, name)
         },
         initialize = function(python_cmd, python_code) {
             private$python_cmd <- python_cmd
             self$python_code <- python_code
+            private$n_groups <- 0
             private$n_mutually_exclusive_groups <- 0
         },
         python_code = NULL
     ),
-    private = list(python_cmd = NULL, n_mutually_exclusive_groups = NULL)
+    private = list(python_cmd = NULL, n_mutually_exclusive_groups = NULL, n_groups = NULL)
 )
 
 # @param argument argument to be converted from R to Python

@@ -1,6 +1,7 @@
 argparse 2.0.0
 ==============
-* Now uses ``R6`` classes instead of ``proto`` classes.  Most users won't notice any difference (#25).
+* Now uses ``R6`` classes instead of ``proto`` classes (#25).  Most users shouldn't notice any difference.
+* Parsers now supports ``add_argument_group`` (#26).  Suggestion of Dario Beraldi. 
 * Parsers now supports ``add_mutually_exclusive_group`` (#23).  Suggestion of Vince Reuter.
 
 argparse 1.1.1

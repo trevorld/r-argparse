@@ -49,8 +49,8 @@ which in turn probably requires the system tool ``pandoc``::
 
     sudo apt-get install pandoc
 
-example
-=======
+examples
+========
 
 ::
 
@@ -79,3 +79,51 @@ which is what you'd want for an Rscript but not for interactive use::
   > accumulate_fn <- get(args$accumulate)
   > print(accumulate_fn(args$integers))
   [1] 6
+
+Starting with version 2.0 ``argparse`` also supports argument groups::
+
+    > parser = ArgumentParser(prog='PROG', add_help=FALSE)
+    > group1 = parser$add_argument_group('group1', 'group1 description')
+    > group1$add_argument('foo', help='foo help')
+    > group2 = parser$add_argument_group('group2', 'group2 description')
+    > group2$add_argument('--bar', help='bar help')
+    > expect_output(parser$print_help(), "group1 description")
+    > parser$print_help()
+    usage: PROG [-h] [--bar BAR] foo
+
+    optional arguments:
+      -h, --help  show this help message and exit
+
+    group1:
+      group1 description
+
+      foo         foo help
+
+    group2:
+      group2 description
+
+      --bar BAR   bar help
+
+as well as mutually exclusive groups::
+
+    > parser = ArgumentParser(prog='PROG')
+    > group = parser$add_mutually_exclusive_group()
+    > group$add_argument('--foo', action='store_true')
+    > group$add_argument('--bar', action='store_false')
+    > parser$parse_args('--foo')
+    $bar
+    [1] TRUE
+
+    $foo
+    [1] TRUE
+
+    > parser$parse_args('--bar')
+    $bar
+    [1] FALSE
+
+    $foo
+    [1] FALSE
+    > parser$parse_args(c('--foo', '--bar'))
+    Error in .stop(output, "parse error:") : parse error:
+    usage: PROG [-h] [--foo | --bar]
+    PROG: error: argument --bar: not allowed with argument --foo

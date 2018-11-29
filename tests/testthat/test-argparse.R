@@ -230,3 +230,16 @@ test_that("mutually exclusive groups works as expected", {
     group$add_argument('--bar', action='store_false')
     expect_error(parser$parse_args(character()), " one of the arguments --foo --bar is required")
 })
+
+# argument groups is a feature request by Dario Beraldi
+context("Add argument group")
+test_that("add argument group works as expected", {
+    parser = ArgumentParser(prog='PROG', add_help=FALSE)
+    group1 = parser$add_argument_group('group1', 'group1 description')
+    group1$add_argument('foo', help='foo help')
+    group2 = parser$add_argument_group('group2', 'group2 description')
+    group2$add_argument('--bar', help='bar help')
+    expect_output(parser$print_help(), "group1 description")
+    expect_output(parser$print_help(), "group2 description")
+})
+
