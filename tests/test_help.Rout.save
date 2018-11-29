@@ -18,7 +18,6 @@ Type 'demo()' for some demos, 'help()' for on-line help, or
 Type 'q()' to quit R.
 
 > library("argparse")
-Loading required package: proto
 > p <- ArgumentParser()
 > p$parse_args("--help")
 usage: PROGRAM [-h]
