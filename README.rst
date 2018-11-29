@@ -127,3 +127,61 @@ as well as mutually exclusive groups::
     Error in .stop(output, "parse error:") : parse error:
     usage: PROG [-h] [--foo | --bar]
     PROG: error: argument --bar: not allowed with argument --foo
+
+and even basic support for sub-commands!::
+
+    > # create the top-level parser
+    > parser = ArgumentParser(prog='PROG')
+    > parser$add_argument('--foo', action='store_true', help='foo help')
+    > subparsers = parser$add_subparsers(help='sub-command help')
+
+    > # create the parser for the "a" command
+    > parser_a = subparsers$add_parser('a', help='a help')
+    > parser_a$add_argument('bar', type='integer', help='bar help')
+
+    > # create the parser for the "b" command
+    > parser_b = subparsers$add_parser('b', help='b help')
+    > parser_b$add_argument('--baz', choices='XYZ', help='baz help')
+   
+    > # parse some argument lists
+    > parser$parse_args(c('a', '12'))
+    $bar
+    [1] 12
+
+    $foo
+    [1] FALSE
+
+    > parser$parse_args(c('--foo', 'b', '--baz', 'Z'))
+    $baz
+    [1] "Z"
+
+    $foo
+    [1] TRUE
+
+    > parser$print_help()
+    usage: PROG [-h] [--foo] {a,b} ...
+
+    positional arguments:
+      {a,b}       sub-command help
+        a         a help
+        b         b help
+
+    optional arguments:
+      -h, --help  show this help message and exit
+      --foo       foo help
+
+    > parser_a$print_help()
+    usage: PROG a [-h] bar
+
+    positional arguments:
+      bar         bar help
+
+    optional arguments:
+      -h, --help  show this help message and exit
+
+    > parser_b$print_help()
+    usage: PROG b [-h] [--baz {X,Y,Z}]
+
+    optional arguments:
+      -h, --help     show this help message and exit
+      --baz {X,Y,Z}  baz help

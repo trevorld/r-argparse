@@ -243,3 +243,30 @@ test_that("add argument group works as expected", {
     expect_output(parser$print_help(), "group2 description")
 })
 
+# subparser support is a feature request by Zebulun Arendsee
+context("Supparser support")
+test_that("sub parsers work as expected", {
+    # create the top-level parser
+    parser = ArgumentParser(prog='PROG')
+    parser$add_argument('--foo', action='store_true', help='foo help')
+    subparsers = parser$add_subparsers(help='sub-command help')
+   
+    # create the parser for the "a" command
+    parser_a = subparsers$add_parser('a', help='a help')
+    parser_a$add_argument('bar', type='integer', help='bar help')
+   
+    # create the parser for the "b" command
+    parser_b = subparsers$add_parser('b', help='b help')
+    parser_b$add_argument('--baz', choices='XYZ', help='baz help')
+   
+    # parse some argument lists
+    arguments <- parser$parse_args(c('a', '12'))
+    expect_equal(arguments$bar, 12)
+    expect_equal(arguments$foo, FALSE)
+    arguments <- parser$parse_args(c('--foo', 'b', '--baz', 'Z'))
+    expect_equal(arguments$baz, 'Z')
+    expect_equal(arguments$foo, TRUE)
+    expect_output(parser$print_help(), "sub-command help")
+    expect_output(parser_a$print_help(), "usage: PROG a")
+    expect_output(parser_b$print_help(), "usage: PROG b")
+})
