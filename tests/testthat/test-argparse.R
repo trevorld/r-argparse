@@ -1,4 +1,4 @@
-# Copyright (c) 2012-2017 Trevor L Davis <trevor.l.davis@gmail.com>
+# Copyright (c) 2012-2018 Trevor L Davis <trevor.l.davis@gmail.com>
 #  
 #  This file is free software: you may copy, redistribute and/or modify it  
 #  under the terms of the GNU General Public License as published by the  
@@ -207,4 +207,26 @@ test_that("Unicode attempt throws error if Python or OS not sufficient", {
     p$add_argument("name")
     expect_error(p$parse_args("\u8292\u679C"), "Non-ASCII character detected.") # 芒果
 
+})
+
+# Mutually exclusive groups is a feature request by Vince Reuter
+context("Mutually exclusive groups")
+test_that("mutually exclusive groups works as expected", {
+    parser = ArgumentParser(prog='PROG')
+    group = parser$add_mutually_exclusive_group()
+    group$add_argument('--foo', action='store_true')
+    group$add_argument('--bar', action='store_false')
+    arguments <- parser$parse_args('--foo')
+    expect_true(arguments$bar)
+    expect_true(arguments$foo)
+    arguments <- parser$parse_args('--bar')
+    expect_false(arguments$bar)
+    expect_false(arguments$foo)
+    expect_error(parser$parse_args(c('--foo', '--bar')), "argument --bar: not allowed with argument --foo")
+
+    parser = ArgumentParser(prog='PROG')
+    group = parser$add_mutually_exclusive_group(required=TRUE)
+    group$add_argument('--foo', action='store_true')
+    group$add_argument('--bar', action='store_false')
+    expect_error(parser$parse_args(character()), " one of the arguments --foo --bar is required")
 })

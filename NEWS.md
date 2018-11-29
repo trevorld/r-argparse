@@ -1,3 +1,8 @@
+argparse 2.0.0
+==============
+* Now uses ``R6`` classes instead of ``proto`` classes.  Most users won't notice any difference (#25).
+* Parsers now supports ``add_mutually_exclusive_group`` (#23).  Suggestion of Vince Reuter.
+
 argparse 1.1.1
 ==============
 * Better support for machines only running Python 2.7.  
