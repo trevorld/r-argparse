@@ -5,7 +5,7 @@ argparse: Command line optional and positional argument parser.
     :target: https://cran.r-project.org/package=argparse
     :alt: CRAN Status Badge
 
-.. image:: https://travis-ci.org/trevorld/r-argparse.png?branch=master
+.. image:: https://travis-ci.org/trevorld/r-argparse.svg?branch=master
     :target: https://travis-ci.org/trevorld/r-argparse
     :alt: Travis-CI Build Status
 
