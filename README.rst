@@ -5,16 +5,16 @@ argparse: Command line optional and positional argument parser.
     :target: https://cran.r-project.org/package=argparse
     :alt: CRAN Status Badge
 
-.. image:: https://travis-ci.org/trevorld/argparse.png?branch=master
-    :target: https://travis-ci.org/trevorld/argparse
+.. image:: https://travis-ci.org/trevorld/r-argparse.png?branch=master
+    :target: https://travis-ci.org/trevorld/r-argparse
     :alt: Travis-CI Build Status
 
-.. image:: https://ci.appveyor.com/api/projects/status/github/trevorld/argparse?branch=master&svg=true
-    :target: https://ci.appveyor.com/project/trevorld/argparse/branch/master
+.. image:: https://ci.appveyor.com/api/projects/status/github/trevorld/r-argparse?branch=master&svg=true
+    :target: https://ci.appveyor.com/project/trevorld/r-argparse/branch/master
     :alt: AppVeyor Build Status
 
-.. image:: https://img.shields.io/codecov/c/github/trevorld/argparse.svg
-    :target: https://codecov.io/github/trevorld/argparse?branch=master
+.. image:: https://img.shields.io/codecov/c/github/trevorld/r-argparse.svg
+    :target: https://codecov.io/github/trevorld/r-argparse?branch=master
     :alt: Coverage Status
 
 .. image:: https://cranlogs.r-pkg.org/badges/argparse
@@ -31,7 +31,7 @@ accept positional and optional arguments and automatically generate usage.
 
 To install the development version use the following command::
 
-    devtools::install_github("argparse", "trevorld")
+    remotes::install_github("trevorld/r-argparse")
 
 dependencies
 ============

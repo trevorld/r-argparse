@@ -11,8 +11,8 @@ Description: A command line parser to
     accept positional and optional arguments and automatically generate usage.
 License: GPL (>= 2)
 Copyright: See file (inst/)COPYRIGHTS.
-URL: https://github.com/trevorld/argparse
-BugReports: https://github.com/trevorld/argparse/issues
+URL: https://github.com/trevorld/r-argparse
+BugReports: https://github.com/trevorld/r-argparse/issues
 LazyLoad: yes
 Imports:
     R6,
