@@ -54,6 +54,7 @@ examples
 
 ::
 
+  > library("argparse")
   > parser <- ArgumentParser(description='Process some integers')
   > parser$add_argument('integers', metavar='N', type="integer", nargs='+',
   +                    help='an integer for the accumulator')
