@@ -1,15 +1,14 @@
 argparse 2.0.0
 ==============
 * Now uses ``R6`` classes instead of ``proto`` classes (#25).  
-  The typical user shouldn't need to change any code since the public API is
-  essentially the same but I did convert the previously public ``python_code``
-  character vector element of the ``ArgumentParser`` object into a private R6 class 
-  (but users shouldn't have been directly using that in the first place).
-* Parsers now support adding sub-parsers aka sub-commands (#14).
+  The typical user shouldn't need to change any ``argparse`` code 
+  but I did make private the previously public ``python_code``
+  element of the object returned by ``ArgumentParser()``.
+* Parsers now support ``add_subparsers`` (#14).
   Suggestion of Zebulun Arendsee.
-* Parsers now supports ``add_argument_group`` (#26).  
+* Parsers now support ``add_argument_group`` (#26).  
   Suggestion of Dario Beraldi. 
-* Parsers now supports ``add_mutually_exclusive_group`` (#23).  
+* Parsers now support ``add_mutually_exclusive_group`` (#23).  
   Suggestion of Vince Reuter.
 
 argparse 1.1.1

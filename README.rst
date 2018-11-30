@@ -85,7 +85,7 @@ which is what you'd want for an Rscript but not for interactive use::
   > print(accumulate_fn(args$integers))
   [1] 6
 
-Starting with version 2.0 ``argparse`` also supports argument groups::
+Beginning with version 2.0 ``argparse`` also supports argument groups::
 
     > parser = ArgumentParser(prog='PROG', add_help=FALSE)
     > group1 = parser$add_argument_group('group1', 'group1 description')
