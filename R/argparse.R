@@ -212,6 +212,7 @@ Parser <- R6Class("Parser",
 # @param argument argument to be converted from R to Python
 convert_argument <- function(argument) {
     if(is.character(argument)) argument <- shQuote(argument, type="sh") 
+    if(is.numeric(argument)) argument <- as.character(argument)
     if(is.logical(argument)) argument <- ifelse(argument, 'True', 'False') 
     if(is.null(argument)) argument <- 'None'
     if(length(argument) > 1) {
@@ -221,14 +222,21 @@ convert_argument <- function(argument) {
 }
 
 # @param mode Either "add_argument" or "ArgumentParser"
-#' @import getopt
 convert_..._to_arguments <- function(mode, ...) {
 
     argument_list <- list(...)
     argument_names <- names(argument_list)
+    if(is.null(argument_names))
+        argument_names <- rep("", length(argument_list))
     equals <- ifelse(argument_names == "", "", "=")
-    arguments <- shQuote(as.character(argument_list), type="sh")
-    proposed_arguments <- paste(argument_names, equals, arguments, sep="")
+    proposed_arguments <- c()
+    for(ii in seq_along(argument_list)) {
+        name <- argument_names[ii]
+        equal <- equals[ii]
+        argument <- convert_argument(argument_list[[ii]])
+        proposed_arguments <- append(proposed_arguments, 
+                                     paste0(name, equal, argument))
+    }
     # Make sure types are what Python wants
     if(mode == "add_argument" && any(grepl("type=", proposed_arguments))) {
         ii <- grep("type=", proposed_arguments)
@@ -247,45 +255,6 @@ convert_..._to_arguments <- function(mode, ...) {
             warning("You almost certainly want to use action='store_true' or action='store_false' instead")
                                  
     }
-    # make sure nargs are what python wants
-    if(mode == "add_argument" && any(grepl("nargs=", proposed_arguments))) {
-        ii <- grep("nargs=", proposed_arguments)
-        nargs <- argument_list[[ii]]
-        if(is.numeric(nargs)) {
-            nargs <- as.character(nargs)
-        } else {
-            nargs <- shQuote(nargs, type="sh")
-        }
-        proposed_arguments[ii] <- sprintf("nargs=%s", nargs)
-    }
-    if(mode == "add_argument" && any(grepl("choices=", proposed_arguments))) {
-        ii <- grep("choices=", proposed_arguments)
-        choices <- convert_argument(argument_list[[ii]])
-        proposed_arguments[ii] <- sprintf("choices=%s", choices)
-    }
-    # Fix bug reported by Claire D McWhite
-    if(mode == "add_argument" && any(grepl("required=", proposed_arguments))) {
-        ii <- grep("required=", proposed_arguments)
-        required <- convert_argument(argument_list[[ii]])
-        proposed_arguments[ii] <- sprintf("required=%s", required)
-    }
-    # Feature request from Paul Newell
-    if(mode == "add_argument" && any(grepl("metavar=", proposed_arguments))) {
-        ii <- grep("metavar=", proposed_arguments)
-        metavar <- convert_argument(argument_list[[ii]])
-        proposed_arguments[ii] <- sprintf("metavar=%s", metavar)
-    }
-    # Make defaults are what Python wants, if specified
-    default_string <- switch(mode,
-           add_argument = "default=", 
-           ArgumentParser = "argument_default=",
-           stop(sprintf("Unknown mode %s", mode)))
-    if(any(grepl(default_string, proposed_arguments))) {
-        ii <- grep(default_string, proposed_arguments)
-        default <- argument_list[[ii]]
-        default <- convert_argument(default)
-        proposed_arguments[ii] <- sprintf("%s%s", default_string, default)
-    }
     # Don't put quotes around formatter_class argument
     if(mode == "ArgumentParser" && any(grepl("formatter_class=", proposed_arguments))) {
         ii <- grep("formatter_class=", proposed_arguments)
@@ -300,6 +269,15 @@ convert_..._to_arguments <- function(mode, ...) {
         proposed_arguments <- c(sprintf("prog='%s'", prog), proposed_arguments)
     }
     return(paste(proposed_arguments, collapse=", "))
+}
+
+# Manually copied over from getopt to eliminate it as a dependency
+get_Rscript_filename <- function() {
+    prog <- sub("--file=", "", grep("--file=", commandArgs(), value=TRUE)[1])
+    if( .Platform$OS.type == "windows") { 
+        prog <- gsub("\\\\", "\\\\\\\\", prog)
+    }
+    prog
 }
 
 # Internal function to check python cmd is okay

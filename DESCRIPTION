@@ -17,7 +17,6 @@ LazyLoad: yes
 Imports:
     R6,
     findpython,
-    getopt (>= 1.19),
     jsonlite
 SystemRequirements: python (>= 3.2)
 Suggests:

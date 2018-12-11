@@ -44,8 +44,7 @@ The package has a Python dependency.
 It is easily satisfied if you have Python (version 3.2 or higher) on your PATH.
 Read the INSTALL file for more information if this doesn't describe you.
 
-Additionally this package depends on the R packages ``R6``, ``findpython``,
-``getopt``, and ``jsonlite``.
+Additionally this package depends on the R packages ``R6``, ``findpython``, and ``jsonlite``.
 
 To run the unit tests you will need the suggested R package ``testthat`` and in
 order to build the vignette you will need the suggested R package ``knitr`` 
@@ -92,7 +91,6 @@ Beginning with version 2.0 ``argparse`` also supports argument groups::
     > group1$add_argument('foo', help='foo help')
     > group2 = parser$add_argument_group('group2', 'group2 description')
     > group2$add_argument('--bar', help='bar help')
-    > expect_output(parser$print_help(), "group1 description")
     > parser$print_help()
     usage: PROG [-h] [--bar BAR] foo
 

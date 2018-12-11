@@ -1,3 +1,10 @@
+argparse 2.0.1
+==============
+* Improved passing of arguments to Python from R.
+  In particular should fix bug in using ``add_help`` argument in ``ArgumentParser``.
+  Thanks George Chlipala for bug report.
+* Removes ``getopt`` as a dependency.
+
 argparse 2.0.0
 ==============
 * Now uses ``R6`` classes instead of ``proto`` classes (#25).  

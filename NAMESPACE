@@ -3,5 +3,4 @@
 export(ArgumentParser)
 import(R6)
 import(findpython)
-import(getopt)
 import(jsonlite)
