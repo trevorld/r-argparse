@@ -142,12 +142,11 @@ test_that("ArgumentParser works as expected", {
     expect_output(parser$print_help(), "foobar arg1 arg2")
     expect_output(parser$print_help(), "foobar's saying \\(default: bye\\)")
     expect_error(ArgumentParser(python_cmd="foobar"))
-    if (interactive()) {
-        # Bug report by George Chlipala
-        expect_error(ArgumentParser()$parse_args("-h"), "help requested")
-        expect_error(ArgumentParser(add_help=TRUE)$parse_args("-h"), "help requested")
-        expect_error(ArgumentParser(add_help=FALSE)$parse_args("-h"), "unrecognized arguments")
-    }
+    skip_if_not(interactive(), "Skip passing -h if not interactive()") 
+    # Bug report by George Chlipala
+    expect_error(ArgumentParser()$parse_args("-h"), "help requested")
+    expect_error(ArgumentParser(add_help=TRUE)$parse_args("-h"), "help requested")
+    expect_error(ArgumentParser(add_help=FALSE)$parse_args("-h"), "unrecognized arguments")
 })
 test_that("parse_args works as expected", {
     parser <- ArgumentParser(prog="foobar", usage="%(prog)s arg1 arg2")
