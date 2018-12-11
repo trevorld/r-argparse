@@ -1,5 +1,5 @@
-argparse: Command line optional and positional argument parser.
-===============================================================
+argparse: Command line optional and positional argument parser
+==============================================================
 
 .. image:: https://www.r-pkg.org/badges/version/argparse
     :target: https://cran.r-project.org/package=argparse
@@ -38,7 +38,7 @@ To install the development version use the following command::
     > remotes::install_github("trevorld/r-argparse")
 
 dependencies
-============
+------------
 
 The package has a Python dependency.  
 It is easily satisfied if you have Python (version 3.2 or higher) on your PATH.
@@ -54,7 +54,7 @@ which in turn probably requires the system tool ``pandoc``::
     sudo apt-get install pandoc
 
 examples
-========
+--------
 
 ::
 
