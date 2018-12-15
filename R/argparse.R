@@ -304,7 +304,7 @@ get_Rscript_filename <- function() {
         if(did_find_python3) {
             python_cmd <- attr(did_find_python3, "python_cmd")
         } else {
-            python_cmd <- find_python_cmd(required_modules=required_modules)
+            python_cmd <- find_python_cmd(required_modules=required_modules) #nocov
         }
     }
     python_cmd
@@ -317,7 +317,7 @@ get_Rscript_filename <- function() {
 # Internal function to print message
 .print_message_and_exit <- function(message, r_note, status=0) {
     if (interactive()) {
-        .stop(message, r_note)
+        .stop(message, r_note) #nocov
     } else {
         cat(message, sep="\n")
         quit(status=0)
