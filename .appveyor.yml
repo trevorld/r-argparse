@@ -19,7 +19,6 @@ environment:
       USE_RTOOLS: true
   matrix:
     - R_VERSION: devel
-
     - R_VERSION: release
 
 build_script:
@@ -53,5 +52,3 @@ artifacts:
 
   - path: '\*_*.zip'
     name: Bits
-
-
