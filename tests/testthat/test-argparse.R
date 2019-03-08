@@ -193,7 +193,8 @@ test_that("parse_args works as expected", {
 # Bug found by Erick Rocha Fonseca
 context("Unicode arguments/options")
 test_that("Unicode support works if Python and OS sufficient", {
-    skip_on_os("windows") # Doesn't work on win-builder (bad Windows unicode support?)
+    skip_on_os("windows") # Didn't work on win-builder
+    skip_on_cran() # Didn't work on Debian Clang
     did_find_python3 <- can_find_python_cmd(minimum_version="3.0",
                                     required_modules=c("argparse", "json|simplejson"),
                                     silent=TRUE)
@@ -203,7 +204,8 @@ test_that("Unicode support works if Python and OS sufficient", {
     expect_equal(p$parse_args("\u8292\u679C"), list(name = "\u8292\u679C")) # 芒果
 })
 test_that("Unicode attempt throws error if Python or OS not sufficient", {
-    skip_on_os("windows") # Worked on win-builder but not on AppVeyor
+    skip_on_os("windows") # Didn't work on AppVeyor
+    skip_on_cran() # Didn't work on Debian Clang
     did_find_python2 <- can_find_python_cmd(maximum_version="2.7",
                                     required_modules=c("argparse", "json|simplejson"),
                                     silent=TRUE)
