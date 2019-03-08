@@ -47,7 +47,7 @@ To run the unit tests you will need the suggested R package ``testthat`` and in
 order to build the vignette you will need the suggested R package ``knitr`` 
 which in turn probably requires the system tool ``pandoc``::
 
-    sudo apt-get install pandoc
+    sudo apt install pandoc
 
 examples
 --------
