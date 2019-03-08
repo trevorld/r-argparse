@@ -3,3 +3,4 @@ README.rst
 cran-comments.rst
 .travis.yml
 ^\.appveyor\.yml$
+^revdep$
