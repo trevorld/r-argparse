@@ -284,7 +284,7 @@ get_Rscript_filename <- function() { # nolint
 # Internal function to check python cmd is okay
 # @param python_cmd Python cmd to use
 .assert_python_cmd <- function(python_cmd) {
-    if (!is_python_sufficient(python_cmd, required_modules = c("argparse", "json | simplejson"))) {
+    if (!findpython::is_python_sufficient(python_cmd, required_modules = c("argparse", "json | simplejson"))) {
         stop(paste(sprintf("python executable %s either is not installed,", python_cmd),
                 "is not on the path, or does not have argparse, json modules",
                 "please see INSTALL file"))
