@@ -1,0 +1,4 @@
+destination: "/home/trevorld/a/projects/websites/R/argparse/"
+url: "https://trevorldavis.com/R/argparse"
+development:
+    mode: auto
