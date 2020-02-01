@@ -44,7 +44,6 @@
 #'
 #' @import jsonlite
 #' @import R6
-#' @import findpython
 #' @export
 #' @examples
 #'
@@ -300,13 +299,13 @@ get_Rscript_filename <- function() { # nolint
     }
     if (is.null(python_cmd)) {
         required_modules <- c("argparse", "json | simplejson")
-        did_find_python3 <- can_find_python_cmd(minimum_version = "3.0",
+        did_find_python3 <- findpython::can_find_python_cmd(minimum_version = "3.0",
                                                 required_modules = required_modules,
                                                 silent = TRUE)
         if (did_find_python3) {
             python_cmd <- attr(did_find_python3, "python_cmd")
         } else {
-            python_cmd <- find_python_cmd(required_modules = required_modules)
+            python_cmd <- findpython::find_python_cmd(required_modules = required_modules)
         }
     }
     python_cmd
