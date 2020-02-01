@@ -19,22 +19,22 @@ Default will be to use \code{findpython} package to find suitable Python binary.
    an \code{add_argument} function to add arguments to the parser,
    a \code{parse_args} function to parse command line arguments into
    a list, a \code{print_help} and \code{print_usage} function to print
-   usage information.  See code examples, package vignette, 
+   usage information.  See code examples, package vignette,
    and corresponding python module for more information on how to use it.
 }
 \description{
-\code{ArgumentParser} creates a parser object that acts as 
+\code{ArgumentParser} creates a parser object that acts as
 a wrapper to Python's argparse module
 }
 \section{Acknowledgement}{
- 
+
     A big thanks to Martin Diehl for a bug report.
 }
 
 \examples{
 
 parser <- ArgumentParser(description='Process some integers')
-parser$add_argument('integers', metavar='N', type="integer", nargs='+',
+parser$add_argument('integers', metavar='N', type = "integer", nargs='+',
                    help='an integer for the accumulator')
 parser$add_argument('--sum', dest='accumulate', action='store_const',
                    const='sum', default='max',
@@ -42,7 +42,7 @@ parser$add_argument('--sum', dest='accumulate', action='store_const',
 parser$print_help()
 # default args for ArgumentParser()$parse_args are commandArgs(TRUE)
 # which is what you'd want for an Rscript but not for interactive use
-args <- parser$parse_args(c("--sum", "1", "2", "3")) 
+args <- parser$parse_args(c("--sum", "1", "2", "3"))
 accumulate_fn <- get(args$accumulate)
 print(accumulate_fn(args$integers))
 }
