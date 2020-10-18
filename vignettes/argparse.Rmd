@@ -17,7 +17,7 @@ opts_chunk$set(comment = NA, echo = FALSE)
 list_file_command <- "ls"
 chmod_command <- "chmod ug+x display_file.R example.R"
 path_command <- "export PATH=$PATH:`pwd`"
-run_command <- function(string) suppressWarnings(cat(system(string, intern = TRUE), sep="\n"))
+run_command <- function(string) suppressWarnings(cat(system(string, intern = TRUE), sep = "\n"))
 ```
 
 In our working directory we have two example R scripts, named "example.R" and "display_file.R" illustrating the use of the argparse package.
