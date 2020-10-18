@@ -1,3 +1,10 @@
+argparse 2.0.2
+==============
+
+* Fixes bug when accidentally passing a positional argument
+  to ``ArgumentParser()`` when using Python 3.9.
+  Thanks Kurt Hornik for bug report.
+
 argparse 2.0.1
 ==============
 

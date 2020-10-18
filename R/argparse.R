@@ -1,4 +1,4 @@
-# Copyright (c) 2012-2018 Trevor L. Davis <trevor.l.davis@gmail.com>
+# Copyright (c) 2012-2020 Trevor L. Davis <trevor.l.davis@gmail.com>
 #
 #  This file is free software: you may copy, redistribute and/or modify it
 #  under the terms of the GNU General Public License as published by the
@@ -142,13 +142,13 @@ Parser <- R6Class("Parser", # nolint
                 }
             } else if (grepl("^Traceback", output[1])) {
                 .stop(output, "Error: python error")
-            } else if (grepl("^SyntaxError: Non-ASCII character", output[2])) {
+            } else if (any(grepl("^SyntaxError: Non-ASCII character", output))) {
                 message <- paste("Non-ASCII character detected.",
                                "If you wish to use Unicode arguments/options",
                                "please upgrade to Python 3.2+",
                                "Please see file INSTALL for more details.")
                 .stop(message, "non-ascii character error:")
-            } else if (grepl("^SyntaxError: positional argument follows keyword argument", output[2]) ||
+            } else if (any(grepl("^SyntaxError: positional argument follows keyword argument", output)) ||
                        grepl("^SyntaxError: non-keyword arg after keyword arg", output[2])) {
                 message <- paste("Positional argument following keyword argument.",
                                  "Please note ``ArgumentParser`` only accepts keyword arguments.")

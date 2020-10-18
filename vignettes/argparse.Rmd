@@ -11,14 +11,13 @@ argparse is a command line argument parser inspired by Python's "argparse" libra
 
 ```{r echo=FALSE}
 library("knitr")
-Rscript_executable <- paste(file.path(R.home(), "bin", "Rscript"), "--vanilla")
-opts_knit$set(root.dir = system.file("exec", package="argparse")) # to access the "Rscript files"
-opts_chunk$set(comment=NA, echo=FALSE) 
-# setwd(system.file("exec", package="argparse")) 
+rscript_executable <- paste(file.path(R.home(), "bin", "Rscript"), "--vanilla")
+opts_knit$set(root.dir = system.file("exec", package = "argparse")) # to access the "Rscript files"
+opts_chunk$set(comment = NA, echo = FALSE)
 list_file_command <- "ls"
 chmod_command <- "chmod ug+x display_file.R example.R"
 path_command <- "export PATH=$PATH:`pwd`"
-run_command <- function(string) { suppressWarnings(cat(system(string, intern=TRUE), sep="\n")) }
+run_command <- function(string) suppressWarnings(cat(system(string, intern = TRUE), sep="\n"))
 ```
 
 In our working directory we have two example R scripts, named "example.R" and "display_file.R" illustrating the use of the argparse package.
@@ -39,15 +38,15 @@ Here is what "example.R" contains:
 
 **`r paste("bash$", command)`**
 ```{r}
-run_command(sprintf("%s %s 2>&1", Rscript_executable, command))
+run_command(sprintf("%s %s 2>&1", rscript_executable, command))
 command <- "example.R --help" # same as system("Rscript example.R -h")
 ```
 
-By default ``argparse`` will generate a help message if it encounters ``--help`` or ``-h`` on the command line.  Note how ``%(default)s`` in the example program was replaced by the actual default values in the help statement that ``argparse`` generated.  
+By default ``argparse`` will generate a help message if it encounters ``--help`` or ``-h`` on the command line.  Note how ``%(default)s`` in the example program was replaced by the actual default values in the help statement that ``argparse`` generated.
 
 **`r paste("bash$", command)`**
 ```{r}
-run_command(sprintf("%s %s 2>&1", Rscript_executable, command))
+run_command(sprintf("%s %s 2>&1", rscript_executable, command))
 command <- "example.R" # rely only on defaults
 ```
 
@@ -55,15 +54,15 @@ If you specify default values when creating your ``ArgumentParser`` then ``argpa
 
 **`r paste("bash$", command)`**
 ```{r}
-run_command(sprintf("%s %s 2>&1", Rscript_executable, command))
-command <- "example.R --mean=10 --sd=10 --count=3" 
+run_command(sprintf("%s %s 2>&1", rscript_executable, command))
+command <- "example.R --mean=10 --sd=10 --count=3"
 ```
 
 Or you can specify your own values.
 
 **`r paste("bash$", command)`**
 ```{r}
-run_command(sprintf("%s %s 2>&1", Rscript_executable, command))   
+run_command(sprintf("%s %s 2>&1", rscript_executable, command))
 command <- "example.R --quiet -c 4 --generator=\"runif\"" #  same as above but "quiet"
 ```
 
@@ -72,7 +71,7 @@ If you remember from the example program that ``--quiet`` had ``action="store_fa
 
 **`r paste("bash$", command)`**
 ```{r}
-run_command(sprintf("%s %s 2>&1", Rscript_executable, command))   
+run_command(sprintf("%s %s 2>&1", rscript_executable, command))
 command <- "example.R --silent -m 5" #  same as above but "quiet"
 ```
 
@@ -80,7 +79,7 @@ If you specify an illegal flag then \emph{argparse} will print out a usage messa
 
 **`r paste("bash$", command)`**
 ```{r}
-run_command(sprintf("%s %s 2>&1", Rscript_executable, command))   
+run_command(sprintf("%s %s 2>&1", rscript_executable, command))
 command <- "example.R -c 100 -c 2 -c 1000 -c 7" #  same as above but "quiet"
 ```
 
@@ -88,29 +87,29 @@ If you specify the same option multiple times then \emph{argparse} will use the 
 
 **`r paste("bash$", command)`**
 ```{r}
-run_command(sprintf("%s %s 2>&1", Rscript_executable, command))   
-command <- "display_file.R --help" 
+run_command(sprintf("%s %s 2>&1", rscript_executable, command))
+command <- "display_file.R --help"
 ```
 
 ``argparse`` can also parse positional arguments.  Below we give an example program ``display_file.R``, which is a program that prints out the contents of a single file (the required positional argument, not an optional argument) and which accepts the normal help option as well as an option to add line numbers to the output.
 
 **`r paste("bash$", command)`**
 ```{r}
-run_command(sprintf("%s %s 2>&1", Rscript_executable, command))   
-command <- "display_file.R --add_numbers display_file.R" 
+run_command(sprintf("%s %s 2>&1", rscript_executable, command))
+command <- "display_file.R --add_numbers display_file.R"
 ```
 
 **`r paste("bash$", command)`**
 ```{r}
-run_command(sprintf("%s %s 2>&1", Rscript_executable, command))   
-command <- "display_file.R non_existent_file.txt" 
+run_command(sprintf("%s %s 2>&1", rscript_executable, command))
+command <- "display_file.R non_existent_file.txt"
 ```
 **`r paste("bash$", command)`**
 ```{r}
-run_command(sprintf("%s %s 2>&1", Rscript_executable, command))   
+run_command(sprintf("%s %s 2>&1", rscript_executable, command))
 command <- "display_file.R"
 ```
 **`r paste("bash$", command)`**
 ```{r}
-run_command(sprintf("%s %s 2>&1", Rscript_executable, command))   
+run_command(sprintf("%s %s 2>&1", rscript_executable, command))
 ```

@@ -22,6 +22,7 @@
 context("Unit tests")
 
 options(python_cmd = .find_python_cmd(NULL))
+# options(python_cmd = "/home/trevorld/tmp/python/Python-3.9.0/python") # nolint
 context("print_help")
 test_that("print_help works as expected", {
     parser <- ArgumentParser(description = "Process some integers.")
