@@ -1,4 +1,4 @@
-argparse 2.0.2
+argparse 2.0.3
 ==============
 
 * Fixes bug when accidentally passing a positional argument
