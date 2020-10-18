@@ -38,7 +38,7 @@
 #'    and corresponding python module for more information on how to use it.
 #'
 #' @references Python's \code{argparse} library, which this package is based on,
-#'  is described here: \url{http://docs.python.org/library/argparse.html}
+#'  is described here: \url{https://docs.python.org/3/library/argparse.html}
 #' @section Acknowledgement:
 #'     A big thanks to Martin Diehl for a bug report.
 #'
