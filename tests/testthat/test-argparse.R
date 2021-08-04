@@ -1,4 +1,4 @@
-# Copyright (c) 2012-2018 Trevor L Davis <trevor.l.davis@gmail.com>
+# Copyright (c) 2012-2021 Trevor L Davis <trevor.l.davis@gmail.com>
 #
 #  This file is free software: you may copy, redistribute and/or modify it
 #  under the terms of the GNU General Public License as published by the
@@ -21,10 +21,9 @@
 # Python (GPL-compatible) license stack.
 context("Unit tests")
 
-options(python_cmd = .find_python_cmd(NULL))
-# options(python_cmd = "/home/trevorld/tmp/python/Python-3.9.0/python") # nolint
 context("print_help")
 test_that("print_help works as expected", {
+    skip_if_not(detects_python())
     parser <- ArgumentParser(description = "Process some integers.")
     expect_output(parser$print_help(), "usage:")
     expect_output(parser$print_help(), "optional arguments:")
@@ -42,6 +41,7 @@ test_that("print_help works as expected", {
 
 context("convert_agument")
 test_that("convert_argument works as expected", {
+    skip_if_not(detects_python())
     expect_equal(convert_argument("foobar"), "'foobar'")
     expect_equal(convert_argument(14.9), "14.9")
     expect_equal(convert_argument(c(12.1, 14.9)), "(12.1, 14.9)")
@@ -50,6 +50,7 @@ test_that("convert_argument works as expected", {
 
 context("convert_..._to_arguments")
 test_that("convert_..._to_arguments works as expected", {
+    skip_if_not(detects_python())
     # test in mode "add_argument"
     c.2a <- function(...) convert_..._to_arguments("add_argument", ...)
     waz <- "wazzup"
@@ -71,6 +72,7 @@ test_that("convert_..._to_arguments works as expected", {
 
 context("add_argument")
 test_that("add_argument works as expected", {
+    skip_if_not(detects_python())
     parser <- ArgumentParser()
     parser$add_argument("integers", metavar = "N", type = "integer", nargs = "+",
                        help = "an integer for the accumulator")
@@ -119,6 +121,7 @@ test_that("add_argument works as expected", {
 
 context("version")
 test_that("version flags works as expected", {
+    skip_if_not(detects_python())
     # Feature request of Dario Beraldi
     parser <- ArgumentParser()
     parser$add_argument("-v", "--version", action = "version", version = "1.0.1")
@@ -136,6 +139,7 @@ test_that("version flags works as expected", {
 
 context("ArgumentParser")
 test_that("ArgumentParser works as expected", {
+    skip_if_not(detects_python())
     parser <- ArgumentParser(prog = "foobar", usage = "%(prog)s arg1 arg2")
     parser$add_argument("--hello", dest = "saying", action = "store_const",
             const = "hello", default = "bye",
@@ -149,7 +153,9 @@ test_that("ArgumentParser works as expected", {
     expect_error(ArgumentParser(add_help = TRUE)$parse_args("-h"), "help requested")
     expect_error(ArgumentParser(add_help = FALSE)$parse_args("-h"), "unrecognized arguments")
 })
+
 test_that("parse_args works as expected", {
+    skip_if_not(detects_python())
     parser <- ArgumentParser("foobar", usage = "%(prog)s arg1 arg2")
     parser$add_argument("--hello", dest = "saying", action = "store", default = "foo",
             choices = c("foo", "bar"),
@@ -192,6 +198,7 @@ test_that("parse_args works as expected", {
 # Bug found by Erick Rocha Fonseca
 context("Unicode arguments/options")
 test_that("Unicode support works if Python and OS sufficient", {
+    skip_if_not(detects_python())
     skip_on_os("windows") # Didn't work on win-builder
     skip_on_cran() # Didn't work on Debian Clang
     did_find_python3 <- findpython::can_find_python_cmd(minimum_version = "3.0",
@@ -202,7 +209,9 @@ test_that("Unicode support works if Python and OS sufficient", {
     p$add_argument("name")
     expect_equal(p$parse_args("\u8292\u679C"), list(name = "\u8292\u679C")) # 芒果
 })
+
 test_that("Unicode attempt throws error if Python or OS not sufficient", {
+    skip_if_not(detects_python())
     skip_on_os("windows") # Didn't work on AppVeyor
     skip_on_cran() # Didn't work on Debian Clang
     did_find_python2 <- findpython::can_find_python_cmd(maximum_version = "2.7",
@@ -218,6 +227,7 @@ test_that("Unicode attempt throws error if Python or OS not sufficient", {
 # Mutually exclusive groups is a feature request by Vince Reuter
 context("Mutually exclusive groups")
 test_that("mutually exclusive groups works as expected", {
+    skip_if_not(detects_python())
     parser <- ArgumentParser(prog = "PROG")
     group <- parser$add_mutually_exclusive_group()
     group$add_argument("--foo", action = "store_true")
@@ -240,6 +250,7 @@ test_that("mutually exclusive groups works as expected", {
 # argument groups is a feature request by Dario Beraldi
 context("Add argument group")
 test_that("add argument group works as expected", {
+    skip_if_not(detects_python())
     parser <- ArgumentParser(prog = "PROG", add_help = FALSE)
     group1 <- parser$add_argument_group("group1", "group1 description")
     group1$add_argument("foo", help = "foo help")
@@ -252,6 +263,7 @@ test_that("add argument group works as expected", {
 # subparser support is a feature request by Zebulun Arendsee
 context("Supparser support")
 test_that("sub parsers work as expected", {
+    skip_if_not(detects_python())
     # create the top-level parser
     parser <- ArgumentParser(prog = "PROG")
     parser$add_argument("--foo", action = "store_true", help = "foo help")
@@ -275,4 +287,21 @@ test_that("sub parsers work as expected", {
     expect_output(parser$print_help(), "sub-command help")
     expect_output(parser_a$print_help(), "usage: PROG a")
     expect_output(parser_b$print_help(), "usage: PROG b")
+})
+
+context("Paths that quit()")
+test_that("Paths that quit()", {
+    skip_if_not(detects_python())
+    skip_on_os("windows")
+    cmd <- file.path(R.home(), "bin/Rscript")
+    skip_if(Sys.which(cmd) == "")
+
+    expect_equal(system2(cmd, c("scripts/test_version.R", "--version"), stdout = TRUE),
+                 "1.0.1")
+
+    help <- system2(cmd, c("scripts/test_help.R", "--help"),
+                    stdout = TRUE, stderr = TRUE)
+    expect_equal(help,
+                 c("usage: scripts/test_help.R [-h]", "", "optional arguments:",
+                   "  -h, --help  show this help message and exit"))
 })

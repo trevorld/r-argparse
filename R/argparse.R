@@ -1,4 +1,4 @@
-# Copyright (c) 2012-2020 Trevor L. Davis <trevor.l.davis@gmail.com>
+# Copyright (c) 2012-2021 Trevor L. Davis <trevor.l.davis@gmail.com>
 #
 #  This file is free software: you may copy, redistribute and/or modify it
 #  under the terms of the GNU General Public License as published by the
@@ -47,21 +47,23 @@
 #' @export
 #' @examples
 #'
-#' parser <- ArgumentParser(description='Process some integers')
-#' parser$add_argument('integers', metavar='N', type = "integer", nargs='+',
-#'                    help='an integer for the accumulator')
-#' parser$add_argument('--sum', dest='accumulate', action='store_const',
-#'                    const='sum', default='max',
-#'                    help='sum the integers (default: find the max)')
-#' parser$print_help()
-#' # default args for ArgumentParser()$parse_args are commandArgs(TRUE)
-#' # which is what you'd want for an Rscript but not for interactive use
-#' args <- parser$parse_args(c("--sum", "1", "2", "3"))
-#' accumulate_fn <- get(args$accumulate)
-#' print(accumulate_fn(args$integers))
+#' if (argparse:::detects_python()) {
+#'   parser <- ArgumentParser(description='Process some integers')
+#'   parser$add_argument('integers', metavar='N', type = "integer", nargs='+',
+#'                      help='an integer for the accumulator')
+#'   parser$add_argument('--sum', dest='accumulate', action='store_const',
+#'                      const='sum', default='max',
+#'                      help='sum the integers (default: find the max)')
+#'   parser$print_help()
+#'   # default args for ArgumentParser()$parse_args are commandArgs(TRUE)
+#'   # which is what you'd want for an Rscript but not for interactive use
+#'   args <- parser$parse_args(c("--sum", "1", "2", "3"))
+#'   accumulate_fn <- get(args$accumulate)
+#'   print(accumulate_fn(args$integers))
+#' }
 ArgumentParser <- function(..., python_cmd = NULL) { # nolint
-    python_cmd <- .find_python_cmd(python_cmd)
-    .assert_python_cmd(python_cmd)
+    python_cmd <- find_python_cmd(python_cmd)
+    assert_python_cmd(python_cmd)
     initial_python_code <- c("import argparse",
         "try:",
         "    import json",
@@ -294,7 +296,7 @@ get_Rscript_filename <- function() { # nolint
 
 # Internal function to check python cmd is okay
 # @param python_cmd Python cmd to use
-.assert_python_cmd <- function(python_cmd) {
+assert_python_cmd <- function(python_cmd) {
     if (!findpython::is_python_sufficient(python_cmd, required_modules = c("argparse", "json | simplejson"))) {
         stop(paste(sprintf("python executable %s either is not installed,", python_cmd),
                 "is not on the path, or does not have argparse, json modules",
@@ -302,9 +304,15 @@ get_Rscript_filename <- function() { # nolint
     }
 }
 
+detects_python <- function() {
+    python_cmd <- find_python_cmd()
+    findpython::is_python_sufficient(python_cmd,
+                                     required_modules = c("argparse", "json | simplejson"))
+}
+
 # Internal function to find python cmd
 # @param python_cmd  Python cmd to use
-.find_python_cmd <- function(python_cmd) {
+find_python_cmd <- function(python_cmd = NULL) {
     if (is.null(python_cmd)) {
         python_cmd <- getOption("python_cmd")
     }

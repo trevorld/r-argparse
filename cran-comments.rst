@@ -1,7 +1,8 @@
-**Nota benes**
+## Notes
 
-* This update should fix the new ``r-devel-linux-x86-64-debian-gcc`` package check error
-  (seems to be result of non-reverse-compatible python update).
+* The examples and unit tests are now skipped if an appropriate
+  version of Python is not found as with the 'r-devel-windows-x86_64-gcc10-UCRT'
+  CRAN flavor.
 
 * As in previous uploads while in a non-interactive session (i.e. in an
   Rscript) if ``parse_args()`` observes a help flag it will print a usage
@@ -13,18 +14,21 @@
 * This package has a Python dependency most easily satisfied having (C)Python
   3.2 or greater on the PATH.  See file INSTALL for more details.
 
-**Test environments**
+## Test environments
 
-* local (linux), R 4.0.3
+* local (linux), R 4.1.0
 * win-builder (windows), R devel
-* appveyor (windows), R release and R devel
-* travis-ci (OSX), R release
-* travis-ci (linux), R release and R devel
+* Github Actions (linux), R release and R devel
+* Github Actions (windows), R release
+* Github Actions (OSX), R release
 
-**R CMD check --as-cran results**
+## R CMD check --as-cran results
 
 Status: OK
 
-**Downstream dependencies**
+## revdepcheck results
 
-This package does not have any downstream dependencies.
+We checked 3 reverse dependencies (0 from CRAN + 3 from Bioconductor), comparing R CMD check results across CRAN and dev versions of this package.
+
+ * We saw 0 new problems
+ * We failed to check 0 packages
