@@ -6,3 +6,4 @@ cran-comments.rst
 ^revdep$
 ^_pkgdown.yml$
 ^.lintr$
+^\.github$
