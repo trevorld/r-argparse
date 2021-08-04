@@ -118,7 +118,7 @@ Subparsers <- R6Class("Subparsers", # nolint
             private$n_subparsers <- private$n_subparsers + 1
             private$python_code$append(sprintf("%s = %s.add_parser(%s)",
                             parser_name, private$name,
-                            convert_..._to_arguments("add_argument", ...)))
+                            convert_..._to_arguments("ArgumentParser", ...)))
             Parser$new(private$python_code, parser_name)
         }
     ),
@@ -150,8 +150,7 @@ Parser <- R6Class("Parser", # nolint
                 .stop(message, "non-ascii character error:")
             } else if (any(grepl("^SyntaxError: positional argument follows keyword argument", output)) ||
                        grepl("^SyntaxError: non-keyword arg after keyword arg", output[2])) {
-                message <- paste("Positional argument following keyword argument.",
-                                 "Please note ``ArgumentParser`` only accepts keyword arguments.")
+                message <- "Positional argument following keyword argument."
                 .stop(message, "syntax error:")
             } else if (grepl("^\\{", output)) {
                 args <- jsonlite::fromJSON(paste(output, collapse = ""))
@@ -240,7 +239,7 @@ convert_..._to_arguments <- function(mode, ...) { # nolint
     argument_list <- list(...)
     argument_names <- names(argument_list)
     if (is.null(argument_names))
-        argument_names <- rep("", length(argument_list))
+        argument_names <- rep_len("", length(argument_list))
     equals <- ifelse(argument_names == "", "", "=")
     proposed_arguments <- c()
     for (ii in seq_along(argument_list)) {
@@ -264,12 +263,24 @@ convert_..._to_arguments <- function(mode, ...) { # nolint
     }
     # Set right default prog name if not specified, if possible
     # Do last to not screw up other fixes with prog insertion
-    if (mode == "ArgumentParser" && all(!grepl("prog=", proposed_arguments))) {
+    if (mode == "ArgumentParser" && needs_prog(argument_names)) {
         prog <- get_Rscript_filename()
         if (is.na(prog)) prog <- "PROGRAM"
         proposed_arguments <- c(sprintf("prog='%s'", prog), proposed_arguments)
     }
     return(paste(proposed_arguments, collapse = ", "))
+}
+
+needs_prog <- function(argument_names) {
+    if (length(argument_names) == 0L) {
+        TRUE
+    } else if (argument_names[1L] == "") {
+        FALSE
+    } else if (any(argument_names == "prog")) {
+        FALSE
+    } else {
+        TRUE
+    }
 }
 
 # Manually copied over from getopt to eliminate it as a dependency

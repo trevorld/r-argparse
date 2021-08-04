@@ -1,3 +1,11 @@
+argparse 2.0.4
+==============
+
+* May now specify a named `formatter_class` argument (as a string)
+  to a `subparsers$add_parser()` method.
+  Thanks Regina (@oyxf) for bug report.
+* May now specify positional arguments in `ArgumentParser()`
+
 argparse 2.0.3
 ==============
 

@@ -150,7 +150,7 @@ test_that("ArgumentParser works as expected", {
     expect_error(ArgumentParser(add_help = FALSE)$parse_args("-h"), "unrecognized arguments")
 })
 test_that("parse_args works as expected", {
-    parser <- ArgumentParser(prog = "foobar", usage = "%(prog)s arg1 arg2")
+    parser <- ArgumentParser("foobar", usage = "%(prog)s arg1 arg2")
     parser$add_argument("--hello", dest = "saying", action = "store", default = "foo",
             choices = c("foo", "bar"),
             help = "%(prog)s's saying (default: %(default)s)")
@@ -162,9 +162,6 @@ test_that("parse_args works as expected", {
     parser$add_argument("M", required = TRUE, help = "Test")
     expect_error(parser$parse_args(), "python error")
 
-    # Unhelpful error message found by Alex Reinhart
-    parser <- ArgumentParser("positional_argument")
-    expect_error(parser$parse_args(), "Positional argument following keyword argument.")
 
     # bug reported by Dominik Mueller
     p <- argparse::ArgumentParser()
