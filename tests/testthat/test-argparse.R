@@ -181,6 +181,7 @@ test_that("parse_args works as expected", {
     expect_equal(args$character, "1")
 
     # Bug found by Taylor Pospisil
+    skip_on_os("windows") # Didn't work on Github Actions Windows
     skip_on_cran() # Once gave an error on win-builder
     parser <- ArgumentParser()
     parser$add_argument("--lotsofstuff", type = "character", nargs = "+")
