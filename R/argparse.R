@@ -313,9 +313,8 @@ assert_python_cmd <- function(python_cmd) {
 }
 
 detects_python <- function() {
-    python_cmd <- find_python_cmd()
-    findpython::is_python_sufficient(python_cmd,
-                                     required_modules = c("argparse", "json | simplejson"))
+    python_cmd <- try(find_python_cmd())
+    !inherits(python_cmd, "try-error")
 }
 
 # Internal function to find python cmd
