@@ -137,6 +137,17 @@ test_that("version flags works as expected", {
     expect_equal(length(el), 0)
 })
 
+context("parse_known_args()")
+test_that("parse_known_args() works as expected", {
+    skip_if_not(detects_python())
+    parser <- ArgumentParser()
+    parser$add_argument("-o", "--output_filename", default = "outfile.txt")
+    a_r <- parser$parse_known_args(c("-o", "foobar.txt", "-n", "4"))
+    expect_equal(a_r[[1]]$output_filename, "foobar.txt")
+    expect_equal(a_r[[2]], c("-n", "4"))
+
+})
+
 context("ArgumentParser")
 test_that("ArgumentParser works as expected", {
     skip_if_not(detects_python())

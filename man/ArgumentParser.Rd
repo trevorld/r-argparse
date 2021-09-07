@@ -26,11 +26,6 @@ Default will be to use \code{findpython} package to find suitable Python binary.
 \code{ArgumentParser} creates a parser object that acts as
 a wrapper to Python's argparse module
 }
-\section{Acknowledgement}{
-
-    A big thanks to Martin Diehl for a bug report.
-}
-
 \examples{
 
 if (argparse:::detects_python()) {

@@ -39,8 +39,6 @@
 #'
 #' @references Python's \code{argparse} library, which this package is based on,
 #'  is described here: \url{https://docs.python.org/3/library/argparse.html}
-#' @section Acknowledgement:
-#'     A big thanks to Martin Diehl for a bug report.
 #'
 #' @import jsonlite
 #' @import R6
@@ -134,32 +132,14 @@ Parser <- R6Class("Parser", # nolint
                             paste(sprintf("'%s'", args), collapse = ", ")),
                     "print(json.dumps(args.__dict__, sort_keys=True))")
             output <- private$python_code$run(new_code)
-            if (grepl("^usage:", output[1])) {
-                has_positional_arguments <- any(grepl("^positional arguments:", output))
-                has_optional_arguments <- any(grepl("^optional arguments:", output))
-                if (has_positional_arguments || has_optional_arguments) {
-                    .print_message_and_exit(output, "help requested:")
-                } else {
-                    .stop(output, "parse error:")
-                }
-            } else if (grepl("^Traceback", output[1])) {
-                .stop(output, "Error: python error")
-            } else if (any(grepl("^SyntaxError: Non-ASCII character", output))) {
-                message <- paste("Non-ASCII character detected.",
-                               "If you wish to use Unicode arguments/options",
-                               "please upgrade to Python 3.2+",
-                               "Please see file INSTALL for more details.")
-                .stop(message, "non-ascii character error:")
-            } else if (any(grepl("^SyntaxError: positional argument follows keyword argument", output)) ||
-                       grepl("^SyntaxError: non-keyword arg after keyword arg", output[2])) {
-                message <- "Positional argument following keyword argument."
-                .stop(message, "syntax error:")
-            } else if (grepl("^\\{", output)) {
-                args <- jsonlite::fromJSON(paste(output, collapse = ""))
-                return(args)
-            } else { # presumably version number request
-                .print_message_and_exit(output, "version requested:")
-            }
+            parse_args_output(output)
+        },
+        parse_known_args = function(args = commandArgs(TRUE)) {
+            new_code <- c(sprintf("args_remainder = %s.parse_known_args([%s])", private$name,
+                            paste(sprintf("'%s'", args), collapse = ", ")),
+                    "print(json.dumps((args_remainder[0].__dict__, args_remainder[1])))")
+            output <- private$python_code$run(new_code)
+            parse_args_output(output)
         },
         print_help = function() {
             cat(private$python_code$run(sprintf("%s.print_help()", private$name)), sep = "\n")
@@ -207,6 +187,34 @@ Parser <- R6Class("Parser", # nolint
                    n_mutually_exclusive_groups = 0, n_groups = 0)
 )
 
+parse_args_output <- function(output) {
+    if (grepl("^usage:", output[1])) {
+        has_positional_arguments <- any(grepl("^positional arguments:", output))
+        has_optional_arguments <- any(grepl("^optional arguments:", output))
+        if (has_positional_arguments || has_optional_arguments) {
+            .print_message_and_exit(output, "help requested:")
+        } else {
+            .stop(output, "parse error:")
+        }
+    } else if (grepl("^Traceback", output[1])) {
+        .stop(output, "Error: python error")
+    } else if (any(grepl("^SyntaxError: Non-ASCII character", output))) {
+        message <- paste("Non-ASCII character detected.",
+                       "If you wish to use Unicode arguments/options",
+                       "please upgrade to Python 3.2+",
+                       "Please see file INSTALL for more details.")
+        .stop(message, "non-ascii character error:")
+    } else if (any(grepl("^SyntaxError: positional argument follows keyword argument", output)) ||
+               grepl("^SyntaxError: non-keyword arg after keyword arg", output[2])) {
+        message <- "Positional argument following keyword argument."
+        .stop(message, "syntax error:")
+    } else if (grepl("^\\{|^\\[", output)) {
+        args <- jsonlite::fromJSON(paste(output, collapse = ""))
+        return(args)
+    } else { # presumably version number request
+        .print_message_and_exit(output, "version requested:")
+    }
+}
 
 # @param argument argument to be converted from R to Python
 convert_argument <- function(argument) {

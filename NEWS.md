@@ -1,3 +1,9 @@
+argparse 2.1.0
+==============
+
+* Parsers now support ``parse_known_args()`` (#34).
+  Suggestion of David Lacalle Castillo (@WaterKnight1998).
+
 argparse 2.0.4
 ==============
 
@@ -69,12 +75,15 @@ argparse 1.0.4
 * You can now pass in a character vector to the ``metavar`` argument of ``add_argument``.
   Thanks Paul Newell for bug report and a patch.
 * `add_argument` now throws a warning recommending using action "store_true" or "store_false" 
-  if type set to "logical" and action set to "store".  Suggestion of Martí Duran Ferrer
+  if type set to "logical" and action set to "store".  
+  Suggestion of Martí Duran Ferrer
 * You can now explicitly set a `NULL` default in `add_argument`.  
   Previously one could only implicitly set a `NULL` default by not setting any default at all.
   Suggestion of Hyunsoo Kim.
-* Fixes parsing bug when using a very large argument list.  Thanks Taylor Pospisil for bug report.
-* Parse error usage message now prints to standard error.  User requested help message quit status is now zero.  
+* Fixes parsing bug when using a very large argument list.  
+  Thanks Taylor Pospisil for bug report.
+* Parse error usage message now prints to standard error.  
+  User requested help message quit status is now zero.  
   Thanks to PlasmaBinturong for report/request.
 * If Python script fails with error pass on error message to user.
   Thanks to Martí Duran Ferrer for report/request.
@@ -94,7 +103,6 @@ argparse 1.0.0
 * If ``interactive() == TRUE`` then ``parse_args`` will no longer ``quit(status=1)`` after printing a help message
   but will instead throw an error.  ``argparse`` will continue to ``quit(status=1)`` after printing a help message
   for non-interactive Rscripts.
-
 
 argparse 0.5.3
 ==============
