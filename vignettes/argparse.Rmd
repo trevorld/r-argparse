@@ -1,5 +1,5 @@
 ---
-title: "arpagrse Command Line Argument Parsing"
+title: "argparse Command Line Argument Parsing"
 output: rmarkdown::html_vignette
 vignette: >
     %\VignetteEngine{knitr::rmarkdown}
