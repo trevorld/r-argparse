@@ -17,6 +17,11 @@ argparse: Command line optional and positional argument parser
     :target: https://cran.r-project.org/package=argparse
     :alt: RStudio CRAN mirror downloads
 
+.. raw:: html
+
+   <img src="man/figures/logo.png" align="right" width="200px" alt="argparse hex sticker">
+
+
 ``argparse`` is an R package which provides a command line parser to
 be used with Rscript to write "#!" shebang scripts that gracefully
 accept positional and optional arguments and automatically generate usage.

@@ -2,4 +2,6 @@
 *.timestamp
 argparse.rst
 README.md
+README.html
 revdep
+pkgdown

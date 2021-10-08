@@ -1,5 +1,6 @@
 CONTRIBUTING
 README.rst
+^README.html$
 cran-comments.rst
 .travis.yml
 ^\.appveyor\.yml$
@@ -7,3 +8,5 @@ cran-comments.rst
 ^_pkgdown.yml$
 ^.lintr$
 ^\.github$
+^pkgdown$
+^raw-data$
