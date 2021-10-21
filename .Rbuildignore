@@ -1,4 +1,5 @@
 CONTRIBUTING
+Rakefile
 README.rst
 ^README.html$
 cran-comments.rst

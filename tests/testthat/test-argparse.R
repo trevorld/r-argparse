@@ -148,6 +148,8 @@ test_that("parse_known_args() works as expected", {
 
 })
 
+
+
 context("ArgumentParser")
 test_that("ArgumentParser works as expected", {
     skip_if_not(detects_python())
@@ -165,7 +167,7 @@ test_that("ArgumentParser works as expected", {
     expect_error(ArgumentParser(add_help = FALSE)$parse_args("-h"), "unrecognized arguments")
 })
 
-test_that("parse_args works as expected", {
+test_that("parse_args() works as expected", {
     skip_if_not(detects_python())
     parser <- ArgumentParser("foobar", usage = "%(prog)s arg1 arg2")
     parser$add_argument("--hello", dest = "saying", action = "store", default = "foo",
@@ -204,6 +206,16 @@ test_that("parse_args works as expected", {
     parser$add_argument("--lotsofstuff", type = "character", nargs = "+")
     args <- parser$parse_args(c("--lotsofstuff", rep("stuff", 1000)))
     expect_equal(args$lotsofstuff, rep("stuff", 1000))
+
+    # Bug found by @miker985
+    test_that("we can action = 'append' with a default list", {
+        parser <- argparse::ArgumentParser()
+        parser$add_argument("--test-dim", dest = "dims", action = "append",
+                            default = c("year", "sex", "age"))
+        args <- parser$parse_args(c("--test-dim", "race"))
+
+        expect_equal(args$dims, c("year", "sex", "age", "race"))
+    })
 })
 
 # Bug found by Erick Rocha Fonseca

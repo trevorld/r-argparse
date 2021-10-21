@@ -1,4 +1,11 @@
-argparse 2.1.0
+argparse 2.1.2
+==============
+
+* Fixes bug when using an argument with `action == "append"` 
+  and a non-`NULL` `default` value (#35).
+  Thanks @miker985 for bug report.
+
+argparse 2.1.1
 ==============
 
 * Parsers now support ``parse_known_args()`` (#34).

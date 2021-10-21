@@ -217,12 +217,14 @@ parse_args_output <- function(output) {
 }
 
 # @param argument argument to be converted from R to Python
-convert_argument <- function(argument) {
+convert_argument <- function(argument, as_list = FALSE) {
     if (is.character(argument)) argument <- shQuote(argument, type = "sh")
     if (is.numeric(argument)) argument <- as.character(argument)
     if (is.logical(argument)) argument <- ifelse(argument, "True", "False")
     if (is.null(argument)) argument <- "None"
-    if (length(argument) > 1) {
+    if (as_list) {
+        argument <- sprintf("[%s]", paste(argument, collapse = ", "))
+    } else if (length(argument) > 1) {
         argument <- sprintf("(%s)", paste(argument, collapse = ", "))
     }
     argument
@@ -243,6 +245,17 @@ get_python_type <- function(type, proposed_arguments) {
     sprintf("type=%s", python_type)
 }
 
+should_as_list <- function(name, argument_list) {
+    if (name == "default" &&
+        (argument_list[["action"]] %||% "store") == "append") {
+        TRUE
+    } else {
+        FALSE
+    }
+}
+
+`%||%` <- function(x, y) if (is.null(x)) y else x # nolint
+
 # @param mode Either "add_argument" or "ArgumentParser"
 convert_..._to_arguments <- function(mode, ...) { # nolint
 
@@ -255,7 +268,8 @@ convert_..._to_arguments <- function(mode, ...) { # nolint
     for (ii in seq_along(argument_list)) {
         name <- argument_names[ii]
         equal <- equals[ii]
-        argument <- convert_argument(argument_list[[ii]])
+        as_list <- should_as_list(name, argument_list)
+        argument <- convert_argument(argument_list[[ii]], as_list)
         proposed_arguments <- append(proposed_arguments,
                                      paste0(name, equal, argument))
     }
