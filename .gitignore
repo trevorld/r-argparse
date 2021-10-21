@@ -1,6 +1,7 @@
 *.swp
 *.timestamp
 argparse.rst
+codecov.yml
 README.md
 README.html
 revdep

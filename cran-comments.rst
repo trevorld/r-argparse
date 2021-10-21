@@ -1,9 +1,5 @@
 ## Notes
 
-* The examples and unit tests are now skipped if an appropriate
-  version of Python is not found as with the 'r-devel-windows-x86_64-gcc10-UCRT'
-  CRAN flavor.
-
 * As in previous uploads while in a non-interactive session (i.e. in an
   Rscript) if ``parse_args()`` observes a help flag it will print a usage
   message and then call ``quit()``.  Additionally if a user specifically adds
@@ -16,9 +12,9 @@
 
 ## Test environments
 
-* local (linux), R 4.1.0
+* local (linux), R 4.1.1
 * win-builder (windows), R devel
-* Github Actions (linux), R release and R devel
+* Github Actions (linux), R release
 * Github Actions (windows), R release
 * Github Actions (OSX), R release
 

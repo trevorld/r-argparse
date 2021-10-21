@@ -2,6 +2,7 @@ CONTRIBUTING
 Rakefile
 README.rst
 ^README.html$
+^codecov.yml$
 cran-comments.rst
 .travis.yml
 ^\.appveyor\.yml$
