@@ -190,7 +190,7 @@ Parser <- R6Class("Parser", # nolint
 parse_args_output <- function(output) {
     if (grepl("^usage:", output[1])) {
         has_positional_arguments <- any(grepl("^positional arguments:", output))
-        has_optional_arguments <- any(grepl("^optional arguments:", output))
+        has_optional_arguments <- any(grepl("^optional arguments:|^options:", output))
         if (has_positional_arguments || has_optional_arguments) {
             .print_message_and_exit(output, "help requested:")
         } else {

@@ -26,7 +26,7 @@ test_that("print_help works as expected", {
     skip_if_not(detects_python())
     parser <- ArgumentParser(description = "Process some integers.")
     expect_output(parser$print_help(), "usage:")
-    expect_output(parser$print_help(), "optional arguments:")
+    expect_output(parser$print_help(), "optional arguments:|options:")
     expect_output(parser$print_help(), "Process some integers.")
     expect_output(parser$print_usage(), "usage:")
 
@@ -324,7 +324,6 @@ test_that("Paths that quit()", {
 
     help <- system2(cmd, c("scripts/test_help.R", "--help"),
                     stdout = TRUE, stderr = TRUE)
-    expect_equal(help,
-                 c("usage: scripts/test_help.R [-h]", "", "optional arguments:",
-                   "  -h, --help  show this help message and exit"))
+    expect_equal("usage: scripts/test_help.R [-h]", help[2])
+    expect_equal("  -h, --help  show this help message and exit", help[5])
 })

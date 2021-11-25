@@ -1,3 +1,10 @@
+argparse 2.1.3
+==============
+
+* Prevents extraneous error message from being included in usage message 
+  when using Python 3.10 (#36).
+  Thanks @dariober for bug report.
+
 argparse 2.1.2
 ==============
 
