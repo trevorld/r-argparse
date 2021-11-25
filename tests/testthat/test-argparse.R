@@ -324,6 +324,6 @@ test_that("Paths that quit()", {
 
     help <- system2(cmd, c("scripts/test_help.R", "--help"),
                     stdout = TRUE, stderr = TRUE)
-    expect_equal("usage: scripts/test_help.R [-h]", help[2])
-    expect_equal("  -h, --help  show this help message and exit", help[5])
+    expect_equal("usage: scripts/test_help.R [-h]", help[1])
+    expect_equal("  -h, --help  show this help message and exit", help[4])
 })
