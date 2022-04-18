@@ -1,3 +1,12 @@
+argparse 2.1.4
+==============
+
+* `add_argument` now uses `as.logical()` logic to cast variables
+  to logical values if `type = "logical"` and `action = "store"` or `action = "append"`
+  instead of using Python's `bool()` logic.
+  We also no longer throw a warning when using `type = "logical"` and `action = "store"`
+  suggesting users instead use `action = "store_true"` or `action = "store_false"`.
+
 argparse 2.1.3
 ==============
 

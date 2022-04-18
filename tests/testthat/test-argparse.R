@@ -19,9 +19,6 @@
 #
 # See (inst/)COPYRIGHTS or http://docs.python.org/2/license.html for the full
 # Python (GPL-compatible) license stack.
-context("Unit tests")
-
-context("print_help")
 test_that("print_help works as expected", {
     skip_if_not(detects_python())
     parser <- ArgumentParser(description = "Process some integers.")
@@ -39,7 +36,6 @@ test_that("print_help works as expected", {
     expect_error(capture.output(parser$parse_args("-h")), "help requested")
 })
 
-context("convert_agument")
 test_that("convert_argument works as expected", {
     skip_if_not(detects_python())
     expect_equal(convert_argument("foobar"), "'foobar'")
@@ -48,7 +44,6 @@ test_that("convert_argument works as expected", {
     expect_equal(convert_argument(c("a", "b")), "('a', 'b')")
 })
 
-context("convert_..._to_arguments")
 test_that("convert_..._to_arguments works as expected", {
     skip_if_not(detects_python())
     # test in mode "add_argument"
@@ -70,7 +65,6 @@ test_that("convert_..._to_arguments works as expected", {
                  "formatter_class=argparse.ArgumentDefaultsHelpFormatter")
 })
 
-context("add_argument")
 test_that("add_argument works as expected", {
     skip_if_not(detects_python())
     parser <- ArgumentParser()
@@ -96,8 +90,18 @@ test_that("add_argument works as expected", {
     expect_equal(arguments$label, c("a", "b"))
     expect_equal(arguments$bool, c(FALSE, TRUE))
 
-    # Frustration of Martí Duran Ferrer
-    expect_warning(parser$add_argument("--bool", type = "logical", action = "store"))
+    # Use R casting of logicals
+    p <- ArgumentParser()
+    p$add_argument("--bool", type = "logical", action = "store")
+    expect_false(p$parse_args("--bool=F")$bool)
+    expect_true(p$parse_args("--bool=T")$bool)
+    expect_equal(p$parse_args("--bool=1")$bool, NA)
+
+    # Use R casting of logicals with type append
+    p <- ArgumentParser()
+    p$add_argument("--bool", type = "logical", action = "append")
+    expect_equal(p$parse_args(c("--bool=F", "--bool=1", "--bool=T"))$bool,
+                 c(FALSE, NA, TRUE))
 
     # Bug/Feature request found by Hyunsoo Kim
     p <- ArgumentParser()
@@ -119,7 +123,6 @@ test_that("add_argument works as expected", {
     expect_error(parser$parse_args())
 })
 
-context("version")
 test_that("version flags works as expected", {
     skip_if_not(detects_python())
     # Feature request of Dario Beraldi
@@ -137,7 +140,6 @@ test_that("version flags works as expected", {
     expect_equal(length(el), 0)
 })
 
-context("parse_known_args()")
 test_that("parse_known_args() works as expected", {
     skip_if_not(detects_python())
     parser <- ArgumentParser()
@@ -150,7 +152,6 @@ test_that("parse_known_args() works as expected", {
 
 
 
-context("ArgumentParser")
 test_that("ArgumentParser works as expected", {
     skip_if_not(detects_python())
     parser <- ArgumentParser(prog = "foobar", usage = "%(prog)s arg1 arg2")
@@ -219,7 +220,6 @@ test_that("parse_args() works as expected", {
 })
 
 # Bug found by Erick Rocha Fonseca
-context("Unicode arguments/options")
 test_that("Unicode support works if Python and OS sufficient", {
     skip_if_not(detects_python())
     skip_on_os("windows") # Didn't work on win-builder
@@ -248,7 +248,6 @@ test_that("Unicode attempt throws error if Python or OS not sufficient", {
 })
 
 # Mutually exclusive groups is a feature request by Vince Reuter
-context("Mutually exclusive groups")
 test_that("mutually exclusive groups works as expected", {
     skip_if_not(detects_python())
     parser <- ArgumentParser(prog = "PROG")
@@ -271,7 +270,6 @@ test_that("mutually exclusive groups works as expected", {
 })
 
 # argument groups is a feature request by Dario Beraldi
-context("Add argument group")
 test_that("add argument group works as expected", {
     skip_if_not(detects_python())
     parser <- ArgumentParser(prog = "PROG", add_help = FALSE)
@@ -284,7 +282,6 @@ test_that("add argument group works as expected", {
 })
 
 # subparser support is a feature request by Zebulun Arendsee
-context("Supparser support")
 test_that("sub parsers work as expected", {
     skip_if_not(detects_python())
     # create the top-level parser
@@ -312,7 +309,6 @@ test_that("sub parsers work as expected", {
     expect_output(parser_b$print_help(), "usage: PROG b")
 })
 
-context("Paths that quit()")
 test_that("Paths that quit()", {
     skip_if_not(detects_python())
     skip_on_os("windows")

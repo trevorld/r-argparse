@@ -1,8 +1,10 @@
 Package: argparse
 Type: Package
 Title: Command Line Optional and Positional Argument Parser
-Version: 2.1.3
-Authors@R: c(person("Trevor L", "Davis", role=c("aut", "cre"), email="trevor.l.davis@gmail.com"),
+Version: 2.1.4
+Authors@R: c(person("Trevor L", "Davis", role=c("aut", "cre"), 
+             email="trevor.l.davis@gmail.com",
+             comment = c(ORCID = "0000-0001-6341-4639")),
     person("Allen", "Day", role="ctb", comment="Some documentation and examples ported from the getopt package."),
     person("Python Software Foundation", role="ctb", comment="Some documentation from the optparse Python module."),
     person("Paul", "Newell", role="ctb"))
@@ -24,5 +26,5 @@ Suggests:
     rmarkdown,
     testthat
 VignetteBuilder: knitr
-RoxygenNote: 7.1.1
+RoxygenNote: 7.1.2
 Encoding: UTF-8
