@@ -95,13 +95,14 @@ test_that("add_argument works as expected", {
     p$add_argument("--bool", type = "logical", action = "store")
     expect_false(p$parse_args("--bool=F")$bool)
     expect_true(p$parse_args("--bool=T")$bool)
-    expect_equal(p$parse_args("--bool=1")$bool, NA)
+    expect_error(p$parse_args("--bool=1")$bool)
 
     # Use R casting of logicals with type append
     p <- ArgumentParser()
     p$add_argument("--bool", type = "logical", action = "append")
-    expect_equal(p$parse_args(c("--bool=F", "--bool=1", "--bool=T"))$bool,
-                 c(FALSE, NA, TRUE))
+    expect_equal(p$parse_args(c("--bool=F", "--bool=true", "--bool=T"))$bool,
+                 c(FALSE, TRUE, TRUE))
+    expect_error(p$parse_args(c("--bool=F", "--bool=1", "--bool=T"))$bool)
 
     # Bug/Feature request found by Hyunsoo Kim
     p <- ArgumentParser()

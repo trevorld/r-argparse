@@ -68,7 +68,7 @@ ArgumentParser <- function(..., python_cmd = NULL) { # nolint
         "except ImportError:",
         "    import simplejson as json",
         "",
-        "def as_logical(s):",
+        "def logical(s):",
         "    if isinstance(s, bool):",
         "        return bool",
         "    elif s in ('T', 'TRUE', 'True', 'true'):",
@@ -76,17 +76,7 @@ ArgumentParser <- function(..., python_cmd = NULL) { # nolint
         "    elif s in ('F', 'FALSE', 'False', 'false'):",
         "        return False",
         "    else:",
-        "        return [None]", # {jsonlite} workaround
-        "",
-        "def as_logical_append(s):", # {jsonlite} workaround
-        "    if isinstance(s, bool):",
-        "        return bool",
-        "    elif s in ('T', 'TRUE', 'True', 'true'):",
-        "        return True",
-        "    elif s in ('F', 'FALSE', 'False', 'false'):",
-        "        return False",
-        "    else:",
-        "        return None",
+        "        raise ValueError(\"could not convert string to logical: '{}'\".format(s))",
         "",
         sprintf("parser = argparse.ArgumentParser(%s)",
                 convert_..._to_arguments("ArgumentParser", ...)),
@@ -255,12 +245,10 @@ get_python_type <- function(type, proposed_arguments) {
             character = "str",
             double = "float",
             integer = "int",
-            logical = "as_logical",
+            logical = "logical",
             stop(paste(sprintf("type %s not supported,", type),
                     "supported types:",
                     "'logical', 'integer', 'double' or 'character'")))
-    if (python_type == "as_logical" && any(grepl("action='append'", proposed_arguments)))
-        python_type <- "as_logical_append" # {jsonlite} workaround
     sprintf("type=%s", python_type)
 }
 
