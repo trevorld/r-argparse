@@ -124,7 +124,7 @@ as well as mutually exclusive groups::
     $foo
     [1] FALSE
     > parser$parse_args(c('--foo', '--bar'))
-    Error in .stop(output, "parse error:") : parse error:
+    Error in "argparse::parse_args_output(output)" : parse error:
     usage: PROG [-h] [--foo | --bar]
     PROG: error: argument --bar: not allowed with argument --foo
 

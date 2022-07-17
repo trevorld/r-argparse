@@ -4,7 +4,7 @@
   Rscript) if ``parse_args()`` observes a help flag it will print a usage
   message and then call ``quit()``.  Additionally if a user specifically adds
   a 'version' argument to the command-line parser with `action='version'` then
-  if ``parse_args()`` also observes a version flag while in a non-interactive
+  if ``parse_args()`` observes a version flag while in a non-interactive
   session then it will print the version number and then call ``quit()``.
 
 * This package has a Python dependency most easily satisfied having (C)Python
@@ -12,7 +12,7 @@
 
 ## Test environments
 
-* local (linux), R 4.1.3
+* local (linux), R 4.2.1
 * win-builder (windows), R devel
 * Github Actions (linux), R devel, release, oldrel
 * Github Actions (windows), R release

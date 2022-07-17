@@ -1,8 +1,8 @@
 Package: argparse
 Type: Package
 Title: Command Line Optional and Positional Argument Parser
-Version: 2.1.5
-Authors@R: c(person("Trevor L", "Davis", role=c("aut", "cre"), 
+Version: 2.1.6
+Authors@R: c(person("Trevor L", "Davis", role=c("aut", "cre"),
              email="trevor.l.davis@gmail.com",
              comment = c(ORCID = "0000-0001-6341-4639")),
     person("Allen", "Day", role="ctb", comment="Some documentation and examples ported from the getopt package."),
@@ -16,6 +16,8 @@ Copyright: See file (inst/)COPYRIGHTS.
 URL: https://github.com/trevorld/r-argparse
 BugReports: https://github.com/trevorld/r-argparse/issues
 LazyLoad: yes
+Depends:
+    R (>= 3.6.0)
 Imports:
     R6,
     findpython,

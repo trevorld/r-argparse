@@ -1,3 +1,19 @@
+argparse 2.1.6
+==============
+
+* The errors raised by `ArgumentParser()$parse_args()` are now of class "argparse_parse_error".
+
+  They are now less verbose when `interactive()` is `FALSE` (#40).
+
+  There may still a trailing "Execution halted" line output by R's default error handler
+  (when `interactive()` is `FALSE`).
+  This can be silenced by setting a new error handler near the top of your Rscript e.g.
+
+  ```r
+  if (!interactive())
+      options(error=function(e) quit('no', status = 1, runLast = FALSE))
+  ```
+
 argparse 2.1.5
 ==============
 
