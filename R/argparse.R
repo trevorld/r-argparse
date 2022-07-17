@@ -204,20 +204,20 @@ parse_args_output <- function(output) {
         if (has_positional_arguments || has_optional_arguments) {
             print_message_and_exit(output, "help requested:")
         } else {
-            pa_stop(output)
+            pa_stop(output, "parse error:")
         }
     } else if (grepl("^Traceback", output[1])) {
-        pa_stop(output)
+        pa_stop(output, "python error:")
     } else if (any(grepl("^SyntaxError: Non-ASCII character", output))) {
         message <- paste("Non-ASCII character detected.",
                        "If you wish to use Unicode arguments/options",
                        "please upgrade to Python 3.2+",
                        "Please see file INSTALL for more details.")
-        pa_stop(message)
+        pa_stop(message, "non-ascii character error:")
     } else if (any(grepl("^SyntaxError: positional argument follows keyword argument", output)) ||
                grepl("^SyntaxError: non-keyword arg after keyword arg", output[2])) {
         message <- "Positional argument following keyword argument."
-        pa_stop(message)
+        pa_stop(message, "syntax error:")
     } else if (grepl("^\\{|^\\[", output)) {
         args <- jsonlite::fromJSON(paste(output, collapse = ""))
         return(args)
@@ -358,8 +358,8 @@ find_python_cmd <- function(python_cmd = NULL) {
     python_cmd
 }
 
-pa_stop <- function(message) {
-    msg <- paste(c("argparse_parse_error", message), collapse = "\n")
+pa_stop <- function(message, r_note) {
+    msg <- paste(c(r_note, message), collapse = "\n")
     cnd <- errorCondition(msg,
                           call = "argparse::parse_args_output(output)",
                           class = "argparse_parse_error")
@@ -375,11 +375,11 @@ pa_stop <- function(message) {
 }
 
 # Internal function to print message
-print_message_and_exit <- function(message, r_note, status = 0) {
+print_message_and_exit <- function(message, r_note) {
     if (interactive()) {
         pa_stop(message, r_note)
     } else {
         cat(message, sep = "\n")
-        quit(status = status)
+        quit(status = 0)
     }
 }
