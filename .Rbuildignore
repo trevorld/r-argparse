@@ -3,7 +3,7 @@ Rakefile
 README.rst
 ^README.html$
 ^codecov.yml$
-cran-comments.rst
+cran-comments.md
 .travis.yml
 ^\.appveyor\.yml$
 ^revdep$

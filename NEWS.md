@@ -5,7 +5,7 @@ argparse 2.1.6
 
   They are now less verbose when `interactive()` is `FALSE` (#40).
 
-  There may still a trailing "Execution halted" line output by R's default error handler
+  There may still be a trailing "Execution halted" line output by R's default error handler
   (when `interactive()` is `FALSE`).
   This can be silenced by setting a new error handler near the top of your Rscript e.g.
 
