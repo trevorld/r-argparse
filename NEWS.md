@@ -1,3 +1,10 @@
+argparse 2.1.7
+==============
+
+* When an error is thrown by `ArgumentParser()$parse_args()` and `interactive()` is `FALSE`
+  and `getOption("error")` is `NULL` then
+  we now use a quieter default error handler that doesn't output a trailing "Execution halted".
+
 argparse 2.1.6
 ==============
 

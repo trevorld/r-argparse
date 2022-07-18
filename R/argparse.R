@@ -358,6 +358,10 @@ find_python_cmd <- function(python_cmd = NULL) {
     python_cmd
 }
 
+quieter_error_handler <- function(e) {
+    quit('no', status = 1, runLast = FALSE)
+}
+
 pa_stop <- function(message, r_note) {
     msg <- paste(c(r_note, message), collapse = "\n")
     cnd <- errorCondition(msg,
@@ -368,7 +372,8 @@ pa_stop <- function(message, r_note) {
     } else {
         signalCondition(cnd)
         cat(message, sep = "\n", file = stderr())
-        opt <- options(show.error.messages = FALSE)
+        opt <- options(error = getOption("error",  quieter_error_handler),
+                       show.error.messages = FALSE)
         on.exit(options(opt))
         stop(cnd)
     }
