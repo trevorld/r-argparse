@@ -293,6 +293,14 @@ convert_..._to_arguments <- function(mode, ...) { # nolint
         formatter_class <- argument_list[[ii]]
         proposed_arguments[ii] <- sprintf("formatter_class=%s", formatter_class)
     }
+    # Convert whitespace to single space in description
+    if (mode == "ArgumentParser" && any(grepl("description=", proposed_arguments))) {
+        ii <- grep("description=", proposed_arguments)
+        description <- argument_list[[ii]]
+        description <- trimws(gsub("\\s+", " ", description))
+        description <- shQuote(description)
+        proposed_arguments[ii] <- sprintf("description=%s", description)
+    }
     # Set right default prog name if not specified, if possible
     # Do last to not screw up other fixes with prog insertion
     if (mode == "ArgumentParser" && needs_prog(argument_names)) {

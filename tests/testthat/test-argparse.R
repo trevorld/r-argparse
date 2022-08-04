@@ -205,6 +205,10 @@ test_that("parse_args() works as expected", {
     expect_equal(args$character, "1")
     expect_equal(args$numeric, 1.0)
 
+    # bug reported by Arthur Gilly
+    parser <- ArgumentParser(description="Description of tool.\nAuthor information.")
+    expect_true(is.list(parser$parse_args()))
+
     # Bug found by Taylor Pospisil
     skip_on_os("windows") # Didn't work on Github Actions Windows
     skip_on_cran() # Once gave an error on win-builder

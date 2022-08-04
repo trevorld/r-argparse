@@ -6,6 +6,11 @@ argparse 2.1.7
   we now use a quieter default error handler that doesn't output a trailing "Execution halted".
 
 * `add_argument()` now allows "numeric" as an alias for "double" for the `type` argument (#42).
+  Suggestion of @dariober.
+
+* `ArgumentParser()` will now quietly "squish" its `description` argument 
+  (which in some cases avoids an error) (#44).
+  Thanks Arthur Gilly (@agilly) for bug report.
 
 argparse 2.1.6
 ==============
