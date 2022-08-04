@@ -5,6 +5,8 @@ argparse 2.1.7
   and `getOption("error")` is `NULL` then
   we now use a quieter default error handler that doesn't output a trailing "Execution halted".
 
+* `add_argument()` now allows "numeric" as an alias for "double" for the `type` argument (#42).
+
 argparse 2.1.6
 ==============
 

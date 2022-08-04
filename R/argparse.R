@@ -246,6 +246,7 @@ get_python_type <- function(type, proposed_arguments) {
             double = "float",
             integer = "int",
             logical = "logical",
+            numeric = "float",
             stop(paste(sprintf("type %s not supported,", type),
                     "supported types:",
                     "'logical', 'integer', 'double' or 'character'")))

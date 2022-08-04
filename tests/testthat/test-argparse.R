@@ -189,17 +189,21 @@ test_that("parse_args() works as expected", {
     p$add_argument("--int", type = "integer")
     p$add_argument("--double", type = "double")
     p$add_argument("--character", type = "character")
+    p$add_argument("--numeric", type = "numeric")
 
     input <- "1"
     args <- p$parse_args(c("--int", input,
                            "--double", input,
-                           "--character", input))
+                           "--character", input,
+                           "--numeric", input))
     expect_equal(class(args$int), "integer")
     expect_equal(class(args$double), "numeric")
     expect_equal(class(args$character), "character")
+    expect_equal(class(args$numeric), "numeric")
     expect_equal(args$int, as.integer(1.0))
     expect_equal(args$double, 1.0)
     expect_equal(args$character, "1")
+    expect_equal(args$numeric, 1.0)
 
     # Bug found by Taylor Pospisil
     skip_on_os("windows") # Didn't work on Github Actions Windows
