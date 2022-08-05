@@ -151,12 +151,28 @@ Parser <- R6Class("Parser", # nolint
             output <- private$python_code$run(new_code)
             parse_args_output(output)
         },
+        format_help = function() {
+            paste(private$python_code$run(sprintf("%s.print_help()", private$name)),
+                  collapse = "\n")
+        },
+        format_usage = function() {
+            paste(private$python_code$run(sprintf("%s.print_usage()", private$name)),
+                  collapse = "\n")
+        },
         print_help = function() {
             cat(private$python_code$run(sprintf("%s.print_help()", private$name)), sep = "\n")
             invisible(NULL)
         },
         print_usage = function() {
             cat(private$python_code$run(sprintf("%s.print_usage()", private$name)), sep = "\n")
+            invisible(NULL)
+        },
+        get_default = function(...) {
+            stop("We don't currently support `get_default()`")
+        },
+        set_defaults = function(...) {
+            private$python_code$append(sprintf("%s.set_defaults(%s)", private$name,
+                            convert_..._to_arguments("add_argument", ...)))
             invisible(NULL)
         },
         add_argument = function(...) {

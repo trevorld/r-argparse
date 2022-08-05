@@ -26,6 +26,8 @@ test_that("print_help works as expected", {
     expect_output(parser$print_help(), "optional arguments:|options:")
     expect_output(parser$print_help(), "Process some integers.")
     expect_output(parser$print_usage(), "usage:")
+    expect_true(grepl("Process some integers.", parser$format_help()))
+    expect_true(grepl("usage:", parser$format_usage()))
 
     # Request/bug by PlasmaBinturong
     parser$add_argument("integers", metavar = "N", type = "integer", nargs = "+",
@@ -151,7 +153,15 @@ test_that("parse_known_args() works as expected", {
 
 })
 
+test_that("set_defaults() works as expected", {
+    skip_if_not(detects_python())
+    parser <- ArgumentParser()
+    parser$set_defaults(bar=42)
+    args <- parser$parse_args(c())
+    expect_equal(args$bar, 42)
 
+    # expect_equal(parser$get_default("bar"), 42)
+})
 
 test_that("ArgumentParser works as expected", {
     skip_if_not(detects_python())
