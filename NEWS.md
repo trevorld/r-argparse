@@ -16,8 +16,7 @@ argparse 2.2.0
 * `add_argument()` now allows "numeric" as an alias for "double" for the `type` argument (#42).
   Suggestion of @dariober.
 
-* `ArgumentParser()` will now quietly "squish" its `description` argument 
-  (which in some cases avoids an error) (#44).
+* `ArgumentParser()` now handles `description` arguments with newlines in them (#44).
   Thanks Arthur Gilly (@agilly) for bug report.
 
 argparse 2.1.6

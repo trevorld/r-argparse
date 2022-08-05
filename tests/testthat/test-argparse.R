@@ -40,10 +40,10 @@ test_that("print_help works as expected", {
 
 test_that("convert_argument works as expected", {
     skip_if_not(detects_python())
-    expect_equal(convert_argument("foobar"), "'foobar'")
+    expect_equal(convert_argument("foobar"), '"""foobar"""')
     expect_equal(convert_argument(14.9), "14.9")
     expect_equal(convert_argument(c(12.1, 14.9)), "(12.1, 14.9)")
-    expect_equal(convert_argument(c("a", "b")), "('a', 'b')")
+    expect_equal(convert_argument(c("a", "b")), '("""a""", """b""")')
 })
 
 test_that("convert_..._to_arguments works as expected", {
@@ -51,17 +51,17 @@ test_that("convert_..._to_arguments works as expected", {
     # test in mode "add_argument"
     c.2a <- function(...) convert_..._to_arguments("add_argument", ...)
     waz <- "wazzup"
-    expect_equal(c.2a(foo = "bar", hello = "world"), "foo='bar', hello='world'")
-    expect_equal(c.2a(foo = "bar", waz), "foo='bar', 'wazzup'")
+    expect_equal(c.2a(foo = "bar", hello = "world"), 'foo="""bar""", hello="""world"""')
+    expect_equal(c.2a(foo = "bar", waz), 'foo="""bar""", """wazzup"""')
     expect_equal(c.2a(type = "character"), "type=str")
     expect_equal(c.2a(default = TRUE), "default=True")
     expect_equal(c.2a(default = 3.4), "default=3.4")
-    expect_equal(c.2a(default = "foo"), "default='foo'")
+    expect_equal(c.2a(default = "foo"), 'default="""foo"""')
     # test in mode "ArgumentParser"
     c.2a <- function(...) convert_..._to_arguments("ArgumentParser", ...)
     expect_match(c.2a(argument_default = FALSE), "argument_default=False")
     expect_match(c.2a(argument_default = 30), "argument_default=30")
-    expect_match(c.2a(argument_default = "foobar"), "argument_default='foobar'")
+    expect_match(c.2a(argument_default = "foobar"), 'argument_default="""foobar"""')
     expect_match(c.2a(foo = "bar"), "^prog='PROGRAM'|^prog='test-argparse.R'")
     expect_match(c.2a(formatter_class = "argparse.ArgumentDefaultsHelpFormatter"),
                  "formatter_class=argparse.ArgumentDefaultsHelpFormatter")

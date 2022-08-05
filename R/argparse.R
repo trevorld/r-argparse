@@ -258,7 +258,7 @@ parse_args_output <- function(output) {
 
 # @param argument argument to be converted from R to Python
 convert_argument <- function(argument, as_list = FALSE) {
-    if (is.character(argument)) argument <- shQuote(argument, type = "sh")
+    if (is.character(argument)) argument <- paste0('"""', argument, '"""')
     if (is.numeric(argument)) argument <- as.character(argument)
     if (is.logical(argument)) argument <- ifelse(argument, "True", "False")
     if (is.null(argument)) argument <- "None"
@@ -322,14 +322,6 @@ convert_..._to_arguments <- function(mode, ...) { # nolint
         ii <- grep("formatter_class=", proposed_arguments)
         formatter_class <- argument_list[[ii]]
         proposed_arguments[ii] <- sprintf("formatter_class=%s", formatter_class)
-    }
-    # Convert whitespace to single space in description
-    if (mode == "ArgumentParser" && any(grepl("description=", proposed_arguments))) {
-        ii <- grep("description=", proposed_arguments)
-        description <- argument_list[[ii]]
-        description <- trimws(gsub("\\s+", " ", description))
-        description <- shQuote(description)
-        proposed_arguments[ii] <- sprintf("description=%s", description)
     }
     # Set right default prog name if not specified, if possible
     # Do last to not screw up other fixes with prog insertion
