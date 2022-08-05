@@ -144,8 +144,22 @@ Parser <- R6Class("Parser", # nolint
             output <- private$python_code$run(new_code)
             parse_args_output(output)
         },
+        parse_intermixed_args = function(args = commandArgs(TRUE)) {
+            new_code <- c(sprintf("args = %s.parse_intermixed_args([%s])", private$name,
+                            paste(sprintf("'%s'", args), collapse = ", ")),
+                    "print(json.dumps(args.__dict__, sort_keys=True))")
+            output <- private$python_code$run(new_code)
+            parse_args_output(output)
+        },
         parse_known_args = function(args = commandArgs(TRUE)) {
             new_code <- c(sprintf("args_remainder = %s.parse_known_args([%s])", private$name,
+                            paste(sprintf("'%s'", args), collapse = ", ")),
+                    "print(json.dumps((args_remainder[0].__dict__, args_remainder[1])))")
+            output <- private$python_code$run(new_code)
+            parse_args_output(output)
+        },
+        parse_known_intermixed_args = function(args = commandArgs(TRUE)) {
+            new_code <- c(sprintf("args_remainder = %s.parse_known_intermixed_args([%s])", private$name,
                             paste(sprintf("'%s'", args), collapse = ", ")),
                     "print(json.dumps((args_remainder[0].__dict__, args_remainder[1])))")
             output <- private$python_code$run(new_code)

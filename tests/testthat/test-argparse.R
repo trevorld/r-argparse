@@ -153,6 +153,26 @@ test_that("parse_known_args() works as expected", {
 
 })
 
+test_that("parse_intermixed_args() works as expected", {
+    skip_if_not(detects_python())
+    parser <- ArgumentParser()
+    parser$add_argument('--foo')
+    parser$add_argument('cmd')
+    parser$add_argument('rest', nargs='*', type='integer')
+    args <- strsplit('doit 1 --foo bar 2 3', ' ')[[1]]
+    args <- parser$parse_intermixed_args(args)
+    expect_equal(args$cmd, 'doit')
+    expect_equal(args$foo, 'bar')
+    expect_equal(args$rest, 1:3)
+
+    args <- strsplit('doit 1 --foo bar 2 3 -n 4', ' ')[[1]]
+    a_r <- parser$parse_known_intermixed_args(args)
+    expect_equal(a_r[[1]]$cmd, 'doit')
+    expect_equal(a_r[[1]]$foo, 'bar')
+    expect_equal(a_r[[1]]$rest, 1:3)
+    expect_equal(a_r[[2]], c('-n', '4'))
+})
+
 test_that("set_defaults() works as expected", {
     skip_if_not(detects_python())
     parser <- ArgumentParser()

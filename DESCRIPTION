@@ -6,7 +6,7 @@ Authors@R: c(person("Trevor L", "Davis", role=c("aut", "cre"),
              email="trevor.l.davis@gmail.com",
              comment = c(ORCID = "0000-0001-6341-4639")),
     person("Allen", "Day", role="ctb", comment="Some documentation and examples ported from the getopt package."),
-    person("Python Software Foundation", role="ctb", comment="Some documentation from the optparse Python module."),
+    person("Python Software Foundation", role="ctb", comment="Some documentation from the argparse Python module."),
     person("Paul", "Newell", role="ctb"))
 Description: A command line parser to
     be used with Rscript to write "#!" shebang scripts that gracefully

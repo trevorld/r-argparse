@@ -1,8 +1,13 @@
 argparse 2.2.0
 ==============
 
-* We now support the `format_help()`, `format_usage()`, and `set_defaults()` methods (#43).
-  Suggestion of @oliverbothe.
+* We now support the following `ArgumentParser()` methods:
+
+  * `format_help()`
+  * `format_usage()`
+  * `parse_intermixed_args()` (#45)
+  * `parse_known_intermixed_args()` (#45)
+  * `set_defaults()` (#43).  Suggestion of @oliverbothe.
 
 * When an error is thrown by `ArgumentParser()$parse_args()` and `interactive()` is `FALSE`
   and `getOption("error")` is `NULL` then
