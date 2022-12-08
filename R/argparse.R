@@ -70,7 +70,7 @@ ArgumentParser <- function(..., python_cmd = NULL) { # nolint
         "",
         "def logical(s):",
         "    if isinstance(s, bool):",
-        "        return bool",
+        "        return s",
         "    elif s in ('T', 'TRUE', 'True', 'true'):",
         "        return True",
         "    elif s in ('F', 'FALSE', 'False', 'false'):",

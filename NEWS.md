@@ -1,4 +1,4 @@
-argparse 2.2.0
+argparse 2.2.1
 ==============
 
 * We now support the following `ArgumentParser()` methods:
