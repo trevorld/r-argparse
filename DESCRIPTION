@@ -1,7 +1,7 @@
 Package: argparse
 Type: Package
 Title: Command Line Optional and Positional Argument Parser
-Version: 2.2.2-0
+Version: 2.2.2
 Authors@R: c(person("Trevor L", "Davis", role=c("aut", "cre"),
              email="trevor.l.davis@gmail.com",
              comment = c(ORCID = "0000-0001-6341-4639")),
@@ -9,7 +9,7 @@ Authors@R: c(person("Trevor L", "Davis", role=c("aut", "cre"),
     person("Python Software Foundation", role="ctb", comment="Some documentation from the argparse Python module."),
     person("Paul", "Newell", role="ctb"))
 Description: A command line parser to
-    be used with Rscript to write "#!" shebang scripts that gracefully
+    be used with 'Rscript' to write "#!" shebang scripts that gracefully
     accept positional and optional arguments and automatically generate usage.
 License: GPL (>= 2)
 Copyright: See file (inst/)COPYRIGHTS.

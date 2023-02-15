@@ -369,9 +369,12 @@ assert_python_cmd <- function(python_cmd) {
     }
 }
 
-detects_python <- function() {
+required_modules <- c("argparse", "json | simplejson")
+
+detects_python <- function(...) {
     python_cmd <- try(find_python_cmd())
-    !inherits(python_cmd, "try-error")
+    !inherits(python_cmd, "try-error") &&
+        findpython::is_python_sufficient(python_cmd, ..., required_modules = required_modules)
 }
 
 # Internal function to find python cmd
@@ -381,7 +384,6 @@ find_python_cmd <- function(python_cmd = NULL) {
         python_cmd <- getOption("python_cmd")
     }
     if (is.null(python_cmd)) {
-        required_modules <- c("argparse", "json | simplejson")
         did_find_python3 <- findpython::can_find_python_cmd(minimum_version = "3.0",
                                                 required_modules = required_modules,
                                                 silent = TRUE)

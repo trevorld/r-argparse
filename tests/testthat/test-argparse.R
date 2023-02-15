@@ -159,7 +159,7 @@ test_that("parse_known_args() works as expected", {
 })
 
 test_that("parse_intermixed_args() works as expected", {
-    skip_if_not(detects_python())
+    skip_if_not(detects_python(minimum_version = '3.7'))
     parser <- ArgumentParser()
     parser$add_argument('--foo')
     parser$add_argument('cmd')
