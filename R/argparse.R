@@ -258,7 +258,7 @@ parse_args_output <- function(output) {
 
 # @param argument argument to be converted from R to Python
 convert_argument <- function(argument, as_list = FALSE) {
-    if (is.character(argument)) argument <- paste0('"""', argument, '"""')
+    if (is.character(argument)) argument <- convert_character(argument)
     if (is.numeric(argument)) argument <- as.character(argument)
     if (is.logical(argument)) argument <- ifelse(argument, "True", "False")
     if (is.null(argument)) argument <- "None"
@@ -268,6 +268,11 @@ convert_argument <- function(argument, as_list = FALSE) {
         argument <- sprintf("(%s)", paste(argument, collapse = ", "))
     }
     argument
+}
+
+convert_character <- function(s) {
+    bool <- substr(s, nchar(s), nchar(s)) == '"'
+    ifelse(bool, paste0("'''", s, "'''"), paste0('"""', s, '"""'))
 }
 
 get_python_type <- function(type, proposed_arguments) {

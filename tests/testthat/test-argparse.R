@@ -92,6 +92,11 @@ test_that("add_argument works as expected", {
     expect_equal(arguments$label, c("a", "b"))
     expect_equal(arguments$bool, c(FALSE, TRUE))
 
+    # Bug found by Oliver Dreschel (@oliverdreschel)
+    p <- ArgumentParser()
+    p$add_argument('--listlab', type='character', help='This is a helpstring,"Containing Quotes"')
+    expect_equal(p$parse_args()$listlab, NULL)
+
     # Use R casting of logicals
     p <- ArgumentParser()
     p$add_argument("--bool", type = "logical", action = "store")
