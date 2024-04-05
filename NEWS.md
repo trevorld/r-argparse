@@ -1,3 +1,25 @@
+argparse 2.2.3
+==============
+
+* Character values are now passed as "raw" strings to Python (#51).
+
+  + In particular this avoids triggering an error in Python 3.12
+    when creating a string with escapes not supported by
+    Python e.g. `default = "\\D"` will continue to return a
+    default value of `"\\D"` instead of triggering an error.
+  + However, this also means that any Python accepted escape
+    sequences will no longer be interpreted as an escape sequence.
+    If relying on such behaviour you may need to instead use
+    the appropriate R escape sequences or Unicode values instead of Python escape sequences:
+
+    - E.g. `default = "\\t"` will now return a default value of
+      `"\\t"` (a `t` preceded by an (escaped) backslash)
+      instead of `"\t"` (a horizontal tab).
+    - https://docs.python.org/3/reference/lexical_analysis.html#escape-sequences
+    - https://en.wikipedia.org/wiki/Basic_Latin_(Unicode_block)
+
+  + Thanks Matthew Hall (@mdhall272) for bug report.
+
 argparse 2.2.2
 ==============
 
@@ -28,7 +50,7 @@ argparse 2.2.1
 argparse 2.1.6
 ==============
 
-* The errors raised by `ArgumentParser()$parse_args()` are now of class "argparse_parse_error".
+* The errors raised by `ArgumentParser()$parse_args()` are now of class "argparse\_parse\_error".
 
   They are now less verbose when `interactive()` is `FALSE` (#40).
 

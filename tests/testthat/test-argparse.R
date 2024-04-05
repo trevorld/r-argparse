@@ -1,4 +1,4 @@
-# Copyright (c) 2012-2021 Trevor L Davis <trevor.l.davis@gmail.com>
+# Copyright (c) 2012-2024 Trevor L Davis <trevor.l.davis@gmail.com>
 #
 #  This file is free software: you may copy, redistribute and/or modify it
 #  under the terms of the GNU General Public License as published by the
@@ -40,10 +40,10 @@ test_that("print_help works as expected", {
 
 test_that("convert_argument works as expected", {
     skip_if_not(detects_python())
-    expect_equal(convert_argument("foobar"), '"""foobar"""')
+    expect_equal(convert_argument("foobar"), 'r"""foobar"""')
     expect_equal(convert_argument(14.9), "14.9")
     expect_equal(convert_argument(c(12.1, 14.9)), "(12.1, 14.9)")
-    expect_equal(convert_argument(c("a", "b")), '("""a""", """b""")')
+    expect_equal(convert_argument(c("a", "b")), '(r"""a""", r"""b""")')
 })
 
 test_that("convert_..._to_arguments works as expected", {
@@ -51,17 +51,17 @@ test_that("convert_..._to_arguments works as expected", {
     # test in mode "add_argument"
     c.2a <- function(...) convert_..._to_arguments("add_argument", ...)
     waz <- "wazzup"
-    expect_equal(c.2a(foo = "bar", hello = "world"), 'foo="""bar""", hello="""world"""')
-    expect_equal(c.2a(foo = "bar", waz), 'foo="""bar""", """wazzup"""')
+    expect_equal(c.2a(foo = "bar", hello = "world"), 'foo=r"""bar""", hello=r"""world"""')
+    expect_equal(c.2a(foo = "bar", waz), 'foo=r"""bar""", r"""wazzup"""')
     expect_equal(c.2a(type = "character"), "type=str")
     expect_equal(c.2a(default = TRUE), "default=True")
     expect_equal(c.2a(default = 3.4), "default=3.4")
-    expect_equal(c.2a(default = "foo"), 'default="""foo"""')
+    expect_equal(c.2a(default = "foo"), 'default=r"""foo"""')
     # test in mode "ArgumentParser"
     c.2a <- function(...) convert_..._to_arguments("ArgumentParser", ...)
     expect_match(c.2a(argument_default = FALSE), "argument_default=False")
     expect_match(c.2a(argument_default = 30), "argument_default=30")
-    expect_match(c.2a(argument_default = "foobar"), 'argument_default="""foobar"""')
+    expect_match(c.2a(argument_default = "foobar"), 'argument_default=r"""foobar"""')
     expect_match(c.2a(foo = "bar"), "^prog='PROGRAM'|^prog='test-argparse.R'")
     expect_match(c.2a(formatter_class = "argparse.ArgumentDefaultsHelpFormatter"),
                  "formatter_class=argparse.ArgumentDefaultsHelpFormatter")
@@ -244,6 +244,11 @@ test_that("parse_args() works as expected", {
     parser <- ArgumentParser(description="Description of tool.\nAuthor information.")
     expect_true(is.list(parser$parse_args()))
 
+    # bug found my Matthew Hall (@mdhall272, #51)
+    parser <- ArgumentParser(description='foo')
+    parser$add_argument('--bar', default = "[\\D]")
+    expect_equal(parser$parse_args()$bar, "[\\D]")
+
     # Bug found by Taylor Pospisil
     skip_on_os("windows") # Didn't work on Github Actions Windows
     skip_on_cran() # Once gave an error on win-builder
@@ -288,7 +293,6 @@ test_that("Unicode attempt throws error if Python or OS not sufficient", {
     p <- ArgumentParser(python_cmd = attr(did_find_python2, "python_cmd"))
     p$add_argument("name")
     expect_error(p$parse_args("\u8292\u679C"), "Non-ASCII character detected.") # 芒果
-
 })
 
 # Mutually exclusive groups is a feature request by Vince Reuter
@@ -353,7 +357,7 @@ test_that("sub parsers work as expected", {
     expect_output(parser_b$print_help(), "usage: PROG b")
 })
 
-test_that("Paths that quit()", {
+test_that("Paths that `quit()`", {
     skip_if_not(detects_python())
     skip_on_os("windows")
     cmd <- file.path(R.home(), "bin/Rscript")

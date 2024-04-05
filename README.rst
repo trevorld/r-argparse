@@ -9,8 +9,8 @@ argparse: Command line optional and positional argument parser
     :target: https://github.com/trevorld/r-argparse/actions
     :alt: R-CMD-check
 
-.. image:: https://img.shields.io/codecov/c/github/trevorld/r-argparse.svg
-    :target: https://codecov.io/github/trevorld/r-argparse?branch=master
+.. image:: https://codecov.io/github/trevorld/r-argparse/branch/master/graph/badge.svg
+    :target: https://app.codecov.io/github/trevorld/r-argparse?branch=master
     :alt: Coverage Status
 
 .. image:: https://cranlogs.r-pkg.org/badges/argparse
