@@ -1,4 +1,4 @@
-# Copyright (c) 2012-2021 Trevor L. Davis <trevor.l.davis@gmail.com>
+# Copyright (c) 2012-2024 Trevor L. Davis <trevor.l.davis@gmail.com>
 #
 #  This file is free software: you may copy, redistribute and/or modify it
 #  under the terms of the GNU General Public License as published by the
@@ -40,9 +40,6 @@
 #' @references Python's \code{argparse} library, which this package is based on,
 #'  is described here: \url{https://docs.python.org/3/library/argparse.html}
 #'
-#' @import jsonlite
-#' @import R6
-#' @export
 #' @examples
 #'
 #' if (argparse:::detects_python()) {
@@ -59,6 +56,8 @@
 #'   accumulate_fn <- get(args$accumulate)
 #'   print(accumulate_fn(args$integers))
 #' }
+#' @importFrom R6 R6Class
+#' @export
 ArgumentParser <- function(..., python_cmd = NULL) { # nolint
     python_cmd <- find_python_cmd(python_cmd)
     assert_python_cmd(python_cmd)
@@ -272,7 +271,7 @@ convert_argument <- function(argument, as_list = FALSE) {
 
 convert_character <- function(s) {
     bool <- substr(s, nchar(s), nchar(s)) == '"'
-    ifelse(bool, paste0("'''", s, "'''"), paste0('"""', s, '"""'))
+    ifelse(bool, paste0("r'''", s, "'''"), paste0('r"""', s, '"""'))
 }
 
 get_python_type <- function(type, proposed_arguments) {

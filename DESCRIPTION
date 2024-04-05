@@ -1,7 +1,7 @@
 Package: argparse
 Type: Package
 Title: Command Line Optional and Positional Argument Parser
-Version: 2.2.2
+Version: 2.2.3
 Authors@R: c(person("Trevor L", "Davis", role=c("aut", "cre"),
              email="trevor.l.davis@gmail.com",
              comment = c(ORCID = "0000-0001-6341-4639")),
@@ -19,14 +19,14 @@ LazyLoad: yes
 Depends:
     R (>= 3.6.0)
 Imports:
-    R6,
     findpython,
-    jsonlite
+    jsonlite,
+    R6
 SystemRequirements: python (>= 3.2)
 Suggests:
     knitr (>= 1.15.19),
     rmarkdown,
     testthat
 VignetteBuilder: knitr
-RoxygenNote: 7.1.2
+RoxygenNote: 7.3.1
 Encoding: UTF-8
