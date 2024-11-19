@@ -7,24 +7,24 @@
 ArgumentParser(..., python_cmd = NULL)
 }
 \arguments{
-\item{...}{Arguments cleaned and passed to Pythons argparse.ArgumentParser()}
+\item{...}{Arguments cleaned and passed to Pythons \code{argparse.ArgumentParser()}}
 
 \item{python_cmd}{Python executable for \code{argparse} to use.
-Must have argparse and json modules (automatically included Python 2.7 and 3.2+).
+Must have \code{argparse} and \code{json} modules (automatically bundled with Python 2.7 and 3.2+).
 If you need Unicode argument support then you must use Python 3.0+.
 Default will be to use \code{findpython} package to find suitable Python binary.}
 }
 \value{
-\code{ArgumentParser} returns a parser object which contains
-   an \code{add_argument} function to add arguments to the parser,
-   a \code{parse_args} function to parse command line arguments into
-   a list, a \code{print_help} and \code{print_usage} function to print
-   usage information.  See code examples, package vignette,
-   and corresponding python module for more information on how to use it.
+\code{ArgumentParser()} returns a parser object which contains
+an \code{add_argument()} function to add arguments to the parser,
+a \code{parse_args()} function to parse command line arguments into
+a list, a \code{print_help()} and a \code{print_usage()} function to print
+usage information.  See code examples, package vignette,
+and corresponding python module for more information on how to use it.
 }
 \description{
-\code{ArgumentParser} creates a parser object that acts as
-a wrapper to Python's argparse module
+\code{ArgumentParser()} creates a parser object that acts as
+a wrapper to Python's \code{argparse} module
 }
 \examples{
 
@@ -45,5 +45,5 @@ if (argparse:::detects_python()) {
 }
 \references{
 Python's \code{argparse} library, which this package is based on,
- is described here: \url{https://docs.python.org/3/library/argparse.html}
+is described here: \url{https://docs.python.org/3/library/argparse.html}
 }

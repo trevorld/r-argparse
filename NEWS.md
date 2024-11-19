@@ -1,3 +1,8 @@
+argparse 2.2.4
+==============
+
+* `ArgumentParser()`'s `python_cmd` argument is now wrapped by `normalizePath(mustWork = FALSE)`.
+
 argparse 2.2.3
 ==============
 
