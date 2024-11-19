@@ -2,3 +2,5 @@ destination: "../../websites/R/argparse/"
 url: "https://trevorldavis.com/R/argparse"
 development:
     mode: auto
+template:
+  bootstrap: 5
