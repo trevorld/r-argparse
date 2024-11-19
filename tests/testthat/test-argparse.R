@@ -169,7 +169,18 @@ test_that("parse_intermixed_args() works as expected", {
     expect_equal(args$cmd, 'doit')
     expect_equal(args$foo, 'bar')
     expect_equal(args$rest, 1:3)
+})
 
+test_that("parse_known_intermixed_args() works as expected", {
+    skip_if_not(detects_python(minimum_version = '3.7'))
+    # Bug in Debian Testing's version of python causes CRAN ERROR
+    # https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1087681
+    if (isTRUE(get_linux_flavor() == "debian"))
+        skip_on_cran()
+    parser <- ArgumentParser()
+    parser$add_argument('--foo')
+    parser$add_argument('cmd')
+    parser$add_argument('rest', nargs='*', type='integer')
     args <- strsplit('doit 1 --foo bar 2 3 -n 4', ' ')[[1]]
     a_r <- parser$parse_known_intermixed_args(args)
     expect_equal(a_r[[1]]$cmd, 'doit')
