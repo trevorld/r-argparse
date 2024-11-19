@@ -21,7 +21,8 @@ Depends:
 Imports:
     findpython,
     jsonlite,
-    R6
+    R6,
+    utils
 SystemRequirements: python (>= 3.2)
 Suggests:
     knitr (>= 1.15.19),

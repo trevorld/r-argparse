@@ -1,5 +1,9 @@
 ## Notes
 
+* Skips two `parse_known_intermixed_args()` tests on CRAN on Debian Testing
+  to avoid raising an ERROR due to a bug in Debian Testing's version of python:
+  https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1087681
+
 * As in previous uploads while in a non-interactive session (i.e. in an
   Rscript) if ``parse_args()`` observes a help flag it will print a usage
   message and then call ``quit()``.  Additionally if a user specifically adds
@@ -12,7 +16,7 @@
 
 ## Test environments
 
-* local (linux), R 4.3.3
+* local (linux), R 4.4.2
 * win-builder (windows), R devel
 * Github Actions (linux), R devel, release, oldrel
 * Github Actions (windows), R release
@@ -24,7 +28,7 @@ Status: OK
 
 ## revdepcheck results
 
-We checked 3 reverse dependencies (0 from CRAN + 3 from Bioconductor), comparing R CMD check results across CRAN and dev versions of this package.
+We checked 4 reverse dependencies (0 from CRAN + 4 from Bioconductor), comparing R CMD check results across CRAN and dev versions of this package.
 
  * We saw 0 new problems
  * We failed to check 0 packages
