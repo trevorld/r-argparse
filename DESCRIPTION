@@ -1,7 +1,7 @@
 Package: argparse
 Type: Package
 Title: Command Line Optional and Positional Argument Parser
-Version: 2.2.4-0
+Version: 2.2.4
 Authors@R: c(person("Trevor L.", "Davis", role=c("aut", "cre"),
              email="trevor.l.davis@gmail.com",
              comment = c(ORCID = "0000-0001-6341-4639")),
@@ -13,7 +13,7 @@ Description: A command line parser to
     accept positional and optional arguments and automatically generate usage.
 License: GPL (>= 2)
 Copyright: See file (inst/)COPYRIGHTS.
-URL: https://github.com/trevorld/r-argparse
+URL: https://github.com/trevorld/r-argparse, https://trevorldavis.com/R/argparse/
 BugReports: https://github.com/trevorld/r-argparse/issues
 LazyLoad: yes
 Depends:
