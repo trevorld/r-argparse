@@ -38,7 +38,7 @@ test_that("print_help works as expected", {
     expect_error(capture.output(parser$parse_args("-h")), "help requested")
 })
 
-test_that("convert_argument works as expected", {
+test_that("`convert_argument()` works as expected", {
     skip_if_not(detects_python())
     expect_equal(convert_argument("foobar"), 'r"""foobar"""')
     expect_equal(convert_argument(14.9), "14.9")
@@ -46,7 +46,7 @@ test_that("convert_argument works as expected", {
     expect_equal(convert_argument(c("a", "b")), '(r"""a""", r"""b""")')
 })
 
-test_that("convert_..._to_arguments works as expected", {
+test_that("`convert_..._to_arguments()` works as expected", {
     skip_if_not(detects_python())
     # test in mode "add_argument"
     c.2a <- function(...) convert_..._to_arguments("add_argument", ...)
@@ -67,7 +67,7 @@ test_that("convert_..._to_arguments works as expected", {
                  "formatter_class=argparse.ArgumentDefaultsHelpFormatter")
 })
 
-test_that("add_argument works as expected", {
+test_that("`add_argument()` works as expected", {
     skip_if_not(detects_python())
     parser <- ArgumentParser()
     parser$add_argument("integers", metavar = "N", type = "integer", nargs = "+",
@@ -148,7 +148,7 @@ test_that("version flags works as expected", {
     expect_equal(length(el), 0)
 })
 
-test_that("parse_known_args() works as expected", {
+test_that("`parse_known_args()` works as expected", {
     skip_if_not(detects_python())
     parser <- ArgumentParser()
     parser$add_argument("-o", "--output_filename", default = "outfile.txt")
@@ -158,7 +158,7 @@ test_that("parse_known_args() works as expected", {
 
 })
 
-test_that("parse_intermixed_args() works as expected", {
+test_that("`parse_intermixed_args()` works as expected", {
     skip_if_not(detects_python(minimum_version = '3.7'))
     parser <- ArgumentParser()
     parser$add_argument('--foo')
@@ -171,25 +171,21 @@ test_that("parse_intermixed_args() works as expected", {
     expect_equal(args$rest, 1:3)
 })
 
-test_that("parse_known_intermixed_args() works as expected", {
+test_that("`parse_known_intermixed_args()` works as expected", {
     skip_if_not(detects_python(minimum_version = '3.7'))
-    # Bug in Debian Testing's version of python causes CRAN ERROR
-    # https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1087681
-    if (isTRUE(get_linux_flavor() == "debian"))
-        skip_on_cran()
     parser <- ArgumentParser()
     parser$add_argument('--foo')
     parser$add_argument('cmd')
     parser$add_argument('rest', nargs='*', type='integer')
-    args <- strsplit('doit 1 --foo bar 2 3 -n 4', ' ')[[1]]
+    args <- strsplit('doit 1 --foo bar 2 3 -n', ' ')[[1]]
     a_r <- parser$parse_known_intermixed_args(args)
     expect_equal(a_r[[1]]$cmd, 'doit')
     expect_equal(a_r[[1]]$foo, 'bar')
     expect_equal(a_r[[1]]$rest, 1:3)
-    expect_equal(a_r[[2]], c('-n', '4'))
+    expect_equal(a_r[[2]], c('-n'))
 })
 
-test_that("set_defaults() works as expected", {
+test_that("`set_defaults()` works as expected", {
     skip_if_not(detects_python())
     parser <- ArgumentParser()
     parser$set_defaults(bar=42)
@@ -199,7 +195,7 @@ test_that("set_defaults() works as expected", {
     # expect_equal(parser$get_default("bar"), 42)
 })
 
-test_that("ArgumentParser works as expected", {
+test_that("`ArgumentParser()` works as expected", {
     skip_if_not(detects_python())
     parser <- ArgumentParser(prog = "foobar", usage = "%(prog)s arg1 arg2")
     parser$add_argument("--hello", dest = "saying", action = "store_const",
@@ -215,7 +211,7 @@ test_that("ArgumentParser works as expected", {
     expect_error(ArgumentParser(add_help = FALSE)$parse_args("-h"), "unrecognized arguments")
 })
 
-test_that("parse_args() works as expected", {
+test_that("`parse_args()` works as expected", {
     skip_if_not(detects_python())
     parser <- ArgumentParser("foobar", usage = "%(prog)s arg1 arg2")
     parser$add_argument("--hello", dest = "saying", action = "store", default = "foo",

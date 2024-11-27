@@ -1,9 +1,5 @@
 ## Notes
 
-* Skips two `parse_known_intermixed_args()` tests on CRAN on Debian Testing
-  to avoid raising an ERROR due to a bug in Debian Testing's version of python:
-  https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1087681
-
 * As in previous uploads while in a non-interactive session (i.e. in an
   Rscript) if ``parse_args()`` observes a help flag it will print a usage
   message and then call ``quit()``.  Additionally if a user specifically adds

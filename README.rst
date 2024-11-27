@@ -5,7 +5,7 @@ argparse: Command line optional and positional argument parser
     :target: https://cran.r-project.org/package=argparse
     :alt: CRAN Status Badge
 
-.. image:: https://github.com/trevorld/r-argparse/workflows/R-CMD-check/badge.svg
+.. image:: https://github.com/trevorld/r-argparse/actions/workflows/R-CMD-check.yaml/badge.svg?branch=master
     :target: https://github.com/trevorld/r-argparse/actions
     :alt: R-CMD-check
 

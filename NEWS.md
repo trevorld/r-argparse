@@ -1,3 +1,8 @@
+argparse 2.2.5
+==============
+
+* Tweaks the `parse_known_intermixed_args()` tests so they work with the development version of Python.
+
 argparse 2.2.4
 ==============
 
