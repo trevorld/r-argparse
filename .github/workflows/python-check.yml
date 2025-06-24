@@ -1,10 +1,9 @@
 # Workflow derived from https://github.com/r-lib/actions/tree/master/examples
 # Need help debugging build failures? Start at https://github.com/r-lib/actions#where-to-find-help
+# https://pubs.opengroup.org/onlinepubs/9699919799/utilities/crontab.html#tag_20_25_07
 on:
-  push:
-    branches: [main, master]
-  pull_request:
-    branches: [main, master]
+  schedule:
+    - cron: "42 11 * * 6"
 
 name: python-check
 
@@ -19,7 +18,12 @@ jobs:
       matrix:
         config:
           - {os: ubuntu-latest,   r: 'release'}
-        python_version: ["3.x", "3.14-dev", "3.x-dev"]
+        # https://github.com/actions/setup-python/blob/main/docs/advanced-usage.md
+        # https://raw.githubusercontent.com/actions/python-versions/main/versions-manifest.json
+        # 3.x is latest stable version of Python
+        # 3.14-dev is latest patch version of 3.14 (alpha, beta, rc releases included)
+        # 3.15-dev not yet supported, 3.x-dev not understood
+        python_version: ["3.x", "3.14-dev"]
 
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
