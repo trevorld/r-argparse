@@ -364,6 +364,21 @@ test_that("sub parsers work as expected", {
     expect_output(parser_b$print_help(), "usage: PROG b")
 })
 
+# Group.add_mutually_exclusive_group request by Brar Piening
+test_that("`Group.add_mutually_exclusive_group()`", {
+    skip_if_not(detects_python())
+    # create the top-level parser
+    parser <- ArgumentParser(prog = "PROG")
+    group1 <- parser$add_argument_group(
+        title = "Group title",
+        description = "Group description"
+    )
+    group2 <- group1$add_mutually_exclusive_group()
+    group2$add_argument("--foo", help = "foo help")
+    group2$add_argument("--bar", help = "bar help")
+    expect_output(parser$print_help(), "Group description")
+})
+
 test_that("Paths that `quit()`", {
     skip_if_not(detects_python())
     skip_on_os("windows")
