@@ -1,3 +1,10 @@
+argparse 2.3.0 (development)
+============================
+
+* The `ArgumentGroup` R6 Class (as returned by `ArgumentParser()$add_argument_group()`)
+  now supports an `add_mutually_exclusive_group()` method (#59).
+  Suggestion of Brar Piening (@Brar).
+
 argparse 2.2.5
 ==============
 

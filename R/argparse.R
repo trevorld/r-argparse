@@ -116,6 +116,28 @@ Group <- R6Class("Group", # nolint
     private = list(python_code = NULL, name = NULL)
 )
 
+# Can call `add_mutually_exclusive_group()` from an "argument group"
+# but not from a "mutually exclusive group" (since Python v3.14)
+ArgumentGroup <- R6Class("ArgumentGroup",
+    inherit = Group,
+    public = list(
+        add_mutually_exclusive_group = function(required = FALSE) {
+            group_name <- paste0(private$name, "_mutually_exclusive_group",
+                                 private$n_mutually_exclusive_groups)
+            private$n_mutually_exclusive_groups <- private$n_mutually_exclusive_groups + 1L
+            private$python_code$append(sprintf("%s = %s.add_mutually_exclusive_group(%s)",
+                           group_name, private$name,
+                           ifelse(required, "required=True", "")))
+            Group$new(private$python_code, group_name)
+        }
+    ),
+    private = list(
+        python_code = NULL,
+        name = NULL,
+        n_mutually_exclusive_groups = 0L
+    )
+)
+
 Subparsers <- R6Class("Subparsers", # nolint
     public = list(
         initialize = function(python_code, name) {
@@ -124,14 +146,14 @@ Subparsers <- R6Class("Subparsers", # nolint
         },
         add_parser = function(...) {
             parser_name <- paste0(private$name, "_subparser", private$n_subparsers)
-            private$n_subparsers <- private$n_subparsers + 1
+            private$n_subparsers <- private$n_subparsers + 1L
             private$python_code$append(sprintf("%s = %s.add_parser(%s)",
                             parser_name, private$name,
                             convert_..._to_arguments("ArgumentParser", ...)))
             Parser$new(private$python_code, parser_name)
         }
     ),
-    private = list(python_code = NULL, name = NULL, n_subparsers = 0)
+    private = list(python_code = NULL, name = NULL, n_subparsers = 0L)
 )
 
 Parser <- R6Class("Parser", # nolint
@@ -195,16 +217,16 @@ Parser <- R6Class("Parser", # nolint
         },
         add_argument_group = function(...) {
             group_name <- paste0(private$name, "_group", private$n_groups)
-            private$n_groups <- private$n_groups + 1
+            private$n_groups <- private$n_groups + 1L
             private$python_code$append(sprintf("%s = %s.add_argument_group(%s)",
                            group_name, private$name,
                             convert_..._to_arguments("add_argument", ...)))
-            Group$new(private$python_code, group_name)
+            ArgumentGroup$new(private$python_code, group_name)
         },
         add_mutually_exclusive_group = function(required = FALSE) {
             group_name <- paste0(private$name, "_mutually_exclusive_group",
                                  private$n_mutually_exclusive_groups)
-            private$n_mutually_exclusive_groups <- private$n_mutually_exclusive_groups + 1
+            private$n_mutually_exclusive_groups <- private$n_mutually_exclusive_groups + 1L
             private$python_code$append(sprintf("%s = %s.add_mutually_exclusive_group(%s)",
                            group_name, private$name,
                            ifelse(required, "required=True", "")))
@@ -223,7 +245,7 @@ Parser <- R6Class("Parser", # nolint
         }
     ),
     private = list(python_code = NULL, name = NULL,
-                   n_mutually_exclusive_groups = 0, n_groups = 0)
+                   n_mutually_exclusive_groups = 0L, n_groups = 0L)
 )
 
 parse_args_output <- function(output) {
@@ -423,6 +445,6 @@ print_message_and_exit <- function(message, r_note) {
         pa_stop(message, r_note)
     } else {
         cat(message, sep = "\n")
-        quit(status = 0)
+        quit(status = 0L)
     }
 }
