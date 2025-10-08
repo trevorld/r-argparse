@@ -1,5 +1,5 @@
-argparse 2.3.0 (development)
-============================
+argparse 2.3.1
+==============
 
 * The `ArgumentGroup` R6 Class (as returned by `ArgumentParser()$add_argument_group()`)
   now supports an `add_mutually_exclusive_group()` method (#59).
@@ -94,14 +94,14 @@ argparse 2.1.5
 argparse 2.1.3
 ==============
 
-* Prevents extraneous error message from being included in usage message 
+* Prevents extraneous error message from being included in usage message
   when using Python 3.10 (#36).
   Thanks @dariober for bug report.
 
 argparse 2.1.2
 ==============
 
-* Fixes bug when using an argument with `action == "append"` 
+* Fixes bug when using an argument with `action == "append"`
   and a non-`NULL` `default` value (#35).
   Thanks @miker985 for bug report.
 
@@ -137,22 +137,22 @@ argparse 2.0.1
 argparse 2.0.0
 ==============
 
-* Now uses ``R6`` classes instead of ``proto`` classes (#25).  
-  The typical user shouldn't need to change any ``argparse`` code 
+* Now uses ``R6`` classes instead of ``proto`` classes (#25).
+  The typical user shouldn't need to change any ``argparse`` code
   but I did make private the previously public ``python_code``
   element of the object returned by ``ArgumentParser()``.
 * Parsers now support ``add_subparsers`` (#14).
   Suggestion of Zebulun Arendsee.
-* Parsers now support ``add_argument_group`` (#26).  
-  Suggestion of Dario Beraldi. 
-* Parsers now support ``add_mutually_exclusive_group`` (#23).  
+* Parsers now support ``add_argument_group`` (#26).
+  Suggestion of Dario Beraldi.
+* Parsers now support ``add_mutually_exclusive_group`` (#23).
   Suggestion of Vince Reuter.
 
 argparse 1.1.1
 ==============
 
-* Better support for machines only running Python 2.7.  
-* DESCRIPTION makes explicit that it requires version 1.0.0 of ``proto`` dependency.  
+* Better support for machines only running Python 2.7.
+* DESCRIPTION makes explicit that it requires version 1.0.0 of ``proto`` dependency.
   Thanks Christophe Poulet for bug report.
 
 argparse 1.1.0
@@ -181,16 +181,16 @@ argparse 1.0.4
 
 * You can now pass in a character vector to the ``metavar`` argument of ``add_argument``.
   Thanks Paul Newell for bug report and a patch.
-* `add_argument` now throws a warning recommending using action "store_true" or "store_false" 
-  if type set to "logical" and action set to "store".  
+* `add_argument` now throws a warning recommending using action "store_true" or "store_false"
+  if type set to "logical" and action set to "store".
   Suggestion of Martí Duran Ferrer
-* You can now explicitly set a `NULL` default in `add_argument`.  
+* You can now explicitly set a `NULL` default in `add_argument`.
   Previously one could only implicitly set a `NULL` default by not setting any default at all.
   Suggestion of Hyunsoo Kim.
-* Fixes parsing bug when using a very large argument list.  
+* Fixes parsing bug when using a very large argument list.
   Thanks Taylor Pospisil for bug report.
-* Parse error usage message now prints to standard error.  
-  User requested help message quit status is now zero.  
+* Parse error usage message now prints to standard error.
+  User requested help message quit status is now zero.
   Thanks to PlasmaBinturong for report/request.
 * If Python script fails with error pass on error message to user.
   Thanks to Martí Duran Ferrer for report/request.
