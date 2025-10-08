@@ -226,7 +226,11 @@ test_that("`set_defaults()` works as expected", {
 	args <- parser$parse_args(c())
 	expect_equal(args$bar, 42)
 
-	# expect_equal(parser$get_default("bar"), 42) # nolint
+	expect_error(
+		parser$get_default("bar"),
+		"We don't currently support `get_default()`",
+		fixed = TRUE
+	)
 })
 
 test_that("`ArgumentParser()` works as expected", {
