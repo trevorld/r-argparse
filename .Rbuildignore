@@ -6,6 +6,7 @@
 ^README.rst$
 ^Rakefile$
 ^\.air.toml$
+^\.claude$
 ^\.editorconfig$
 ^\.git$
 ^\.github$
