@@ -453,12 +453,24 @@ needs_prog <- function(argument_names) {
 
 # Manually copied over from getopt to eliminate it as a dependency
 get_Rscript_filename <- function() {
-	prog <- sub("--file=", "", grep("--file=", commandArgs(), value = TRUE)[1])
-	if (.Platform$OS.type == "windows") {
+	args <- command_args()
+	args_idx <- match("--args", args)
+	if (!is.na(args_idx)) {
+		args <- args[seq_len(args_idx - 1L)]
+	}
+	prog <- sub("--file=", "", grep("^--file=", args, value = TRUE)[1L])
+	if (is.na(prog)) {
+		prog <- littler_script_path()
+	}
+	if (!is.na(prog) && .Platform$OS.type == "windows") {
 		prog <- gsub("\\\\", "\\\\\\\\", prog)
 	}
 	prog
 }
+
+command_args <- function() commandArgs()
+
+littler_script_path <- function() Sys.getenv("LITTLER_SCRIPT_PATH", unset = NA_character_)
 
 # Internal function to check python cmd is okay
 # @param python_cmd Python cmd to use
