@@ -1,5 +1,6 @@
 *.swp
 *.timestamp
+.claude/
 argparse.rst
 codecov.yml
 README.md
