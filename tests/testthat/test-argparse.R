@@ -190,6 +190,7 @@ test_that("`parse_known_args()` works as expected", {
 	a_r <- parser$parse_known_args(c("-o", "foobar.txt", "-n", "4"))
 	expect_equal(a_r[[1]]$output_filename, "foobar.txt")
 	expect_equal(a_r[[2]], c("-n", "4"))
+	expect_identical(parser$parse_known_args(c("-o", "foobar.txt"))[[2]], character(0))
 })
 
 test_that("`parse_intermixed_args()` works as expected", {
@@ -217,6 +218,7 @@ test_that("`parse_known_intermixed_args()` works as expected", {
 	expect_equal(a_r[[1]]$foo, 'bar')
 	expect_equal(a_r[[1]]$rest, 1:3)
 	expect_equal(a_r[[2]], c('-n'))
+	expect_identical(parser$parse_known_intermixed_args(c('doit', '1'))[[2]], character(0))
 })
 
 test_that("`set_defaults()` works as expected", {
