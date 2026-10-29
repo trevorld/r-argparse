@@ -5,3 +5,14 @@ development:
 template:
   bootstrap: 5
 llm-docs: false
+reference:
+- title: Create a parser
+  contents:
+  - ArgumentParser
+- title: R6 classes
+  desc: R6 objects returned by `ArgumentParser()` and its methods.
+  contents:
+  - Parser
+  - ArgumentGroup
+  - MutuallyExclusiveGroup
+  - Subparsers

@@ -447,6 +447,24 @@ test_that("`Group.add_mutually_exclusive_group()`", {
 	expect_output(parser$print_help(), "Group description")
 })
 
+test_that("group methods return the expected R6 classes", {
+	skip_if_not(detects_python())
+	parser <- ArgumentParser(prog = "PROG")
+	expect_r6_class(parser, "Parser")
+	group <- parser$add_argument_group("group")
+	expect_r6_class(group, "ArgumentGroup")
+	expect_r6_class(group, "Group")
+	meg <- parser$add_mutually_exclusive_group()
+	expect_r6_class(meg, "MutuallyExclusiveGroup")
+	expect_r6_class(meg, "Group")
+	expect_r6_class(group$add_mutually_exclusive_group(), "MutuallyExclusiveGroup")
+	expect_null(meg$add_mutually_exclusive_group)
+	expect_r6_class(parser$add_subparsers(), "Subparsers")
+	expect_null(parser$clone)
+	expect_null(group$clone)
+	expect_null(meg$clone)
+})
+
 test_that("Paths that `quit()`", {
 	skip_if_not(detects_python())
 	skip_on_os("windows")
