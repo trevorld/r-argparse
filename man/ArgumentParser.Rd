@@ -15,7 +15,7 @@ If you need Unicode argument support then you must use Python 3.0+.
 Default will be to use \code{findpython} package to find suitable Python binary.}
 }
 \value{
-\code{ArgumentParser()} returns a parser object which contains
+\code{ArgumentParser()} returns a \link{Parser} R6 object which contains
 an \code{add_argument()} function to add arguments to the parser,
 a \code{parse_args()} function to parse command line arguments into
 a list, a \code{print_help()} and a \code{print_usage()} function to print
@@ -28,7 +28,8 @@ a wrapper to Python's \code{argparse} module
 }
 \examples{
 
-if (argparse:::detects_python()) {
+run_example <- argparse:::detects_python()
+if (run_example) {
   parser <- ArgumentParser(description='Process some integers')
   parser$add_argument('integers', metavar='N', type = "integer", nargs='+',
                      help='an integer for the accumulator')
@@ -36,6 +37,8 @@ if (argparse:::detects_python()) {
                      const='sum', default='max',
                      help='sum the integers (default: find the max)')
   parser$print_help()
+}
+if (run_example) {
   # default args for ArgumentParser()$parse_args are commandArgs(TRUE)
   # which is what you'd want for an Rscript but not for interactive use
   args <- parser$parse_args(c("--sum", "1", "2", "3"))
@@ -46,4 +49,10 @@ if (argparse:::detects_python()) {
 \references{
 Python's \code{argparse} library, which this package is based on,
 is described here: \url{https://docs.python.org/3/library/argparse.html}
+}
+\seealso{
+\link{Parser}, \link{ArgumentGroup}, \link{MutuallyExclusiveGroup}, and
+\link{Subparsers} for
+documentation of the R6 objects returned by \code{ArgumentParser()} and its
+methods.
 }

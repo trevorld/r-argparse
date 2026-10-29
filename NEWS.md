@@ -2,6 +2,9 @@ argparse 2.3.3
 ==============
 
 * `ArgumentParser()` now also checks the `LITTLER_SCRIPT_PATH` environment variable for the script name so it works when called from `littler`.
+* The R6 objects returned by `ArgumentParser()` and its methods can no longer be cloned. Their `clone()` method didn't produce independent copies and could cause arguments to be added to the wrong parser or group.
+* The R6 classes returned by `ArgumentParser()` and its methods (`Parser`, `ArgumentGroup`, `MutuallyExclusiveGroup`, and `Subparsers`) are now documented.
+* Mutually exclusive groups (as returned by `add_mutually_exclusive_group()`) are now `MutuallyExclusiveGroup` R6 objects instead of `Group` R6 objects. `Group` is now the shared parent class of `ArgumentGroup` and `MutuallyExclusiveGroup`.
 
 argparse 2.3.1
 ==============
