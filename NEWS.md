@@ -1,5 +1,5 @@
-argparse 2.3.2 (development)
-============================
+argparse 2.3.3
+==============
 
 * `ArgumentParser()` now also checks the `LITTLER_SCRIPT_PATH` environment variable for the script name so it works when called from `littler`.
 

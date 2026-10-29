@@ -12,7 +12,7 @@
 
 ## Test environments
 
-* local (linux), R 4.5.1
+* local (linux), R 4.6.1
 * win-builder (windows), R devel
 * Github Actions (linux), R devel, release, oldrel
 * Github Actions (windows), R release
