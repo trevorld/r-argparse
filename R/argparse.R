@@ -374,9 +374,9 @@ Parser <- R6Class(
 		#' Parse command line arguments without raising an error for
 		#' unrecognized arguments.
 		#' @param args A character vector of command line arguments.
-		#' @return A list whose first element is a named list of argument values and
-		#'   whose second element is a character vector of the remaining
-		#'   unrecognized arguments.
+		#' @return A list of length two.  The first element is a named list of
+		#'   argument values.  The second element is a character vector of the
+		#'   remaining unrecognized arguments.
 		parse_known_args = function(args = commandArgs(TRUE)) {
 			new_code <- c(
 				sprintf(
@@ -387,16 +387,16 @@ Parser <- R6Class(
 				"print(json.dumps((args_remainder[0].__dict__, args_remainder[1])))"
 			)
 			output <- private$python_code$run(new_code)
-			parse_args_output(output)
+			parse_known_args_output(output)
 		},
 		#' @description
 		#' Parse command line arguments allowing optional and positional
 		#' arguments to be intermixed and without raising an error for
 		#' unrecognized arguments.
 		#' @param args A character vector of command line arguments.
-		#' @return A list whose first element is a named list of argument values and
-		#'   whose second element is a character vector of the remaining
-		#'   unrecognized arguments.
+		#' @return A list of length two.  The first element is a named list of
+		#'   argument values.  The second element is a character vector of the
+		#'   remaining unrecognized arguments.
 		parse_known_intermixed_args = function(args = commandArgs(TRUE)) {
 			new_code <- c(
 				sprintf(
@@ -407,7 +407,7 @@ Parser <- R6Class(
 				"print(json.dumps((args_remainder[0].__dict__, args_remainder[1])))"
 			)
 			output <- private$python_code$run(new_code)
-			parse_args_output(output)
+			parse_known_args_output(output)
 		},
 		#' @description
 		#' Format the help message.
@@ -562,6 +562,13 @@ parse_args_output <- function(output) {
 		# presumably version number request
 		print_message_and_exit(output, "version requested:")
 	}
+}
+
+# `jsonlite::fromJSON()` simplifies an empty JSON array to `list()`
+parse_known_args_output <- function(output) {
+	args_remainder <- parse_args_output(output)
+	args_remainder[[2L]] <- as.character(args_remainder[[2L]])
+	args_remainder
 }
 
 # @param argument argument to be converted from R to Python

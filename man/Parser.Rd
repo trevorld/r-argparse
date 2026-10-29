@@ -124,9 +124,9 @@ unrecognized arguments.
     \if{html}{\out{</div>}}
   }
   \subsection{Returns}{
-    A list whose first element is a named list of argument values and
-whose second element is a character vector of the remaining
-unrecognized arguments.
+    A list of length two.  The first element is a named list of
+argument values.  The second element is a character vector of the
+remaining unrecognized arguments.
   }
 }
 
@@ -150,9 +150,9 @@ unrecognized arguments.
     \if{html}{\out{</div>}}
   }
   \subsection{Returns}{
-    A list whose first element is a named list of argument values and
-whose second element is a character vector of the remaining
-unrecognized arguments.
+    A list of length two.  The first element is a named list of
+argument values.  The second element is a character vector of the
+remaining unrecognized arguments.
   }
 }
 
